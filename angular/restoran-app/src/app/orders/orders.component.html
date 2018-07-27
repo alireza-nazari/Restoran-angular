@@ -1,0 +1,21 @@
+
+<div class="container">
+<h3>Porudzbine</h3>
+    <table border="1px solid black" class="table table-striped">
+        <tr>
+            <th>Broj porudzbine</th>
+            <th>Ime klijenta</th>
+            <th>Jelo</th>
+            <th>Količina jela</th>
+            <th>Datum narudzbine</th>
+        </tr>
+        <tr  *ngFor="let meal of meals; let i = index">
+            <td>{{ meal.id_narudzbine }}</td>
+            <td>{{ meal.klijent.ime }}</td>
+            <td>{{ meal.glavno.naziv }}</td>
+            <td>{{ meal.kolicinaGlavnog }}</td>
+            <td>{{ meal.datumPorudzbine }}</td>
+        </tr>
+    </table>
+</div>
+

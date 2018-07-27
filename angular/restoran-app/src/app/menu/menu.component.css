@@ -1,0 +1,57 @@
+#wrap{
+    
+    margin-left: -20px;
+
+}
+li{
+    list-style-type: none;
+    display: inline;
+}
+ul{
+    padding-top: 20px;
+    margin-left: 20px;  
+}
+#list{
+    margin-right: 0; 
+}
+.card{
+    position: relative;
+    
+}
+#btnOrder{
+    width: 100%;
+    background-color: orangered;
+    border: 1px solid orangered;
+    border-radius: 1px; 
+}
+#btnOrder::after{
+    display: none;
+}
+#dropDownContent{
+    width: 100%;
+    text-align: center;
+}
+#amountInput{
+    width: 70%;
+    margin: 0 auto;
+}
+.btn-success{
+    margin-top: 5px;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: inline;
+}
+#alertWrapper{
+    position: absolute;
+    bottom: 0;
+}
+#x{
+    font-size: 25px;
+    text-align: right;
+}
+#hideDrop{
+    position: relative;
+}

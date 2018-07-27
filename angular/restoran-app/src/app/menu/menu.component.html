@@ -1,0 +1,28 @@
+<div id="list" class="row">
+    <ul id="menu" *ngFor="let meal of meals" >
+        <div class="card">
+            <img appSrcValue class="card-img-top" style="width:200px;" src="http://www.beopopust.rs/uploaded_pictures/content/ponude/640x480/350-din-za-karadjordjevu-sniclu-sa-pomfritom-kolac-u-restoranu-dunavska-prica-958-1.jpg"
+                alt="Card image">    
+            <h4 class="card-title" #name>{{ meal.naziv }}</h4>
+            <p class="card-text">Cena po kg: {{meal.cena}} din</p>
+            <div ngbDropdown class="d-inline-block"  #myDrop="ngbDropdown">
+                <a class="btn btn-primary" ngbDropdownToggle id="btnOrder">Poruči</a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" id="dropDownContent">
+                    <span> <fa name="times" (click)="$event.stopPropagation(); myDrop.close();" id="hideDrop"></fa></span>
+                    <span>
+                        <p>Količina u gramima:</p>
+                    </span>
+                    <input type="number" id="amountInput" #amountInput>
+                    <br>
+                    <button class="btn btn-success" (click)="postIt({id: meal.id_glj, amount: amountInput.value}, amountInput)">Potvrdi</button>
+                </div>
+            </div>
+        </div>
+    </ul>
+    <router-outlet></router-outlet>
+    <div class="col-md-12" id="alertWrapper">
+        <div class="alert alert-success" role="alert" [hidden]="status">
+            Uspešno ste izvršili narudzbinu
+        </div>
+    </div>
+</div>
