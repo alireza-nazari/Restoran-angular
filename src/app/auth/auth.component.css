@@ -1,0 +1,23 @@
+
+.row{
+    margin-right: 0px;
+}
+.icon-food{
+    position: absolute;
+}
+img{
+    width: 100px;
+    height: 100px;
+}
+#imageWrapper{
+    text-align: center;
+}
+#alert{
+    margin-top: 20px;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: inline;
+}

@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-sm navbar-dark orange d-flex justify-content-center">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#" routerLink="">Početna</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" routerLink="/menu">Meni</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" routerLink="/orders" *ngIf="status">Narudzbine</a>
+    </li>
+  </ul>
+  <div class="d-flex justify-content-right" id="singOutBtnWrapper">
+   <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
+  </div>
+</nav>

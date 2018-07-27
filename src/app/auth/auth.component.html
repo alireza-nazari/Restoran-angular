@@ -1,0 +1,20 @@
+
+<div class="row d-flex justify-content-center" id="formWrapper">
+  <div class="col-xs-12 col-sm-12 col-md-12 d-flex justify-content-center">
+      <form (ngSubmit)="onSingUp(f)" #f="ngForm">
+          <div class="form-group">
+            <div id="imageWrapper">
+            <img src="../../assets/imageedit_15_2018791835.png" alt="">
+          </div>
+            <label for="username">Korisničko ime</label>
+            <input type="text" id="user" name="user" ngModel class="form-control">
+            <label for="password">Lozinka</label>
+            <input type="password" id="pass" name="pass" ngModel class="form-control">
+          </div>
+          <button class="btn btn-primary" type="submit">Prijavi se</button>
+        </form>
+  </div>
+  <div class="alert alert-warning hide" role="alert" #alert id="alert" [ngClass]="{'show': show, 'hide': !show}">
+      Vaša sesija je istekla, molimo vas prijavite se ponovo!
+  </div>
+</div>
