@@ -17,7 +17,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 })
 export class AuthComponent implements OnInit{
 
-  faCoffee = faCoffee;
+  show: boolean;
 
   constructor(private authService: AuthService) { }
 
