@@ -1,18 +1,13 @@
 const express = require('express');
+const app = express();
 const path = require('path');
 
-const app = express();
+app.use(express.static(__dirname + '/dist'));
 
-// Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/<restoran-app>'));
+app.listen(process.env.PORT || 8080);
 
-app.get('/', function(req,res) {
-    
-res.sendFile(path.join(__dirname+'/dist/<restoran-app>/index.html'));
-});
+//Path Location Strategy
 
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 4200);
-server.listen(port, function() {
-    console.log("App is running on port " + port);
-});
+app.get('/*', function(req, res) {
+res.sendFile(path.join(__dirname + '/dist/index.html'));
+})
