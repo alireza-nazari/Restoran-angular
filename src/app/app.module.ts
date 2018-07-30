@@ -20,19 +20,19 @@ import { AuthService } from './auth/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthGuardService } from './auth/auth-guard.service';
-import { JwtHelperService as _JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService} from '@auth0/angular-jwt';
 import { RoleGuardService } from './auth/role-guard.service';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { StatusService } from './auth/status.service';
 import { SrcValueDirective } from './menu/src-value.directive';
 
-export const JwtHelperService  = {
-  provide: _JwtHelperService,
-  useFactory: () => {
-    return new _JwtHelperService();
-  }
-};
+// export const JwtHelperService  = {
+//   provide: _JwtHelperService,
+//   useFactory: () => {
+//     return new _JwtHelperService();
+//   }
+// };
 
 @NgModule({
   declarations: [
