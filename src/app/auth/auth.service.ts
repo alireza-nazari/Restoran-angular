@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpHeaders, } from "@angular/common/http";
 import { map } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 import decode from 'jwt-decode';
 
@@ -14,7 +13,6 @@ import { StatusService } from "./status.service";
 @Injectable()
 export class AuthService{
     constructor(private http: HttpClient,
-                private jwtHelper: JwtHelperService,
                 private location: Location,
                 private router: Router,
                 private stat: StatusService){}
