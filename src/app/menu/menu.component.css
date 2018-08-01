@@ -1,57 +1,80 @@
-#wrap{
-    
-    margin-left: -20px;
 
-}
 li{
     list-style-type: none;
     display: inline;
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+}
+
+ul:first-child{
+    padding-top: 25px;
 }
 ul{
-    padding-top: 20px;
-    margin-left: 20px;  
+    padding-left: 0px;
 }
 #list{
     margin-right: 0; 
 }
-.card{
-    position: relative;
-    
-}
-#btnOrder{
-    width: 100%;
-    background-color: orangered;
-    border: 1px solid orangered;
-    border-radius: 1px; 
-}
-#btnOrder::after{
-    display: none;
-}
-#dropDownContent{
-    width: 100%;
-    text-align: center;
-}
-#amountInput{
-    width: 70%;
-    margin: 0 auto;
-}
-.btn-success{
-    margin-top: 5px;
-}
-.hide{
-    display: none;
-}
-.show{
-    display: inline;
-}
+
 #alertWrapper{
     position: absolute;
     bottom: 0;
 }
-#x{
-    font-size: 25px;
+
+
+#mealWrapper{
+
+    height: 101px;
+    border: 1px solid rgb(255, 68, 0);
+    border-radius: 2px;
+    width: 860px;
+}
+#mealWrapper > img{
+    height: 100px;
+    width: 100px;
+}
+.orange{
+    background-color: rgb(255, 68, 0);
+    color: white;
+}
+#dropDown{
+    margin-top: -35px;  
+    text-align: right;  
+}
+#dropDown li{
+    margin-right: 5px;
+}
+
+#wrapper{
+    margin-top: -75px; 
+    margin-left: 105px;
+    border-bottom: 2px dotted rgb(255, 68, 0);
+    height: 25px;
+}
+#wrapper{
+    margin-right: 60px; 
+}
+#orderToggle{
+    width: 50px;
+    height: 45px;
+}
+#exitWrapper{
     text-align: right;
 }
 #hideDrop{
-    position: relative;
+    position: absolute;
+    margin-top: -5px;   
+    right: 0;
+    font-size: 25px;
+}
+span > p{
+    margin-top: 25px;
+}
+#alertWtapper{
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -40%;
+    z-index: 100;
 }

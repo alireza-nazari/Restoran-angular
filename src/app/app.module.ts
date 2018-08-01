@@ -26,6 +26,8 @@ import { RoleGuardService } from './auth/role-guard.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { StatusService } from './auth/status.service';
 import { SrcValueDirective } from './menu/src-value.directive';
+import { CategoriesComponent } from './categories/categories.component';
+import { AlertComponent } from './alert/alert.component';
 
 // export const JwtHelperService  = {
 //   provide: _JwtHelperService,
@@ -43,7 +45,9 @@ import { SrcValueDirective } from './menu/src-value.directive';
     OrdersComponent,
     ItemComponent,
     AuthComponent,
-    SrcValueDirective
+    SrcValueDirective,
+    CategoriesComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,7 @@ import { SrcValueDirective } from './menu/src-value.directive';
     // _JwtHelperService,
     RoleGuardService,
     StatusService,
-    
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

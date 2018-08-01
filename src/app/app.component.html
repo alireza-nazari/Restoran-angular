@@ -1,5 +1,5 @@
-
-<app-header *ngIf="status"></app-header>
-<router-outlet *ngIf="status"></router-outlet>
-<app-auth *ngIf="!status" id="loginForm"></app-auth>
-
+<div>
+    <app-header *ngIf="status"></app-header>
+    <router-outlet *ngIf="status"></router-outlet>
+    <app-auth *ngIf="!status" id="loginForm"></app-auth>
+</div>

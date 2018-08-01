@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
               private router: Router,
               private auth: AuthGuardService) {
               config.autoClose = false;
+              
         }
   
   ngOnInit() {
@@ -45,16 +46,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     console.log(this.name.nativeElement.value);
   }
   ngAfterViewInit(){
-    setTimeout(() => {
-      const name = this.name.nativeElement;
-      console.log(name);
-      if(name == 'karadjordjeva'){
-        console.log('karadjordjeva')
-      }
-      else{
-        console.log('ostalo')
-      }
-    }, 100);
+  
   }
   showMenu(){
     this.status = true;

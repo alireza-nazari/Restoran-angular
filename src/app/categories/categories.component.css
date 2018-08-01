@@ -1,0 +1,30 @@
+.row{
+    margin-top: 120px;
+    
+}
+a > .card > img{
+    height: 70%;
+}
+.card{
+    height: 100%;
+    border: 1px solid darkgray;
+}
+div:nth-child(3){
+    margin-right: 10px;
+    margin-left: 10px;
+}
+div:nth-child(1){
+    margin-right: 10px;
+    margin-left: 10px;
+}
+a{
+    text-decoration: none;
+    color : black;
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
+}
+.card-body{
+    margin-left: -1px;
+    width: 200px;
+    background-color: rgb(255, 68, 0);
+    color: white;   
+}

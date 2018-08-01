@@ -1,6 +1,7 @@
 
 .row{
     margin-right: 0px;
+    
 }
 .icon-food{
     position: absolute;
@@ -20,4 +21,13 @@ img{
 }
 .show{
     display: inline;
+}
+label{
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
+}
+div{
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
+}
+form{
+    width: 200px;
 }

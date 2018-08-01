@@ -66,8 +66,16 @@ img{
     font-size: 21px;
     text-decoration: none;
     z-index: 2;
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
 }
 #outletWrapper{
-    margin-top: 7%;
-    margin-right: 0px; 
+    margin-right: 0px;
+
+}
+#baner{
+    width: 100%;
+    height: auto;
+}
+h1{
+    font-family: 'Allan', Helvetica, Arial, sans-serif;
 }
