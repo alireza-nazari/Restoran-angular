@@ -7,7 +7,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthComponent } from "./auth/auth.component";
 import { AuthGuardService as AuthGuard } from "./auth/auth-guard.service";
 import { RoleGuardService as RoleGuard } from "./auth/role-guard.service";
-
+import { CrudComponent } from "./crud/crud.component";
 
 
 const appRoutes: Routes = [
@@ -17,6 +17,9 @@ const appRoutes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
     {path: 'orders', component: OrdersComponent, canActivate: [RoleGuard, AuthGuard], data: {
+        role: 'admin'
+    }},
+    {path: 'crud', component: CrudComponent, canActivate: [RoleGuard, AuthGuard], data: {
         role: 'admin'
     }},
     {path: 'login', component: AuthComponent},

@@ -8,6 +8,7 @@ import { Config } from 'protractor';
 import { Router } from '@angular/router';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { SrcValueDirective } from './src-value.directive';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -37,8 +38,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     
   }
   postIt(data: any, amountInput: HTMLInputElement){
-    this.mealsService.postMeal(data);
-
+    this.mealsService.postOrder(data)
   }
   ngAfterViewInit(){
   
@@ -48,7 +48,9 @@ export class MenuComponent implements OnInit, AfterViewInit {
     console.log(status)
   }
   click(){
-    this.mealsService.getMeals()
+    this.mealsService.getMeals().subscribe(
+      
+    )
   }
 
 }

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: "http://192.168.120.:8080/"
+  apiBaseUrl: "https://narudzbina-test.herokuapp.com/webapi/"
 };

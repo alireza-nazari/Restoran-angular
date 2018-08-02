@@ -28,6 +28,9 @@ import { StatusService } from './auth/status.service';
 import { SrcValueDirective } from './menu/src-value.directive';
 import { CategoriesComponent } from './categories/categories.component';
 import { AlertComponent } from './alert/alert.component';
+import { CrudComponent } from './crud/crud.component';
+import { SelectedDirective } from './selected.directive';
+import { CommonModule } from '@angular/common';
 
 // export const JwtHelperService  = {
 //   provide: _JwtHelperService,
@@ -47,7 +50,9 @@ import { AlertComponent } from './alert/alert.component';
     AuthComponent,
     SrcValueDirective,
     CategoriesComponent,
-    AlertComponent
+    AlertComponent,
+    CrudComponent,
+    SelectedDirective
   ],
   imports: [
     BrowserModule,
@@ -57,7 +62,8 @@ import { AlertComponent } from './alert/alert.component';
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    CommonModule
   ],
   providers: [
     MealsService,

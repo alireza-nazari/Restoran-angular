@@ -1,0 +1,72 @@
+<div class="container">
+  <div id="tableHeader">
+    <h2 id="heading">Upravljanje menijem</h2>
+    <button (click)="addMeal()">
+      <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
+  </div>
+
+  <table class="table table striped">
+    <thead>
+      <tr>
+        <th>
+          Naizv jela
+        </th>
+        <th>
+          Cena jela
+        </th>
+        <th>
+          Kategorija
+        </th>
+        <th>
+          URL slike
+        </th>
+        <th id="akcija">
+          Akcija
+        </th>
+      </tr>
+    </thead>
+    <tbody>        
+          <form (ngSubmit)="newMealData(form)" #form="ngForm">
+              <tr *ngIf="addNewMeal" id="newMeal">
+              <td>
+                  <input type="text" ngModel class="form-control" name="mealName">
+                </td>
+                <td>
+                  <input type="number" ngModel class="form-control"  name="mealPrice">
+                </td>
+                <td>
+                    <select name="category" ngModely class="form-control" name="mealCategory">
+                        <option value="we"></option>
+                    </select>
+                
+                </td>
+                <td>
+                    <input type="text" #newUrl class="form-control" name="mealUrl">
+                <td>
+                    <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(newName, nwePrice, newCategory, newUrl)"></fa>
+                </td>
+              </tr>
+          </form>
+      <tr *ngFor="let meal of data" selectedRow>
+        <td>
+          <input #n [hidden]="edit" type="text" name="mealName" value="{{meal.naziv}}">
+          <span #na>{{meal.naziv}}</span>
+        </td>
+        <td>
+          <input #p [hidden]="edit" type="text" name="mealName" value="{{meal.cena}}">
+          <span #pr>{{meal.cena}}din</span>
+        </td>
+        <td>
+          <input #c [hidden]="edit" type="text" name="mealName" value="{{meal.kategorija}}">
+          <span #co>:D</span>
+        </td>
+        <td>:D</td>
+        <td>
+          <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn"></fa>
+          <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, na, pr, co, confirm)" *ngIf="editBtn"></fa>
+          <fa name="trash" id="hideDrop" id="delete" (click)="deleteMeal(meal.id_glj)" *ngIf="deleteBtn"></fa>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
