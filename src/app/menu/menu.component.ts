@@ -18,6 +18,7 @@ import { SrcValueDirective } from './src-value.directive';
 export class MenuComponent implements OnInit, AfterViewInit {
   meals: any[];
   status = true;
+  staticAlertClosed = true;
   @ViewChild('name') name: ElementRef;
   constructor(private mealsService: MealsService,
               private searchService: SearchService,
@@ -37,13 +38,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
   postIt(data: any, amountInput: HTMLInputElement){
     this.mealsService.postMeal(data);
-    setInterval(() => {
-      this.status = true
-    }, 4000)
-    setTimeout(() => {
-      this.status = false;
-    }, 1)
-    console.log(this.name.nativeElement.value);
+
   }
   ngAfterViewInit(){
   
@@ -55,4 +50,5 @@ export class MenuComponent implements OnInit, AfterViewInit {
   click(){
     this.mealsService.getMeals()
   }
+
 }

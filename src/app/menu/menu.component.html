@@ -1,4 +1,4 @@
-<app-alert></app-alert>
+<app-alert *ngIf="!staticAlertClosed"></app-alert>
 <div id="list" class="col">
     <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center">
         <div id="mealWrapper">
