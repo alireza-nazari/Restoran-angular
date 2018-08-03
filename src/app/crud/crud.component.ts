@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { MealsService } from '../meals.service';
+import { CrudService } from '../crud.service';
 
 @Component({
   selector: 'app-crud',
@@ -17,7 +18,8 @@ export class CrudComponent implements OnInit {
   i: number = 0;
   public data = [];
   @ViewChild('selectedRow') row : ElementRef;
-  constructor(public meals: MealsService) { }
+  constructor(public meals: MealsService,
+              public crud: CrudService ) { }
 
   ngOnInit() {
     this.meals.getMeals()
@@ -45,13 +47,29 @@ export class CrudComponent implements OnInit {
     na.hidden = true;
     pr.hidden = true;
     co.hidden = true;
-    
     this.confirmBtn = true;
   }
+  confirm(n:any, p :any, c:any, na:any, pr:any, co:any){
+    n.hidden = true;
+    p.hidden = true;
+    c.hidden = true;
+    na.hidden = false;
+    pr.hidden = false;
+    co.hidden = false;
+    this.confirmBtn = false;
+    console.log(n.value, p.value, c.value)
+  }
   deleteMeal(id: number){
-    console.log(id) 
+    this.crud.deleteMeal(id).subscribe(
+      (res: Response) => {
+        console.log(res)
+      },
+      (err: Error) =>{
+        alert("Doslo je do greske: " + err)
+      }
+    )
   }
   newMealData(name: any, price: any, cat: any, url: any){
-    console.log(name, price, cat, url)
+    console.log(name.value, price.value, cat.value, url.value)
   }
 }

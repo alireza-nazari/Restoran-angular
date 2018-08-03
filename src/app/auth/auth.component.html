@@ -1,4 +1,4 @@
-
+<app-alert id="alert" [auth]="[alertMessageValue, alertType]" *ngIf="show"></app-alert>
 <div class="row d-flex justify-content-center" id="formWrapper">
   <div class="col-xs-12 col-sm-12 col-md-12 d-flex justify-content-center" id="form">
       <form (ngSubmit)="onSingUp(f)" #f="ngForm">
@@ -13,8 +13,5 @@
           </div>
           <button class="btn btn-primary" type="submit">Prijavi se</button>
         </form>
-  </div>
-  <div class="alert alert-warning hide" role="alert" #alert id="alert" [ngClass]="{'show': show, 'hide': !show}">
-      Vaša sesija je istekla, molimo vas prijavite se ponovo!
   </div>
 </div>

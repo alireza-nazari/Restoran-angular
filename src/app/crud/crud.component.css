@@ -93,3 +93,9 @@ tr td:nth-child(4){
 tr td:nth-child(5){
     width: 20%;
 }
+thead{
+    text-align: center;
+}
+table{
+    text-align: center;
+}

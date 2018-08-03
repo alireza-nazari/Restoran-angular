@@ -31,3 +31,6 @@ div{
 form{
     width: 200px;
 }
+#formWrapper{
+    margin: 0 auto;
+}

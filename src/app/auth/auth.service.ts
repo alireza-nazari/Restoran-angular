@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Input} from "@angular/core";
 import { HttpHeaders, } from "@angular/common/http";
 import { map } from 'rxjs/operators';
 
@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 import { StatusService } from "./status.service";
-
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService{
@@ -17,9 +17,12 @@ export class AuthService{
                 private router: Router,
                 private stat: StatusService){}
     show: boolean = true;
+    @Input() status: string;
+    private countdownEndSource = new Subject<void>();
+
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
-      });
+    });
     public getToken(): string{
         return localStorage.getItem('token');
     }
@@ -39,7 +42,7 @@ export class AuthService{
             username: username,
             password: password
         }, {headers: this.headers})
-        .subscribe(
+        .map(
             (response: Response) => {
                 const data = JSON.stringify(response);
                 const novo = data.replace(/['"]+/g, '');
@@ -49,9 +52,6 @@ export class AuthService{
                 this.router.navigate(['/'])
                 location.reload(); 
             },
-            (err) => {
-                alert("Pogrešili ste lozinku")
-            }            
         );
     }
     public singOut(): void{

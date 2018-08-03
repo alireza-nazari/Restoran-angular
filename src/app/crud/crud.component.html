@@ -25,28 +25,25 @@
         </th>
       </tr>
     </thead>
-    <tbody>        
-          <form (ngSubmit)="newMealData(form)" #form="ngForm">
-              <tr *ngIf="addNewMeal" id="newMeal">
-              <td>
-                  <input type="text" ngModel class="form-control" name="mealName">
-                </td>
-                <td>
-                  <input type="number" ngModel class="form-control"  name="mealPrice">
-                </td>
-                <td>
-                    <select name="category" ngModely class="form-control" name="mealCategory">
-                        <option value="we"></option>
-                    </select>
-                
-                </td>
-                <td>
-                    <input type="text" #newUrl class="form-control" name="mealUrl">
-                <td>
-                    <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(newName, nwePrice, newCategory, newUrl)"></fa>
-                </td>
-              </tr>
-          </form>
+    <tbody>
+      <tr *ngIf="addNewMeal" id="newMeal">
+        <td>
+          <input type="text" ngModel class="form-control" name="mealName" #name>
+        </td>
+        <td>
+          <input type="number" ngModel class="form-control" name="mealPrice" #price>
+        </td>
+        <td>
+          <select name="category" ngModely class="form-control" name="mealCategory" #category>
+            <option value="we"></option>
+          </select>
+        </td>
+        <td>
+          <input type="text" #newUrl class="form-control" name="mealUrl" #url>
+          <td>
+            <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(name, price, category, url)"></fa>
+          </td>
+      </tr>
       <tr *ngFor="let meal of data" selectedRow>
         <td>
           <input #n [hidden]="edit" type="text" name="mealName" value="{{meal.naziv}}">
@@ -57,12 +54,17 @@
           <span #pr>{{meal.cena}}din</span>
         </td>
         <td>
-          <input #c [hidden]="edit" type="text" name="mealName" value="{{meal.kategorija}}">
+          <select #c [hidden]="edit" name="category" name="mealCategory">
+              <option value="we" ></option>
+            </select>
           <span #co>:D</span>
         </td>
-        <td>:D</td>
         <td>
-          <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn"></fa>
+          <input #url [hidden]="edit" type="text" name="mealName" value="{{meal.url}}">
+          <span>:D</span>
+        </td>
+        <td>
+          <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, na, pr, co, url)" ></fa>
           <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, na, pr, co, confirm)" *ngIf="editBtn"></fa>
           <fa name="trash" id="hideDrop" id="delete" (click)="deleteMeal(meal.id_glj)" *ngIf="deleteBtn"></fa>
         </td>

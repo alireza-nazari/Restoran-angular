@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
@@ -9,9 +9,11 @@ export class AlertComponent implements OnInit {
 
   staticAlertClosed = true;
 
-  constructor() { }
+  @Input('auth') masterName: Array<string>;
 
-  ngOnInit() {
+  constructor() {  }
+
+  ngOnInit(){
+    console.log(this.masterName)
   }
-
-}
+} 

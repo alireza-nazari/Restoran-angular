@@ -31,7 +31,7 @@ import { AlertComponent } from './alert/alert.component';
 import { CrudComponent } from './crud/crud.component';
 import { SelectedDirective } from './selected.directive';
 import { CommonModule } from '@angular/common';
-
+import { CrudService } from './crud.service'
 // export const JwtHelperService  = {
 //   provide: _JwtHelperService,
 //   useFactory: () => {
@@ -73,7 +73,7 @@ import { CommonModule } from '@angular/common';
     // _JwtHelperService,
     RoleGuardService,
     StatusService,
-
+    CrudService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

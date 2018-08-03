@@ -23,7 +23,7 @@
                             </span>
                             <input type="number" id="amountInput" #amountInput>
                             <br>
-                            <button class="btn btn-success" (click)="postIt({id: meal.id_glj, amount: amountInput.value}, amountInput)">Potvrdi</button>
+                            <button class="btn btn-success" (click)="postIt({id: meal.id_glj, amount: amountInput.value}, amountInput); myDrop.close()">Potvrdi</button>
                         </div>
                     </div>
                 </li>
