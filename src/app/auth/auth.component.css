@@ -31,6 +31,11 @@ div{
 form{
     width: 200px;
 }
-#formWrapper{
-    margin: 0 auto;
+
+@media (max-width:480px)  {
+    #formWrapper{
+        text-align: center;
+        margin-left: 0px;
+        margin-top: 25%;
+    }
 }
