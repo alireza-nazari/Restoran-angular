@@ -4,7 +4,7 @@
     <button (click)="addMeal()">
       <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
   </div>
-
+  <button class="btn btn-danger" (click)="get()"> GEt data</button>
   <table class="table table striped">
     <thead>
       <tr>
@@ -35,7 +35,10 @@
         </td>
         <td>
           <select name="category" ngModely class="form-control" name="mealCategory" #category>
-            <option value="we"></option>
+            <option value="glavno jelo">Glavno jelo</option>
+            <option value="predjelo">Predjelo</option>
+            <option value="salata">Salata</option>
+            <option value="desert">Desert</option>
           </select>
         </td>
         <td>
@@ -71,4 +74,7 @@
       </tr>
     </tbody>
   </table>
+  <div *ngFor="let da of newData">
+    <p>{{da}}</p>
+  </div>
 </div>

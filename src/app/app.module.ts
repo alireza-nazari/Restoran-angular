@@ -32,13 +32,12 @@ import { CrudComponent } from './crud/crud.component';
 import { SelectedDirective } from './selected.directive';
 import { CommonModule } from '@angular/common';
 import { CrudService } from './crud.service'
-// export const JwtHelperService  = {
-//   provide: _JwtHelperService,
-//   useFactory: () => {
-//     return new _JwtHelperService();
-//   }
-// };
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule,  } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +62,10 @@ import { CrudService } from './crud.service'
     HttpClientModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    CommonModule
+    CommonModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     MealsService,

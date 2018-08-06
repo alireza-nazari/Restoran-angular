@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://192.168.120.:8080/narudzbina/webapi/"
+  apiBaseUrl: "http://192.168.120.:8080/narudzbina/webapi/",
+  firebaseConfig : {
+    apiKey: "AIzaSyD7a-qluxJN_g1iYHrrVD2YuBGmXohlk6E",
+    authDomain: "restoranapp-15444.firebaseapp.com",
+    databaseURL: "https://restoranapp-15444.firebaseio.com",
+    projectId: "restoranapp-15444",
+    storageBucket: "",
+    messagingSenderId: "1027404922717"
+  }
 };
 
 /*

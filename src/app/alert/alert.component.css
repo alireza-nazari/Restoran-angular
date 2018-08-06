@@ -1,3 +1,6 @@
+*{
+    font-family: Ubuntu; 
+}
 #alertWtapper{
     width: 250px;
     z-index: 100;

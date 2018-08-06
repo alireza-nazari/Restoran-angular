@@ -1,4 +1,7 @@
 
+*{
+    font-family: Ubuntu; 
+}
 .row{
     margin-right: 0px;
     
@@ -23,11 +26,7 @@ img{
     display: inline;
 }
 label{
-    font-family: 'Allan', Helvetica, Arial, sans-serif;
-}
-div{
-    font-family: 'Allan', Helvetica, Arial, sans-serif;
-}
+    font-family: Ubuntu; }
 form{
     width: 200px;
 }

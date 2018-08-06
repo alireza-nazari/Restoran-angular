@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { MealsService } from '../meals.service';
 import { CrudService } from '../crud.service';
+import { ResponseOptions } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
+import { CrudModel } from './crud-model';
+
+
 
 @Component({
   selector: 'app-crud',
@@ -15,11 +20,17 @@ export class CrudComponent implements OnInit {
 
   addNewMeal: boolean = false;
 
+  status: number;
+  
   i: number = 0;
   public data = [];
+  newData: any = [];
   @ViewChild('selectedRow') row : ElementRef;
   constructor(public meals: MealsService,
-              public crud: CrudService ) { }
+              public crud: CrudService,
+              public responseOptions: ResponseOptions) {
+            
+               }
 
   ngOnInit() {
     this.meals.getMeals()
@@ -59,17 +70,43 @@ export class CrudComponent implements OnInit {
     this.confirmBtn = false;
     console.log(n.value, p.value, c.value)
   }
-  deleteMeal(id: number){
-    this.crud.deleteMeal(id).subscribe(
-      (res: Response) => {
-        console.log(res)
-      },
-      (err: Error) =>{
-        alert("Doslo je do greske: " + err)
-      }
-    )
-  }
+  // deleteMeal(id: number){
+  //   this.crud.deleteMeal(id).subscribe(
+  //     (res: Response) => {
+  //       console.log(res)
+  //     },
+  //     (err: Error) =>{
+  //       alert("Doslo je do greske: " + err)
+  //     }
+  //   )
+  // }
   newMealData(name: any, price: any, cat: any, url: any){
-    console.log(name.value, price.value, cat.value, url.value)
+    this.newData.push({
+      name: name.value,
+      price: price.value,
+      category: cat.value,
+      url: url.value
+    })
+
+    this.crud.postData(this.newData)
+  }
+  get(){
+    // this.crud.getData()
+    // .subscribe(
+    //   (response => {
+    //     console.log(response.body[1])
+    //   })
+    // )
+    var x = this.crud.getData();
+    x.snapshotChanges().subscribe(item => {
+      this.newData = [];
+      item.forEach(element => {
+        var y = element.payload.toJSON();
+        y["$key"] = element.key;
+        this.newData.push(y as CrudModel);
+      });
+    });
+    console.log(this.newData);
+    
   }
 }

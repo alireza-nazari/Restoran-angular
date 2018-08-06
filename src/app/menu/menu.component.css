@@ -1,8 +1,10 @@
 
+*{
+    font-family: Ubuntu; 
+}
 li{
     list-style-type: none;
     display: inline;
-    font-family: 'Allan', Helvetica, Arial, sans-serif;
     font-size: 18px;
 }
 
