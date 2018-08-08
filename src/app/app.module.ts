@@ -33,7 +33,6 @@ import { SelectedDirective } from './selected.directive';
 import { CommonModule } from '@angular/common';
 import { CrudService } from './crud.service'
 
-import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule,  } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
@@ -67,7 +66,6 @@ import { CategoriesService } from './categories/categories-service';
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     CommonModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule
