@@ -20,7 +20,7 @@ export class CrudService{
     
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
-      });
+    });
 
     // deleteMeal(id: number){
     //     return this.http.post<any>("https://udemy-ng-http-e8052.firebaseio.com/",{
@@ -46,7 +46,7 @@ export class CrudService{
     // }
     postData(crud : CrudModel)
     {
-        // this.tostr.success('Submitted Succcessfully', 'Employee Register');
+    this.tostr.success('Submitted Succcessfully', 'Employee Register');
     this.mealList = this.firebase.list('/meals')
         
     this.mealList.push(crud)

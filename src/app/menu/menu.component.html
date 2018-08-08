@@ -1,17 +1,16 @@
-<app-alert *ngIf="!staticAlertClosed"></app-alert>
+
 <div id="list" class="col">
-    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center">
+    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center"  [@menuTransition]="state">
         <div id="mealWrapper">
             <img src="http://www.beopopust.rs/uploaded_pictures/content/ponude/640x480/350-din-za-karadjordjevu-sniclu-sa-pomfritom-kolac-u-restoranu-dunavska-prica-958-1.jpg"
                 alt="meal-image">
-            <div id="wrapper" class="d-flex">
-                <li #name class="mr-auto p2">{{meal.naziv}}</li>
-                <li class="p2">{{meal.cena}}din</li>
+            <div id="wrapper">
+                <li #name>{{meal.name}}</li>
+                <li id="price">{{meal.price}}din</li>
             </div>
             <div id="dropDown">
                 <li>
                     <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown">
-                        <!-- <a class="btn btn-primary" ngbDropdownToggle id="btnOrder">Poruči</a> -->
                         <img ngbDropdownToggle id="orderToggle" src="../../assets/imageedit_2_6871258977.png"
                         alt="">
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" id="dropDownContent">
@@ -22,8 +21,7 @@
                                 <p>Količina u gramima:</p>
                             </span>
                             <input type="number" id="amountInput" #amountInput>
-                            <br>
-                            <button class="btn btn-success" (click)="postIt({id: meal.id_glj, amount: amountInput.value}, amountInput); myDrop.close()">Potvrdi</button>
+                            <button class="btn btn-success" (click)="postIt({id: meal.meal_id, amount: amountInput.value}); myDrop.close()">Potvrdi</button>
                         </div>
                     </div>
                 </li>

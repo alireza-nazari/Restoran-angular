@@ -20,7 +20,12 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.mealService.getOrders()
     .subscribe(
-      (res: string[]) => this.meals = res,
+      (res: string[]) =>{
+        this.meals = res;
+        console.log(res);
+
+      } 
+      
     );
   }
   

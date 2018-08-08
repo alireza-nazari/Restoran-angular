@@ -20,7 +20,7 @@
     z-index: 2;
 }
 #menuWrapper{
-    height: 400px;
+    height: 510px;
     position: relative;
     z-index: 2  ;
 }
@@ -34,12 +34,12 @@
 img{
     position: relative;
     z-index: 1;
-    margin-right: 0px;
+    max-width: 100%;
+    max-height: 100%;
 }
 #imageWrapper{
     box-sizing: border-box;
     position: absolute;
-
     width: 100%;
     height: 500px;
     overflow: hidden;
@@ -70,9 +70,20 @@ img{
 }
 #outletWrapper{
     margin-right: 0px;
-
+    position: relative;
+    z-index: 2;
 }
-#baner{
-    width: 100%;
-    height: auto;
+#heading{
+    width: 250px;
+}
+@media screen and (max-width: 590px){
+    #imageWrapper{
+        height: 100%;
+    }
+    img{
+        height: 100%;
+    }
+    #menuWrapper{
+        height: 180px
+    }
 }

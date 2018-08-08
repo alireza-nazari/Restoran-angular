@@ -13,6 +13,9 @@ ul:first-child{
 }
 ul{
     padding-left: 0px;
+    padding: 50px;
+    margin: 0 auto;
+    min-width: 275px;
 }
 #list{
     margin-right: 0; 
@@ -41,7 +44,7 @@ ul{
 }
 #dropDown{
     margin-top: -35px;  
-    text-align: right;  
+    text-align: right;
 }
 #dropDown li{
     margin-right: 5px;
@@ -79,4 +82,19 @@ span > p{
     right: 0;
     margin-top: -40%;
     z-index: 100;
+}
+.btn-success{
+    padding: 5px 5px;
+    margin-top: 5px;
+    margin-left: 5px; 
+}
+#amountInput{
+    width: 150px;
+    margin: 5px 5px;
+}
+@media screen and (max-width: 590px) {
+    #wrapper li{
+        font-size: 11px;
+        margin-top: 8px; 
+    }
 }

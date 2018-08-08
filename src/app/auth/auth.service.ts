@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 import { StatusService } from "./status.service";
 import { Subject } from 'rxjs/Subject';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService{
     constructor(private http: HttpClient,
@@ -37,8 +37,9 @@ export class AuthService{
         }
     }
     public singIn(username: string, password: string){
+        console.log(username, password);
         
-        return this.http.post<any>("http://192.168.0.120:8080/narudzbina/webapi/klijenti/login", {
+        return this.http.post<any>(environment.apiBaseUrl+"clients/login", {
             username: username,
             password: password
         }, {headers: this.headers})

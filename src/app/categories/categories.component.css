@@ -3,6 +3,8 @@
 }
 .row{
     margin-top: 120px;
+}
+.row a{
     
 }
 a > .card > img{
@@ -30,4 +32,14 @@ a{
     width: 200px;
     background-color: rgb(255, 68, 0);
     color: white;   
+}
+.col{
+    margin-left: 0px; 
+}
+#wrapper{
+    height: 100%;
+    margin: 0px 0px
+}
+#outletWrapper{
+    width: 100%;
 }

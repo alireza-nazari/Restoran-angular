@@ -8,11 +8,14 @@ import { AuthComponent } from "./auth/auth.component";
 import { AuthGuardService as AuthGuard } from "./auth/auth-guard.service";
 import { RoleGuardService as RoleGuard } from "./auth/role-guard.service";
 import { CrudComponent } from "./crud/crud.component";
+import { CategoriesComponent } from './categories/categories.component';
 
 
 const appRoutes: Routes = [
-    {path: '', component: HomeComponent , canActivate: [AuthGuard],children: [
-        {path: 'meni', component: MenuComponent, canActivate: [AuthGuard]},
+    {path: '', component: HomeComponent , canActivate: [AuthGuard], children: [
+        {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard], children: [
+            {path: ':id/meni', component: MenuComponent, canActivate: [AuthGuard]}
+        ]}
     ]},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},

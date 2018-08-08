@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://192.168.120.:8080/narudzbina/webapi/",
+  apiBaseUrl: "https://biber-so.herokuapp.com/webapi/",
   firebaseConfig : {
     apiKey: "AIzaSyD7a-qluxJN_g1iYHrrVD2YuBGmXohlk6E",
     authDomain: "restoranapp-15444.firebaseapp.com",

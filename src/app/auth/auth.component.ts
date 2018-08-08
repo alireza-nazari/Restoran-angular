@@ -1,8 +1,9 @@
-import { Component, OnInit, NgModule, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, NgModule, Output, EventEmitter, HostListener, DoCheck} from '@angular/core';
 import {  FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 @NgModule({
   imports: [
     CommonModule,
@@ -20,10 +21,17 @@ export class AuthComponent implements OnInit{
   alertMessageValue: string;
   alertType: string;
 
-  constructor(private authService: AuthService) { }
+
+
+
+  constructor(private authService: AuthService,
+               public tostr: ToastrService) { }
+
 
   ngOnInit(){
+
   }
+
   onSingUp(form: NgForm){
     const user = form.value.user;
     const pass = form.value.pass;
@@ -33,22 +41,11 @@ export class AuthComponent implements OnInit{
       error => {
         this.status = error.status;
         if(this.status === 401){
-          this.alertMessageValue = "Pogrešili ste lozinku";
-          this.alertType = "danger";
-          setTimeout(() => {
-            this.show = true
-          }, 0)
+          this.tostr.error('Pogrešna lozinka ili korisnicko ime', 'Prijavite se ponovo!');
         }
         else{
-          this.alertMessageValue = "Došlo je do greške";
-          this.alertType = "danger";
-          setTimeout(() => {
-            this.show = true
-          }, 0)
+          this.tostr.error('Prijavite se ponovo!', 'Došlo je do greške!');
         }
-        setTimeout(() => {
-          this.show = false;
-        }, 5000)
       }
     );
   }

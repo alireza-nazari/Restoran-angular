@@ -38,6 +38,10 @@ import { AngularFireDatabaseModule,  } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderService } from './header/header-service';
+import { CategoriesService } from './categories/categories-service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +69,8 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     MealsService,
@@ -76,6 +81,8 @@ import { ToastrModule } from 'ngx-toastr';
     RoleGuardService,
     StatusService,
     CrudService,
+    HeaderService,
+    CategoriesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
