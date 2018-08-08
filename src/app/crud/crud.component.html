@@ -4,7 +4,6 @@
     <button (click)="addMeal()">
       <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
   </div>
-  <button class="btn btn-danger" (click)="get()"> GEt data</button>
   <table class="table table striped">
     <thead>
       <tr>
@@ -69,7 +68,7 @@
         <td>
           <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, na, pr, co, url)" ></fa>
           <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, na, pr, co, confirm)" *ngIf="editBtn"></fa>
-          <fa name="trash" id="hideDrop" id="delete" (click)="deleteMeal(meal.id_glj)" *ngIf="deleteBtn"></fa>
+          <fa name="trash" id="hideDrop" id="delete"  *ngIf="deleteBtn"></fa>
         </td>
       </tr>
     </tbody>

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: "https://narudzbina-test.herokuapp.com/webapi/"
+  apiBaseUrl: "https://biber-so.herokuapp.com/webapi/"
 };
