@@ -15,6 +15,7 @@ ul li a{
     position: absolute;
     right: 0;
     margin-right: 3%;
+    margin-top: 47px;
 }
 #singOutBtn{
     border: 1px solid black;

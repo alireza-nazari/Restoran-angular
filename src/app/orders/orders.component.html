@@ -1,21 +1,22 @@
-
 <div class="container">
-<h3>Porudzbine</h3>
+    <h3>Porudzbine</h3>
+    <button class="btn btn-primary" (click)="today()">Danasnja porudzbina</button>
     <table border="1px solid black" class="table table-striped">
-        <tr>
-            <th>Broj porudzbine</th>
-            <th>Ime klijenta</th>
-            <th>Jelo</th>
-            <th>Količina jela</th>
-            <th>Datum narudzbine</th>
-        </tr>
-        <tr  *ngFor="let meal of meals; let i = index">
-            <td>{{ meal.order_id}}</td>
-            <!-- <td>{{ meal.klijent.ime }}</td>
-            <td>{{ meal.glavno.naziv }}</td> -->
-            <td>{{ meal.quantity }}</td>
-            <!-- <td>{{ meal.datumPorudzbine }}</td> -->
-        </tr>
+        <thead>
+            <tr>
+                <th>Broj porudzbine</th>
+                <th>Ime klijenta</th>
+                <th>Jelo</th>
+                <th>Količina jela</th>
+                <th>Datum narudzbine</th>
+            </tr>
+        </thead>
+            <tr *ngFor="let meal of meals; let i = index">
+                <td>{{ meal.order_id}}</td>
+                <td>{{ meal.client.name }} {{ meal.client.lastname }}</td>
+                <td>{{ meal.meal.name }}</td>
+                <td>{{ meal.quantity }}</td>
+                <td>{{ meal.order_date }}</td>
+            </tr>
     </table>
 </div>
-

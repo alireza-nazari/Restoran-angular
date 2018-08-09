@@ -13,9 +13,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/crud" *ngIf="status">Crud</a>
       </li>
+      <li id="singOutBtnWrapper">
+          <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
+      </li>
     </ul>
-    <div class="d-flex justify-content-right" id="singOutBtnWrapper">
-      <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
-    </div>
   </div>
 </nav>

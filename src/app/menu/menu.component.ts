@@ -10,6 +10,7 @@ import { AuthGuardService } from '../auth/auth-guard.service';
 import { ToastrService, Toast } from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories-service';
 import { trigger, state, style } from '@angular/animations';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menu',
@@ -40,17 +41,18 @@ export class MenuComponent implements OnInit{
 
   public id: any;
 
+  closeResult: string;
+  type: string;
+
   @ViewChild('name') name: ElementRef;
   constructor(private mealsService: MealsService,
               private searchService: SearchService,
-              private config: NgbDropdownConfig,
               private router: Router,
               private auth: AuthGuardService,
               private tostr: ToastrService,
               private route: ActivatedRoute,
-              private cate: CategoriesService) {
-              config.placement = 'bottom-right'
-              config.autoClose = false;
+              private cate: CategoriesService,
+              private modalService: NgbModal) {
 
         }
   
@@ -74,11 +76,18 @@ export class MenuComponent implements OnInit{
     });
     this.state = "hidden";
   }
+  
   postIt(data: any){
+    if(data.piece == "true"){
+      this.type = "grama";
+    }
+    else if(data.piece == "false"){
+      this.type = "komad/a";
+    }
     this.mealsService.postOrder(data)
     .subscribe(
-      (res: Response) =>{
-        this.tostr.success('Porudzbina je uspešno prosledjena');
+      (res: Response) =>{ 
+        this.tostr.success('Količina: '+ data.amount+  ' ' +this.type, 'Porudzbina: '+ data.info);
         console.log(res)
       },
       (error) =>{
@@ -91,14 +100,24 @@ export class MenuComponent implements OnInit{
       }
     )
   }
+  open(content) {
+    this.modalService.open(content, {centered: true, ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
   showMenu(){
     this.status = true;
     console.log(status)
   }
-  click(){
-    this.mealsService.getMeals().subscribe(
-      
-    )
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
-
 }

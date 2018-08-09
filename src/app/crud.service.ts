@@ -4,57 +4,59 @@ import { map } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { environment } from '../environments/environment';
 import { Observable } from "rxjs";
-import { AngularFireList, AngularFireDatabase } from "angularfire2/database";
-import { ComponentFactoryBoundToModule } from "@angular/core/src/linker/component_factory_resolver";
 import { CrudModel } from './crud/crud-model'
 import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class CrudService{
 
     constructor(public http: HttpClient,
-                public firebase: AngularFireDatabase,
                 public tostr: ToastrService){}
 
-    mealList: AngularFireList<any>;
-    selectedMeal: CrudModel = new CrudModel();
-    
+
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
     });
 
-    // deleteMeal(id: number){
-    //     return this.http.post<any>("https://udemy-ng-http-e8052.firebaseio.com/",{
-    //         id_glj: id
-    //     },
-    //     {headers : this.headers}).map(
-    //         (res: Response) => {
-    //             return res;
-    //         },
-    //         (err: Error) =>{
-    //             return err;
-    //         }
-    //     )
-    // }
-    // editMeal(){
-    // }
-    // postMeal(data: any[]){
-    //     return this.http.post("https://udemy-ng-http-e8052.firebaseio.com/meals.json", data);
-    // }
-    // getData(): Observable<HttpResponse<string>>{
-    //     return this.http.get<any>("https://udemy-ng-http-e8052.firebaseio.com/meals.json", {observe: 'response'});
+    deleteMeal(id: number){
+        console.log(id);
         
-    // }
-    postData(crud : CrudModel)
-    {
-    this.tostr.success('Submitted Succcessfully', 'Employee Register');
-    this.mealList = this.firebase.list('/meals')
-        
-    this.mealList.push(crud)
+        return this.http.delete(environment.apiBaseUrl+"meal/"+id,
+        {headers : this.headers})
+        .subscribe(
+            (res: Response) =>{
+                this.tostr.success('Jelo je obrisano!'); 
+            },
+            (error) => {
+                this.tostr.error('Jelo nije obrisano!', 'Pokušajte ponovo');   
+            }
+        )
     }
-    getData(){
-        this.mealList = this.firebase.list('meals');
-        console.log(this.mealList)
-        return this.mealList;
-
+    postMeal(data:any){
+        console.log(data);
+        return this.http.post(environment.apiBaseUrl+"meal",data,{headers: this.headers})
+        .subscribe(
+            (res: Response) => {
+                console.log(res);     
+            },
+            (error) =>{
+                console.log(error);     
+            }
+        )
+    }
+    editMeal(data, id: any){
+        console.log(id);
+        return this.http.put(environment.apiBaseUrl+"meal/"+id,data,{headers: this.headers})
+        .subscribe(
+            (res: Response) => {
+                this.tostr.success('Jelo je izmenjeno!');    
+            },
+            (error) =>{
+                this.tostr.error('Jelo nije izmenjeno!', 'Pokušajte ponovo');   
+            }
+        )
+    }
+    getData(): Observable<HttpResponse<string>>{
+        return this.http.get<any>("https://udemy-ng-http-e8052.firebaseio.com/meals.json", {observe: 'response'});
+        
     }
 }

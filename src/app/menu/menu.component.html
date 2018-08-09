@@ -1,31 +1,44 @@
-
 <div id="list" class="col">
-    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center"  [@menuTransition]="state">
+    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state">
         <div id="mealWrapper">
-            <img src="http://www.beopopust.rs/uploaded_pictures/content/ponude/640x480/350-din-za-karadjordjevu-sniclu-sa-pomfritom-kolac-u-restoranu-dunavska-prica-958-1.jpg"
+            <img src="{{meal.link}}"
                 alt="meal-image">
             <div id="wrapper">
                 <li #name>{{meal.name}}</li>
-                <li id="price">{{meal.price}}din</li>
+               
+                <div id="image">
+                    <li id="price">{{meal.price}}din</li>
+                    <img (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="">
             </div>
-            <div id="dropDown">
-                <li>
-                    <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown">
-                        <img ngbDropdownToggle id="orderToggle" src="../../assets/imageedit_2_6871258977.png"
-                        alt="">
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" id="dropDownContent">
-                            <span id="exitWrapper">
-                                <fa name="times" (click)="$event.stopPropagation(); myDrop.close();" id="hideDrop"></fa>
-                            </span>
-                            <span>
-                                <p>Količina u gramima:</p>
-                            </span>
-                            <input type="number" id="amountInput" #amountInput>
-                            <button class="btn btn-success" (click)="postIt({id: meal.meal_id, amount: amountInput.value}); myDrop.close()">Potvrdi</button>
-                        </div>
+            </div>
+            <ng-template #content let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">Porudzbina</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true" id="close">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="form-group">
+                    <div class="form-group">
+                      <label for="dateOfBirth">Izabrano jelo: {{meal.name}}</label><br>
+                      <label for="piece">Jedinica mere:</label>
+                      <select class="custom-select" #piece>
+                          <option value ="true">Gram</option>
+                          <option value ="false">Komad</option>
+                        </select>
+                        <label for="amountInput">Količina:</label>
+                        <input class="form-control" type="number" id="amountInput" #amountInput>
+                        <div class="input-group-append">
+                      </div>
                     </div>
-                </li>
-            </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-dark" (click)="postIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, piece: piece.value})">Poruči</button>
+                </div>
+              </ng-template>
+
         </div>
     </ul>
 </div>

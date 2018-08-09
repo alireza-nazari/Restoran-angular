@@ -56,12 +56,31 @@ ul{
     border-bottom: 2px dotted rgb(255, 68, 0);
     height: 25px;
 }
+.modal-header{
+    background-color: rgb(255, 68, 0);
+    color: white;
+}
+.close{
+    color: white;
+}
+#close{
+    width: 10px;
+    height: 5px;
+}
 #wrapper{
     margin-right: 60px; 
 }
 #orderToggle{
+    text-align: right;
     width: 50px;
     height: 45px;
+}
+#image{
+    width: 100%;
+    text-align: right;
+
+    margin-top: -33px;
+    margin-left: 50px; 
 }
 #exitWrapper{
     text-align: right;

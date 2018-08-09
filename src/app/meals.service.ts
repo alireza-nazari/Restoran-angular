@@ -23,9 +23,6 @@ export class MealsService{
     getMeals(){
         return this.http.get(environment.apiBaseUrl +"meal")
     }
-    getOrders(){
-        return this.http.get<any>(environment.apiBaseUrl + "orders")
-    }
 
     postOrder(data: any){
         console.log(data.id, data.amount);  

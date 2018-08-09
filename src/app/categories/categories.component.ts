@@ -44,5 +44,4 @@ export class CategoriesComponent implements OnInit {
    this.router.navigate([id,'meni'],{relativeTo: this.route});
    this.state = 'visible'
   }
-
 }

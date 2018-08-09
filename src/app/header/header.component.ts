@@ -12,15 +12,25 @@ import { trigger, state, style } from '@angular/animations';
     trigger('divState', [
       state('resp', style({
         'height': '0px',
+       
         'transition': 'height 0.2s',
       })),
       state('expand', style({
         'height': '140px',
+        
         'transition': 'height 0.2s'
       })),
       state('normal', style({
         'height': '45px',
         'transition' : '0.0s'
+      }))
+    ]),
+    trigger('display', [
+      state('show', style({
+        'visibility': 'hidden'
+      })),
+      state('hide', style({
+        'visibility': 'visible'
       }))
     ])
   ]

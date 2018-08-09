@@ -33,13 +33,13 @@ import { SelectedDirective } from './selected.directive';
 import { CommonModule } from '@angular/common';
 import { CrudService } from './crud.service'
 
-import { AngularFireDatabaseModule,  } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderService } from './header/header-service';
 import { CategoriesService } from './categories/categories-service';
+import { OrderService } from './orders/order-service';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,6 @@ import { CategoriesService } from './categories/categories-service';
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     CommonModule,
-    AngularFireDatabaseModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule
   ],
@@ -81,6 +80,7 @@ import { CategoriesService } from './categories/categories-service';
     CrudService,
     HeaderService,
     CategoriesService,
+    OrderService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

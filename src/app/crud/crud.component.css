@@ -77,23 +77,29 @@ only screen and (max-width: 760px) {
 }
 tr td:nth-child(1){
     width: 20%;
+    text-align: center;
 }
 tr td:nth-child(2){
    width: 20%;
-
+   text-align: center;
 }
 tr td:nth-child(3){
     width: 20%;
+    text-align: center;
 }
 tr td:nth-child(4){
     width: 20%;
 }
 tr td:nth-child(5){
     width: 20%;
+    text-align: center;
 }
 thead{
     text-align: center;
 }
 table{
-    text-align: center;
+    table-layout: fixed;
+}
+td{
+    word-wrap:break-word
 }
