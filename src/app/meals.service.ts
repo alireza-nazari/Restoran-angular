@@ -30,7 +30,8 @@ export class MealsService{
             meal: {
                 meal_id: data.id
             },
-            quantity: data.amount
+            quantity: data.amount,
+            piece: data.piece
         }, {headers: this.headers})
     }
 

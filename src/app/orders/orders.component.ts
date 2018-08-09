@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { DatePipe } from '@angular/common';
 import { OrderService } from './order-service';
@@ -10,33 +10,38 @@ import { OrderService } from './order-service';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-  meals = [];
-  data = [];
-  date: any = new Date();
-  
-  
+  meals: any = [];
+  data : string;
+  public date = new Date();
+  ref: any;
   constructor(public orderService: OrderService) {
    }
 
   ngOnInit() {
-    console.log(this.date);
     this.orderService.getOrders()
     .subscribe(
       (res: string[]) =>{
         this.meals = res;
-        console.log(res);
 
       } 
     );
   }
-  today(){
-    var datePipe = new DatePipe('en');
-    this.date = datePipe.transform(this.date, 'yyyy-dd-mm');
-    console.log(this.date)
-    this.orderService.todayOrders(this.date)
+  all(){
+    this.orderService.getOrders()
     .subscribe(
-      (res: Response) =>{
-        console.log(res);
+      (res: string[]) =>{
+        this.meals = res;
+      } 
+    );
+  }
+  today(date: HTMLParagraphElement){
+    this.ref = date.innerHTML;
+    this.orderService.todayOrders(this.ref)
+    .subscribe(
+      (res: Array<string>) =>{
+        for(let i = 0;i < res.length; i++){
+         this.data = res[i];
+        }
       }
     )
   }

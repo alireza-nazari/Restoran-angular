@@ -1,6 +1,11 @@
 <div class="container">
-    <h3>Porudzbine</h3>
-    <button class="btn btn-primary" (click)="today()">Danasnja porudzbina</button>
+    <div id="tableHeader">
+        <h2>Porudzbine</h2>
+        <p #d>{{date | date: 'yyyy-MM-dd'}}</p>
+        <div id="btnWrapper"><button class="btn btn-success" (click)="today(d)" id="today">Današnje porudzbine</button>
+        <button class="btn btn-success" (click)="all()" id="today">Sve porudzbine</button>
+    </div>
+    </div>
     <table border="1px solid black" class="table table-striped">
         <thead>
             <tr>
@@ -11,12 +16,13 @@
                 <th>Datum narudzbine</th>
             </tr>
         </thead>
-            <tr *ngFor="let meal of meals; let i = index">
-                <td>{{ meal.order_id}}</td>
-                <td>{{ meal.client.name }} {{ meal.client.lastname }}</td>
-                <td>{{ meal.meal.name }}</td>
-                <td>{{ meal.quantity }}</td>
-                <td>{{ meal.order_date }}</td>
-            </tr>
+        <tr *ngFor="let meal of meals; let i = index">
+            <td>{{ meal.order_id}}</td>
+            <td>{{ meal.client.name }} {{ meal.client.lastname }}</td>
+            <td>{{ meal.meal.name }}</td>
+            <td>{{ meal.quantity }}</td>
+            <td>{{ meal.order_date }}</td>
+            <td>{{ meal.piece }}</td>
+        </tr>
     </table>
 </div>

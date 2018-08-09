@@ -40,6 +40,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderService } from './header/header-service';
 import { CategoriesService } from './categories/categories-service';
 import { OrderService } from './orders/order-service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,8 @@ import { OrderService } from './orders/order-service';
     AngularFontAwesomeModule,
     CommonModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InfiniteScrollModule  
   ],
   providers: [
     MealsService,
@@ -89,3 +93,5 @@ import { OrderService } from './orders/order-service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

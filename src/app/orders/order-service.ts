@@ -12,6 +12,6 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders")
     }
     todayOrders(date: any){
-        return this.http.get<any>(environment.apiBaseUrl + "orders/"+date, {headers: this.headers})
+        return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date, {headers: this.headers})
     }
 }

@@ -18,7 +18,7 @@ ul{
     min-width: 275px;
 }
 #list{
-    margin-right: 0; 
+    margin-right: 0;
 }
 
 #alertWrapper{
@@ -29,13 +29,14 @@ ul{
 
 #mealWrapper{
 
-    height: 101px;
+    height: 92px;
     border: 1px solid rgb(255, 68, 0);
     border-radius: 2px;
     width: 860px;
+    margin-bottom: 50px;
 }
 #mealWrapper > img{
-    height: 100px;
+    height: 90px;
     width: 100px;
 }
 .orange{

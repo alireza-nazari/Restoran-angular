@@ -1,3 +1,26 @@
 .container{
     margin-top: 3%;
 }
+p{
+    display: none;
+}
+h2{
+    margin:20px 10px 0px 10px; 
+}
+#tableHeader{
+    width: 100%;
+    color: white;
+    background-color: rgb(255, 68, 0);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: -5px;
+}
+#btnWrapper{
+    text-align: right;
+    margin: 5px 5px;
+    padding-bottom: 8px;
+    padding-right: 10px;
+}
+#today{
+    margin-right: 5px;
+}
