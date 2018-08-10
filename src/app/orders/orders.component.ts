@@ -92,7 +92,7 @@ console.log(this.data)
         for(let r of res){
           if(r.piece === false){
             this.data.push({
-              type :'gr.',
+              type :'kom.',
                id: r.order_id,
               name: r.client.name,
               date: r.order_date,
@@ -103,7 +103,7 @@ console.log(this.data)
           }else 
           if(r.piece === true){
             this.data.push({
-              type :'kom.',
+              type :'gr.',
                id: r.order_id,
               name: r.client.name,
               date: r.order_date,
