@@ -11,36 +11,107 @@ import { OrderService } from './order-service';
 })
 export class OrdersComponent implements OnInit {
   meals: any = [];
-  data : string;
+  data: any = [];
   public date = new Date();
   ref: any;
+  piece: any;
+  value: any;
   constructor(public orderService: OrderService) {
    }
 
   ngOnInit() {
     this.orderService.getOrders()
     .subscribe(
-      (res: string[]) =>{
-        this.meals = res;
-
-      } 
+      (res: Array<any>) =>{
+        for(let r of res){
+          if(r.piece === false){
+            this.data.push({
+              type :'gr.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+          })
+          }else 
+          if(r.piece === true){
+            this.data.push({
+              type :'kom.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+            })
+          }
+        }
+      }
     );
   }
   all(){
     this.orderService.getOrders()
     .subscribe(
-      (res: string[]) =>{
-        this.meals = res;
-      } 
+      (res: Array<any>) =>{
+        this.data = [];
+console.log(this.data)
+        for(let r of res){
+          if(r.piece === false){
+            this.data.push({
+              type :'gr.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+          })
+          }else 
+          if(r.piece === true){
+            this.data.push({
+              type :'kom.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+            })
+          }
+        }
+      }
     );
   }
   today(date: HTMLParagraphElement){
     this.ref = date.innerHTML;
     this.orderService.todayOrders(this.ref)
     .subscribe(
-      (res: Array<string>) =>{
-        for(let i = 0;i < res.length; i++){
-         this.data = res[i];
+      (res: Array<any>) =>{
+        this.data = [];
+        for(let r of res){
+          if(r.piece === false){
+            this.data.push({
+              type :'gr.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+          })
+          }else 
+          if(r.piece === true){
+            this.data.push({
+              type :'kom.',
+               id: r.order_id,
+              name: r.client.name,
+              date: r.order_date,
+              mealName: r.meal.name,
+              user: r.client.username,
+              amount: r.quantity
+            })
+          }
         }
       }
     )

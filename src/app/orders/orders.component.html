@@ -16,13 +16,12 @@
                 <th>Datum narudzbine</th>
             </tr>
         </thead>
-        <tr *ngFor="let meal of meals; let i = index">
-            <td>{{ meal.order_id}}</td>
-            <td>{{ meal.client.name }} {{ meal.client.lastname }}</td>
-            <td>{{ meal.meal.name }}</td>
-            <td>{{ meal.quantity }}</td>
-            <td>{{ meal.order_date }}</td>
-            <td>{{ meal.piece }}</td>
+        <tr *ngFor="let meal of data">
+            <td>{{ meal.id }}</td>
+            <td>{{ meal.name }}({{meal.user}})</td>
+            <td>{{ meal.mealName }}</td>
+            <td>{{ meal.amount}} {{ meal.type }}</td>
+            <td>{{ meal.date }}</td>
         </tr>
     </table>
 </div>
