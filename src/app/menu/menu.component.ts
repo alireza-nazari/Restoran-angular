@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
 import { MealsService } from '../meals.service';
 
 import { SearchService } from '../search.service';
@@ -11,6 +11,7 @@ import { ToastrService, Toast } from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories-service';
 import { trigger, state, style } from '@angular/animations';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-menu',
@@ -44,6 +45,8 @@ export class MenuComponent implements OnInit{
   closeResult: string;
   type: string;
 
+  menu: any;
+
   @ViewChild('name') name: ElementRef;
   constructor(private mealsService: MealsService,
               private searchService: SearchService,
@@ -52,7 +55,8 @@ export class MenuComponent implements OnInit{
               private tostr: ToastrService,
               private route: ActivatedRoute,
               private cate: CategoriesService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private menuData: DataService) {
 
         }
   
@@ -78,10 +82,10 @@ export class MenuComponent implements OnInit{
   }
   
   postIt(data: any){
-    if(data.piece == "true"){
+    if(data.piece){
       this.type = "grama";
     }
-    else if(data.piece == "false"){
+    else{
       this.type = "komad/a";
     }
     this.mealsService.postOrder(data)
@@ -120,4 +124,10 @@ export class MenuComponent implements OnInit{
       return  `with: ${reason}`;
     }
   }
+  sendIt(data: any){
+    console.log(data);
+      this.menuData.sendData(data);
+      this.tostr.success('Prosledjeno u korpu');
+  }
+
 }

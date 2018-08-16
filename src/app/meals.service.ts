@@ -14,6 +14,7 @@ import { map } from "rxjs-compat/operator/map";
 
 @Injectable()
 export class MealsService{
+    data: any = [];
     constructor(private http: HttpClient,
                 private router: Router,
                 private auth: AuthService){}
@@ -24,15 +25,22 @@ export class MealsService{
         return this.http.get(environment.apiBaseUrl +"meal")
     }
 
-    postOrder(data: any){
-        console.log(data.id, data.amount);  
-        return this.http.post<any>(environment.apiBaseUrl +"orders",{
-            meal: {
-                meal_id: data.id
-            },
-            quantity: data.amount,
-            piece: data.piece
-        }, {headers: this.headers})
+    postOrder(data){
+        this.data = [];
+        for(let item of data){
+            console.log(item.data.piece)
+            this.data.push({
+                meal: {
+                    meal_id: item.data.id
+                },
+                piece: item.data.piece,
+                quantity: item.data.amount
+            })
+        }
+        console.log(this.data)
+        return this.http.post<any>(environment.apiBaseUrl +"orders/list",
+        this.data
+        ,{headers: this.headers})
     }
 
 }

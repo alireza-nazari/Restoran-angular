@@ -16,11 +16,12 @@ export class OrdersComponent implements OnInit {
   ref: any;
   piece: any;
   value: any;
+  public id: number = 0;
   constructor(public orderService: OrderService) {
    }
 
   ngOnInit() {
-    this.orderService.getOrders()
+    this.orderService.getOrders(this.id)
     .subscribe(
       (res: Array<any>) =>{
         for(let r of res){
@@ -51,7 +52,7 @@ export class OrdersComponent implements OnInit {
     );
   }
   all(){
-    this.orderService.getOrders()
+    this.orderService.getOrders(this.id)
     .subscribe(
       (res: Array<any>) =>{
         this.data = [];
@@ -60,7 +61,7 @@ console.log(this.data)
           if(r.piece === false){
             this.data.push({
               type :'gr.',
-               id: r.order_id,
+              id: r.order_id,
               name: r.client.name,
               date: r.order_date,
               mealName: r.meal.name,
@@ -115,5 +116,8 @@ console.log(this.data)
         }
       }
     )
+  }
+  onScroll() {
+    console.log('scrolled!!');
   }
 }

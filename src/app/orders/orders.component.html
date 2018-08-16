@@ -6,7 +6,11 @@
         <button class="btn btn-success" (click)="all()" id="today">Sve porudzbine</button>
     </div>
     </div>
-    <table border="1px solid black" class="table table-striped">
+    <table border="1px solid black" class="table table-striped"
+    infiniteScroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="50"
+            (scrolled)="onScroll()">
         <thead>
             <tr>
                 <th>Broj porudzbine</th>

@@ -55,8 +55,5 @@ export class CrudService{
             }
         )
     }
-    getData(): Observable<HttpResponse<string>>{
-        return this.http.get<any>("https://udemy-ng-http-e8052.firebaseio.com/meals.json", {observe: 'response'});
-        
-    }
+
 }

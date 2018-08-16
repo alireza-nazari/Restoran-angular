@@ -43,6 +43,9 @@ import { OrderService } from './orders/order-service';
 
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CarthComponent } from './carth/carth.component';
+import { DataService } from './data.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     CategoriesComponent,
     AlertComponent,
     CrudComponent,
-    SelectedDirective
+    SelectedDirective,
+    CarthComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     CommonModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    InfiniteScrollModule
 
   ],
   providers: [
@@ -85,6 +90,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     HeaderService,
     CategoriesService,
     OrderService,
+    DataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -1,14 +1,13 @@
 <div id="list" class="col">
     <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state">
-        <div id="mealWrapper">
+        <div id="mealWrapper" >
             <img src="{{meal.link}}"
-                alt="meal-image">
+                alt="meal-image" >
             <div id="wrapper">
                 <li #name>{{meal.name}}</li>
-               
-                <div id="image">
-                    <li id="price">{{meal.price}}din</li>
-                    <img (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="">
+                <li id="price">{{meal.price}}din</li>
+                <div id="image"> 
+                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="">
             </div>
             </div>
             <ng-template #content let-c="close" let-d="dismiss">
@@ -35,7 +34,7 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-dark" (click)="postIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, piece: piece.value})">Poruči</button>
+                  <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, piece: piece.value, link: meal.link}); c('Save click')">U korpu</button>
                 </div>
               </ng-template>
 

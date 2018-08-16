@@ -1,0 +1,24 @@
+#tableWrapper{
+    height: 500px;
+    border: 1px solid red;
+}
+.scrol{
+    display: block;
+    max-height: 500px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+thead{
+    position: sticky;
+}
+img{
+    width: 120px;
+    height: 80px;
+}
+#tableActions{
+    border: 1px solid red;
+    text-align: right;
+}
+form{
+    width: 100%;
+}

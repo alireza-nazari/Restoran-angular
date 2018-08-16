@@ -8,8 +8,8 @@ export class OrderService{
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
       });
-    getOrders(){
-        return this.http.get<any>(environment.apiBaseUrl + "orders")
+    getOrders(id: any){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/scroll?offset=" + id)
     }
     todayOrders(date: any){
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date, {headers: this.headers})

@@ -1,0 +1,39 @@
+<div class="container">
+  <h3>Korpa</h3>
+  <div id="tableWrapper" class="scrol">
+    <table class="table">
+      <form>
+        <thead>
+          <tr>
+            <th>Jelo</th>
+            <th>Kolicina</th>
+            <th>Akcija</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of menu$" >
+          <tr >
+            <td>
+              <div id="imageWrapper">
+                <img src="{{item.data.link}}" alt="img"> <p #name>{{item.data.info}}</p>
+              </div>
+
+            </td>
+            <td>
+              <input type="text" value="{{item.data.amount}}" #amount>
+            </td>
+            <td>
+              <fa name="times" id="hideDrop" id="delete"></fa>
+            </td>
+          </tr>    
+        </tbody>
+        <div id="tableActions">
+            <p>Ukupna cena:</p>
+            <p id="wholePrice"></p>
+            <button class="btn btn-primary" (click)="submit(data.value)">Poruči</button>
+            <button class="btn btn-danger" (click)="empty()">Isprazni korpu</button>
+          </div>
+      </form>
+    </table>
+
+  </div>
+</div>
