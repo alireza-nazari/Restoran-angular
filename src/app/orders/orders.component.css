@@ -7,6 +7,9 @@ p{
 h2{
     margin:20px 10px 0px 10px; 
 }
+table{
+    margin-bottom: 300px
+}
 #tableHeader{
     width: 100%;
     color: white;
@@ -16,11 +19,68 @@ h2{
     margin-bottom: -5px;
 }
 #btnWrapper{
-    text-align: right;
+    text-align: center;
     margin: 5px 5px;
     padding-bottom: 8px;
-    padding-right: 10px;
+    padding-right: 12px;
+}
+#formWrapper{
+    width: 100%;
 }
 #today{
     margin-right: 5px;
+}
+.bounce {
+    display: inline-block;
+    position: relative;
+    -moz-animation: bounce 0.5s infinite linear;
+    -o-animation: bounce 0.5s infinite linear;
+    -webkit-animation: bounce 0.5s infinite linear;
+    animation: bounce 0.5s infinite linear;
+    colr:000;
+  }
+  .fa-twitter{
+      color: #027bdd;
+    font-size: 30px;
+    margin: 20px;
+  }
+  @-webkit-keyframes bounce {
+      0% { top: 0; }
+      50% { top: -0.2em; }
+      70% { top: -0.3em; }
+      100% { top: 0; }
+  }
+  @-moz-keyframes bounce {
+      0% { top: 0; }
+      50% { top: -0.2em; }
+      70% { top: -0.3em; }
+      100% { top: 0; }
+  }
+  @-o-keyframes bounce {
+      0% { top: 0; }
+      50% { top: -0.2em; }
+      70% { top: -0.3em; }
+      100% { top: 0; }
+  }
+  @-ms-keyframes bounce {
+      0% { top: 0; }
+      50% { top: -0.2em; }
+      70% { top: -0.3em; }
+      100% { top: 0; }
+  }
+  @keyframes bounce {
+      0% { top: 0; }
+      50% { top: -0.2em; }
+      70% { top: -0.3em; }
+      100% { top: 0; }
+  }
+#angle{
+    font-size: 28px;
+}
+
+#today{
+    margin-top: 10px;
+}
+#formWrapper{
+    width: 100%;
 }

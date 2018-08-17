@@ -139,3 +139,7 @@ span > p{
 #mealWrapper:hover{
     border: 1px solid red;
 }
+.search-results {
+    height: 20rem;
+    overflow: scroll;
+  }

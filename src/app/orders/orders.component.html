@@ -1,19 +1,52 @@
 <div class="container">
     <div id="tableHeader">
         <h2>Porudzbine</h2>
+
         <p #d>{{date | date: 'yyyy-MM-dd'}}</p>
-        <div id="btnWrapper"><button class="btn btn-success" (click)="today(d)" id="today">Današnje porudzbine</button>
-        <button class="btn btn-success" (click)="all()" id="today">Sve porudzbine</button>
+        <div id="btnWrapper">
+            <!-- 
+            <button class="btn btn-success" (click)="all()" id="today">Sve porudzbine</button> -->
+            <h3>Pretraga</h3>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" (click)="animate('user')">
+                    <fa name="user"></fa>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="animate('calender')">
+                    <fa name="calendar"></fa>
+                </button>
+            </div>
+            <div [@divState]="state" id="formWrapper">
+                <form>
+                    <div class="form-group" [hidden]="user">
+                        <label for="exampleInputEmail1">Korisnicko ime</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+                        <button type="submit" class="btn btn-primary">Pretrazi</button>
+                    </div>
+                    <div class="form-group row" [hidden]="!user">
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1">Datum</label>
+                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+                        </div>
+                        <div class="col-md-3">
+                                <label>Datum od</label>
+                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+                                <label>Datum do</label>
+                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+
+                        </div>
+                        <div class="col-md-3">
+                                <button class="btn btn-primary" (click)="today(d)" id="today">Današnje porudzbine</button> 
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    </div>
-    <table border="1px solid black" class="table table-striped"
-    infiniteScroll
-            [infiniteScrollDistance]="2"
-            [infiniteScrollThrottle]="50"
-            (scrolled)="onScroll()">
+    <table border="1px solid black" class="table table-striped">
         <thead>
             <tr>
-                <th>Broj porudzbine</th>
+                <th (click)="setOrder('id')">Broj porudzbine </th>
                 <th>Ime klijenta</th>
                 <th>Jelo</th>
                 <th>Količina jela</th>
@@ -28,4 +61,7 @@
             <td>{{ meal.date }}</td>
         </tr>
     </table>
+    <div style="text-align: center">
+        <fa class="bounce" name="angle-down" id="angle" (click)="moreOrders()"></fa>
+    </div>
 </div>

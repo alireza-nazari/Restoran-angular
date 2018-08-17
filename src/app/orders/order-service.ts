@@ -11,7 +11,7 @@ export class OrderService{
     getOrders(id: any){
         return this.http.get<any>(environment.apiBaseUrl + "orders/scroll?offset=" + id)
     }
-    todayOrders(date: any){
-        return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date, {headers: this.headers})
+    todayOrders(date: any, id: any){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date+"?offset="+id, {headers: this.headers})
     }
 }
