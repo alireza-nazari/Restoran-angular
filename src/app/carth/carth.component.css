@@ -1,6 +1,8 @@
+*{
+    box-sizing: border-box;
+}
 #tableWrapper{
     height: 500px;
-    border: 1px solid red;
 }
 .scrol{
     display: block;
@@ -16,9 +18,79 @@ img{
     height: 80px;
 }
 #tableActions{
-    border: 1px solid red;
+    width: 100%;
     text-align: right;
 }
-form{
-    width: 100%;
+form thead th{
+    width: 400px;
+}
+#delete:hover{
+    color: red;
+}
+#submit:hover{
+    color: green;
+}
+#delete{
+    font-size: 25px
+}
+#submit{
+    font-size: 25px
+}
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.2);
+}
+thead{
+    background-color: rgb(255, 68, 0);
+    color: white;
+    text-align: center;
+}
+tbody{
+    text-align: center;
+}
+#singleOrderWrapper{
+    background-color: lightgray;
+    /* border: 1px solid gray; */
+    margin-bottom: 20px;
+    position: relative;
+    opacity: 0.8;
+}
+
+td{
+    padding: 0px 0px;
+}
+#singleOrderWrapper:hover{
+    opacity: 1
+}
+#imageWrapper{
+    margin-left: 0px;
+}
+#submitButton{
+    margin-right: 20px;
+}
+#actions{
+    text-align: center;
+}
+#input{
+    margin-top: 25px;
+}
+.hvr-grow{
+    margin-top: 20px;
+}
+@media screen and (max-width: 590px) {
+    img{
+        display: none;
+    }
 }

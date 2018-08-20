@@ -57,7 +57,8 @@ export class AuthService{
     }
     public singOut(): void{
         this.show = false;
-        localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
         location.reload();
     }
 }

@@ -42,10 +42,13 @@ import { CategoriesService } from './categories/categories-service';
 import { OrderService } from './orders/order-service';
 
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CarthComponent } from './carth/carth.component';
 import { DataService } from './data.service';
+
+import { OrderModule } from 'ngx-order-pipe';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FooterComponent } from './footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -61,7 +64,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     AlertComponent,
     CrudComponent,
     SelectedDirective,
-    CarthComponent
+    CarthComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +79,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CommonModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    OrderModule,
     InfiniteScrollModule
 
   ],

@@ -1,6 +1,6 @@
-<div id="list" class="col">
+<div id="list" class="col" >
     <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state">
-        <div id="mealWrapper" style="border: 1px solid red">
+        <div id="mealWrapper" (scroll)="onScroll()">
             <img src="{{meal.link}}"
                 alt="meal-image" >
             <div id="wrapper">
@@ -8,8 +8,9 @@
                 <li id="price">{{meal.price}}din</li>
                 <div id="image"> 
                 <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="">
+
             </div>
-            </div>
+          </div>
             <ng-template #content let-c="close" let-d="dismiss">
                 <div class="modal-header">
                   <h4 class="modal-title" id="modal-basic-title">Porudzbina</h4>
@@ -23,7 +24,7 @@
                       <label for="dateOfBirth">Izabrano jelo: {{meal.name}}</label><br>
                       <label for="piece">Jedinica mere:</label>
                       <select class="custom-select" #piece>
-                          <option value ="true">Gram</option>
+                          <option value ="true">Ggit ram</option>
                           <option value ="false">Komad</option>
                         </select>
                         <label for="amountInput">Količina:</label>
@@ -39,5 +40,14 @@
               </ng-template>
 
         </div>
+
     </ul>
+    <!-- <div class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="5"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()"> -->
+    <div style="border: 1px solid red; height: 100px;">
+
+    </div>
 </div>

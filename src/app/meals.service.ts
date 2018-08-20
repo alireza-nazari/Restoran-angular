@@ -25,10 +25,10 @@ export class MealsService{
         return this.http.get(environment.apiBaseUrl +"meal")
     }
 
-    postOrder(data){
+    postOrder(data: any){
         this.data = [];
         for(let item of data){
-            console.log(item.data.piece)
+            console.log(item)
             this.data.push({
                 meal: {
                     meal_id: item.data.id

@@ -14,14 +14,17 @@
         <a class="nav-link" href="#" routerLink="/crud" *ngIf="status">Crud</a>
       </li>
       <li id="singOutBtnWrapper">
-          <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
+        <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
+
       </li>
       <li>
-        <div id="image"> 
+        <div id="cartWrapper" class="row">
           <fa name="shopping-cart" animation="slow" routerLink="/carth"></fa>
-      </div>
+          <p>{{number}}</p>
+        </div>
+
       </li>
     </ul>
   </div>
-  <p>{{number}}</p>
+
 </nav>

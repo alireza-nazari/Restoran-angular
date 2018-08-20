@@ -46,7 +46,7 @@ export class MenuComponent implements OnInit{
   type: string;
 
   menu: any;
-
+  page: number = 0;
   @ViewChild('name') name: ElementRef;
   constructor(private mealsService: MealsService,
               private searchService: SearchService,
@@ -61,26 +61,28 @@ export class MenuComponent implements OnInit{
         }
   
   ngOnInit() {
+    this.getMealsByID()
+  }
+  getMealsByID(){
     this.id = this.route.snapshot.params['id'];
     this.route.params
     .subscribe(
       (params: Params) =>{
         this.id = params['id'];
-        this.cate.getByCategory(this.id)
+        this.cate.getByCategory(this.id, this.page)
         .subscribe((res: any[]) => {
           this.state = "show";
           this.meals = res;
         }); 
       }
     )
-    this.cate.getByCategory(this.id)
+    this.cate.getByCategory(this.id, this.page)
     .subscribe((res: any[]) => {
       this.state = "show";
       this.meals = res;
     });
     this.state = "hidden";
   }
-  
   postIt(data: any){
     if(data.piece){
       this.type = "grama";
@@ -125,9 +127,10 @@ export class MenuComponent implements OnInit{
     }
   }
   sendIt(data: any){
-    console.log(data);
       this.menuData.sendData(data);
       this.tostr.success('Prosledjeno u korpu');
   }
-
+  onScroll() {
+    console.log('scrolled!!');
+  }
 }

@@ -2,35 +2,39 @@
   <h3>Korpa</h3>
   <div id="tableWrapper" class="scrol">
     <table class="table">
-      <form>
+        <form>
         <thead>
           <tr>
             <th>Jelo</th>
-            <th>Kolicina</th>
+            <th>Količina</th>
             <th>Akcija</th>
           </tr>
         </thead>
-        <tbody *ngFor="let item of menu$" >
-          <tr >
+        <tbody *ngFor="let item of menu$;let i = index" >
+          <tr #element id="singleOrderWrapper" >
             <td>
-              <div id="imageWrapper">
-                <img src="{{item.data.link}}" alt="img"> <p #name>{{item.data.info}}</p>
+              <div id="imageWrapper" class="row">
+                <div>
+                    <img src="{{item.data.link}}" alt="img">
+                </div>
+                <div>
+                    <p #name>{{item.data.info}}</p>
+                </div>
               </div>
-
             </td>
-            <td>
-              <input type="text" value="{{item.data.amount}}" #amount>
+            <td id="inputWrapper">
+              <input id="input"  type="number" value="{{item.data.amount}}" #amount (click)="showConfirm(actions)" (keyup)="check($event, amount)" size="2">
             </td>
-            <td>
-              <fa name="times" id="hideDrop" id="delete"></fa>
+            <td #actions id="actions">
+              <fa class="hvr-grow " [hidden]="!show" name="check"id="submit" (click)="getIt({position : i,name: item.data.info, id: item.data.id, amount: amount.value, piece: item.data.piece})"></fa>
+              <fa class="hvr-grow " name="times" id="delete" (click)="emptyItem(i, element, item.i)"></fa>
             </td>
           </tr>    
         </tbody>
         <div id="tableActions">
             <p>Ukupna cena:</p>
             <p id="wholePrice"></p>
-            <button class="btn btn-primary" (click)="submit(data.value)">Poruči</button>
-            <button class="btn btn-danger" (click)="empty()">Isprazni korpu</button>
+            <button id="submitButton" class="btn btn-primary" type="submit" (click)="submit(menu$)">Poruči</button>
           </div>
       </form>
     </table>
