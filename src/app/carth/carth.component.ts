@@ -10,7 +10,7 @@ import { isNumeric } from 'rxjs/internal-compatibility';
   templateUrl: './carth.component.html',
   styleUrls: ['./carth.component.css']
 })
-export class CarthComponent implements OnInit, OnDestroy, DoCheck {
+export class CarthComponent implements OnInit{
 
   closeResult: string;
   public carth: any;
@@ -27,16 +27,8 @@ export class CarthComponent implements OnInit, OnDestroy, DoCheck {
     }
 
   ngOnInit() {
-    this.menu$ = this.dataService.getData();
-    console.log(this.menu$)
-  }
-  ngOnDestroy() {
-    // if(this.menu$.length() != 0){
-    //   alert('puna')
-    // }
-  }
-  ngDoCheck() {
-
+  this.menu$ = this.dataService.getData();
+  console.log(this.dataService.getData());
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -78,9 +70,11 @@ export class CarthComponent implements OnInit, OnDestroy, DoCheck {
    
   }
 
-  emptyItem(id, element: HTMLTableRowElement){
+  emptyItem(id, element: HTMLTableRowElement, number: any){
+    console.log(number)
+    console.log(id)
     element.remove()
-    this.dataService.deleteData(id)
+    this.dataService.deleteData(id, number)
   } 
   getIt(data: any) {
     this.changed = this.menu$;

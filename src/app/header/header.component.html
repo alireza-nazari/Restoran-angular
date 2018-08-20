@@ -13,15 +13,18 @@
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/crud" *ngIf="status">Crud</a>
       </li>
-      <li id="singOutBtnWrapper" class="my-2 my-lg-0">
-          <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
-          <div id="image"> 
-              <fa name="shopping-cart" animation="slow" routerLink="/carth"></fa>
-              <p>{{number}}</p>
-          </div>
-        </li>
+      <li id="singOutBtnWrapper">
+        <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
 
+      </li>
+      <li>
+        <div id="cartWrapper" class="row">
+          <fa name="shopping-cart" animation="slow" routerLink="/carth"></fa>
+          <p>{{number}}</p>
+        </div>
+
+      </li>
     </ul>
   </div>
-  
+
 </nav>

@@ -127,7 +127,6 @@ export class MenuComponent implements OnInit{
     }
   }
   sendIt(data: any){
-    console.log(data);
       this.menuData.sendData(data);
       this.tostr.success('Prosledjeno u korpu');
   }
