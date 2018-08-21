@@ -1,14 +1,13 @@
-<div id="list" class="col" >
-    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state">
-        <div id="mealWrapper" (scroll)="onScroll()">
+<div id="list" class="col">
+    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state" >
+        <div id="mealWrapper">
             <img src="{{meal.link}}"
                 alt="meal-image" >
             <div id="wrapper">
                 <li #name>{{meal.name}}</li>
                 <li id="price">{{meal.price}}din</li>
                 <div id="image"> 
-                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="">
-
+                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="" (page)="show($event)">
             </div>
           </div>
             <ng-template #content let-c="close" let-d="dismiss">
@@ -40,14 +39,7 @@
               </ng-template>
 
         </div>
-
     </ul>
-    <!-- <div class="search-results"
-    infiniteScroll
-    [infiniteScrollDistance]="5"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()"> -->
-    <div style="border: 1px solid red; height: 100px;">
-
+    <div style="height: 100px; border: 1px solid red; margin-top: 350px" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
     </div>
 </div>

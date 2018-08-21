@@ -5,15 +5,19 @@ import { json } from "express";
 @Injectable()
 export class DataService {
 
+    changed: boolean = false;
+
     data: any = [];
 
     pushed: boolean = false;
 
+    page: number = 0;
 
     public number: number = 0;
-    public retrived = [{
+    public retrived = [{}];
+    state: any;
+    navchange: EventEmitter<number> = new EventEmitter();
 
-    }];
     sendData(data: any) {
         var current = localStorage.getItem('number');
         if (current == null) {
@@ -32,29 +36,29 @@ export class DataService {
     }
     deleteData(id: any, number: any) {
 
-        var current  = localStorage.getItem('number')
+        var current = localStorage.getItem('number')
         console.log(id, number);
         localStorage.removeItem('new' + number.toString())
         this.data.splice(id, 1)
         var numbe = JSON.parse(current);
         numbe -= 1;
-        if(numbe == 0){
+        if (numbe == 0) {
             localStorage.setItem('number', JSON.stringify(numbe))
         }
-        else if(numbe < 0){
+        else if (numbe < 0) {
             localStorage.removeItem('number')
-        }else{
+        } else {
             localStorage.setItem('number', JSON.stringify(numbe))
         }
-        
+
     }
     returnNumber(): number {
         var number = localStorage.getItem("number");
         var changed = JSON.parse(number);
-        if(number == null){
+        if (number == null) {
             return 0;
         }
-        else{
+        else {
             changed += 1;
             return JSON.parse(changed)
         }
@@ -64,10 +68,10 @@ export class DataService {
         var numb = Number(num);
         if (num == null) {
             console.log("rsa")
-        } 
-        else{
+        }
+        else {
             if (this.data == '') {
-                for (var i= 0;i <= numb; i++){
+                for (var i = 0; i <= numb; i++) {
                     console.log(i)
                     this.pushed = true;
                     var stat = this.pushed;
@@ -96,12 +100,27 @@ export class DataService {
                         this.pushed = false;
                     }
                 }
-               
+
             }
         }
         console.log(this.data)
         return this.data;
-
     }
-
+    emitNavChangeEvent(number) {
+        this.navchange.emit(number);
+      }
+      getNavChangeEmitter() {
+        return this.navchange;
+      }
+    changeOfCategory(response){
+        if(response == true){
+            this.state = 'not changed'
+        }
+        else{
+            this.state = 'changed'
+        }
+    }
+    returnState(): Observable<string>{
+        return Observable.of(this.state)
+    }
 }

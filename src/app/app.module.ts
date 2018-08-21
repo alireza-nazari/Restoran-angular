@@ -33,7 +33,6 @@ import { SelectedDirective } from './selected.directive';
 import { CommonModule } from '@angular/common';
 import { CrudService } from './crud.service'
 
-import { environment } from '../environments/environment';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,9 +45,12 @@ import { CarthComponent } from './carth/carth.component';
 import { DataService } from './data.service';
 
 import { OrderModule } from 'ngx-order-pipe';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FooterComponent } from './footer/footer.component';
+import { InViewportModule, WindowRef } from '@thisissoon/angular-inviewport';
 
+const providers = [
+  { provide: WindowRef, useValue: window }
+];
 
 @NgModule({
   declarations: [
@@ -80,8 +82,7 @@ import { FooterComponent } from './footer/footer.component';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     OrderModule,
-    InfiniteScrollModule
-
+    InViewportModule.forRoot(providers)
   ],
   providers: [
     MealsService,

@@ -18,7 +18,9 @@ ul{
     min-width: 275px;
 }
 #list{
+    position: relative;
     margin-right: 0;
+    height: 500px;
 }
 
 #alertWrapper{
