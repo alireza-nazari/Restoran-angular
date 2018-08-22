@@ -37,7 +37,7 @@ table{
     -o-animation: bounce 0.5s infinite linear;
     -webkit-animation: bounce 0.5s infinite linear;
     animation: bounce 0.5s infinite linear;
-    colr:000;
+    color:000;
   }
   .fa-twitter{
       color: #027bdd;
@@ -83,4 +83,65 @@ table{
 }
 #formWrapper{
     width: 100%;
+}
+#result{
+    margin-top: 1px;
+    position: absolute;
+    background-color: white;
+    border-radius: 2px;
+    z-index: 1;
+    width: 150px;
+    overflow: hidden;
+    text-align: left;
+}
+#result ul{
+
+    color: black;
+}
+li{
+    list-style-type: none;
+    margin-left: -30px;
+}
+th{
+    vertical-align: top;
+}
+ul{
+    margin-bottom: 1px;
+}
+#searchBtn{
+    cursor: pointer;
+}
+li:hover{
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+#search{
+    text-align: right;
+    font-size: 20px;
+    position: absolute;
+    margin-top: -3px;
+    margin-left: 25px;
+}
+#search:hover{
+    cursor: pointer;
+}
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.2);
+}
+#header th{
+vertical-align: top; 
 }

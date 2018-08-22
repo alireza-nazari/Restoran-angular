@@ -89,7 +89,6 @@ export class CarthComponent implements OnInit{
     this.show = true;
   }
   check(data, elem: HTMLInputElement){
-    console.log(data)
     if(isNumeric(data.key) || data.key == 'Backspace'){
     }
     else{

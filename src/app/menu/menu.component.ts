@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, AfterContentInit, DoCheck } from '@angular/core';
 import { MealsService } from '../meals.service';
 
 import { SearchService } from '../search.service';
@@ -34,7 +34,7 @@ import { Subscription, Observable } from 'rxjs';
     ])
   ]
 })
-export class MenuComponent implements OnInit, OnChanges {
+export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
   meals: any = [];
   response: any = [];
   sub: any;
@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit, OnChanges {
 
   public state: any = "hidden";
 
-  public id: any = 1;
+  public id: any;
 
   closeResult: string;
   type: string;
@@ -54,7 +54,8 @@ export class MenuComponent implements OnInit, OnChanges {
   page: number = 0;
 
   previousPage: number;
-  storage = localStorage.getItem('page');
+
+  
 
   identifer: any;
   subscribeState: string;
@@ -62,6 +63,8 @@ export class MenuComponent implements OnInit, OnChanges {
   count = 0;
   subed: Subscription;
   subede: Subscription;
+  spiner: boolean = false;
+
   @Input('page') masterName: string;
 
   constructor(private mealsService: MealsService,
@@ -75,9 +78,18 @@ export class MenuComponent implements OnInit, OnChanges {
     private menuData: DataService) {
 
   }
-  ngOnChanges() {
-
+  ngDoCheck(){
+    if(this.id != this.route.snapshot.params['id'] || this.id == 'undefined')
+    {
+      this.meals = [];
+      this.page = 0;
+      this.getMealsByID(this.page)
+    }else{
+    }
   }
+  ngAfterContentInit(){
+  }
+
   onInViewportChange(inViewport: boolean) {
     this.visible = inViewport;
     if (this.visible == true) {
@@ -85,55 +97,35 @@ export class MenuComponent implements OnInit, OnChanges {
     }
   }
   getMealsByID(num: number) {
-    console.log(this.subscribeState)
+    setTimeout(() => {
+      this.spiner = true;
+    }, 500)
     this.id = this.route.snapshot.params['id'];
-    this.menuData.returnState()
-      .subscribe(
-        (da) => {
-          console.log(da)
-          this.subscribeState = da;
-        }
-      )
-    if (this.subscribeState == 'not changed'){
-      this.subscribeState = 'changed'
-      console.log('fisrt ' + this.subscribeState)
+    if (this.id == this.identifer) {
+      this.oldData(this.page)
     }
-    else if (this.subscribeState == 'changed' || this.subscribeState == 'undefined') {
-      console.log('second ' + this.subscribeState)
-      this.newData(0 )
+    else {
+      this.page = 0;
+      this.identifer = this.id
+      this.newData(this.page)
     }
   }
   oldData(num) {
-    this.subed = this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.try = true;
-          this.id = params['id'];
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
               (res: Array<any>[]) => {
                 this.meals = this.meals.concat(res);
                 this.page += 10;
               });
-        }
-      )
   }
   newData(num) {
-    this.page = 0;
-    this.menu = [];
-    this.subede = this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.try = true;
-          this.id = params['id'];
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
               (res: Array<any>[]) => {
+                console.log(res)
                 this.meals = res;
-                this.page = 0;
-              });
-        }
-      )
+                this.page += 10;
+          });
   }
   postIt(data: any) {
     if (data.piece) {
@@ -157,10 +149,6 @@ export class MenuComponent implements OnInit, OnChanges {
           }
         }
       )
-  }
-  show(event) {
-    console.log(event);
-
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -186,7 +174,7 @@ export class MenuComponent implements OnInit, OnChanges {
     this.menuData.sendData(data);
     this.tostr.success('Prosledjeno u korpu');
   }
-  ngOnInit() {
-    this.getMealsByID(0)
+  ngOnInit(){
+    
   }
 }

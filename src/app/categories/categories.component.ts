@@ -54,13 +54,11 @@ export class CategoriesComponent implements OnInit {
   }
   reset(num){
     if(this.element == num){
-      console.log("prvo")
-      this.data.changeOfCategory(true);
+      this.data.clicked(false);
     }
     else{
       this.element = num;
-      console.log("drugo");
-      this.data.changeOfCategory(false);
+      this.data.clicked(true);
     }
   }
 }

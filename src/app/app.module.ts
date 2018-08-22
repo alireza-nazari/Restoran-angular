@@ -47,6 +47,7 @@ import { DataService } from './data.service';
 import { OrderModule } from 'ngx-order-pipe';
 import { FooterComponent } from './footer/footer.component';
 import { InViewportModule, WindowRef } from '@thisissoon/angular-inviewport';
+import { FilterPipe } from './filter.pipe';
 
 const providers = [
   { provide: WindowRef, useValue: window }
@@ -67,7 +68,8 @@ const providers = [
     CrudComponent,
     SelectedDirective,
     CarthComponent,
-    FooterComponent
+    FooterComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

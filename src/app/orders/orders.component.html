@@ -4,40 +4,38 @@
 
         <p #d>{{date | date: 'yyyy-MM-dd'}}</p>
         <div id="btnWrapper">
-            <!-- 
-            <button class="btn btn-success" (click)="all()" id="today">Sve porudzbine</button> -->
-            <h3>Pretraga</h3>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" (click)="animate('user')">
-                    <fa name="user"></fa>
-                </button>
-                <button type="button" class="btn btn-primary" (click)="animate('calender')">
-                    <fa name="calendar"></fa>
-                </button>
-            </div>
+            <h3>Pretraga <fa class="hvr-grow" id="searchBtn" (click)="animate('calender')" name="search"></fa></h3>
             <div [@divState]="state" id="formWrapper">
                 <form>
                     <div class="form-group" [hidden]="user">
-                        <label for="exampleInputEmail1">Korisnicko ime</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
-                        <button type="submit" class="btn btn-primary">Pretrazi</button>
+                        <form>
+                            <label for="exampleInputEmail1">Korisnicko ime</label>
+                            <input #dat type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
+                                ngModel (keyup)="userData(dat)" name="user" autocomplete="off">
+                            <div id="result">
+                                <ul *ngFor="let use of users">
+                                    <li >{{use.username}}({{use.name}})</li>
+                                </ul>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Pretrazi</button>
+                        </form>
                     </div>
                     <div class="form-group row" [hidden]="!user">
                         <div class="col-md-3">
-                            <label for="exampleInputEmail1">Datum</label>
-                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
-                        </div>
-                        <div class="col-md-3">
+                            <form #fromTo="ngForm" (ngSubmit)="fromToData(fromTo)">
                                 <label>Datum od</label>
-                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
+                                    name="from" ngModel>
                                 <label>Datum do</label>
-                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime">
+                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="to" ngModel ngbDatepicker>
+                                <button class="btn btn-primary" id="today" type="submit">Prosledi</button>
+                            </form>
 
                         </div>
                         <div class="col-md-3">
-                                <button class="btn btn-primary" (click)="today(d)" id="today">Današnje porudzbine</button> 
+                            <button class="btn btn-primary" (click)="today(d)" id="today">Današnje porudzbine</button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>
@@ -45,15 +43,20 @@
     </div>
     <table border="1px solid black" class="table table-striped">
         <thead>
-            <tr>
+            <tr id="header">
                 <th (click)="setOrder('id')">Broj porudzbine </th>
-                <th>Ime klijenta</th>
+                <th>Ime klijenta
+                    <div *ngIf="userInput">
+                        <input #dat type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Pretrazi" ngModel
+                        [(ngModel)]="term" name="user" autocomplete="off">
+                    </div>
+                </th>
                 <th>Jelo</th>
                 <th>Količina jela</th>
                 <th>Datum narudzbine</th>
             </tr>
         </thead>
-        <tr *ngFor="let meal of data">
+        <tr *ngFor="let meal of data | filter: term">
             <td>{{ meal.id }}</td>
             <td>{{ meal.name }}({{meal.user}})</td>
             <td>{{ meal.mealName }}</td>

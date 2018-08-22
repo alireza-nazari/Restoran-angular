@@ -1,5 +1,5 @@
 <div id="list" class="col">
-    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" [@menuTransition]="state" >
+    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" >
         <div id="mealWrapper">
             <img src="{{meal.link}}"
                 alt="meal-image" >
@@ -40,6 +40,6 @@
 
         </div>
     </ul>
-    <div style="height: 100px; border: 1px solid red; margin-top: 350px" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
+    <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
     </div>
 </div>

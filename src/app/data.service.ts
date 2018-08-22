@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { json } from "express";
 
 @Injectable()
@@ -17,6 +17,10 @@ export class DataService {
     public retrived = [{}];
     state: any;
     navchange: EventEmitter<number> = new EventEmitter();
+    action: boolean;
+
+
+
 
     sendData(data: any) {
         var current = localStorage.getItem('number');
@@ -108,19 +112,25 @@ export class DataService {
     }
     emitNavChangeEvent(number) {
         this.navchange.emit(number);
-      }
-      getNavChangeEmitter() {
+    }
+    getNavChangeEmitter() {
         return this.navchange;
-      }
-    changeOfCategory(response){
-        if(response == true){
+    }
+    changeOfCategory(response) {
+        if (response == true) {
             this.state = 'not changed'
         }
-        else{
+        else {
             this.state = 'changed'
         }
     }
-    returnState(): Observable<string>{
+    returnState(): Observable<string> {
         return Observable.of(this.state)
+    }
+    clicked(data){
+        this.action = data;
+    }
+    retrurnAction(): Observable<boolean>{
+        return Observable.of(this.action)
     }
 }
