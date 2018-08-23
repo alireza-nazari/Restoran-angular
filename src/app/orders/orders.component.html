@@ -46,8 +46,8 @@
             <tr id="header">
                 <th (click)="setOrder('id')">Broj porudzbine </th>
                 <th>Ime klijenta
-                    <div *ngIf="userInput">
-                        <input #dat type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Pretrazi" ngModel
+                    <div>
+                        <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Pretrazi" ngModel
                         [(ngModel)]="term" name="user" autocomplete="off">
                     </div>
                 </th>

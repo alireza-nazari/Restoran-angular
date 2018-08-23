@@ -10,7 +10,6 @@ import { FilterPipe } from '../filter.pipe'
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
-  pipes: [FilterPipe],
     animations: [
     trigger('divState', [
       state('normal', style({

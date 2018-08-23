@@ -42,6 +42,7 @@ export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
   try: boolean = false;
   staticAlertClosed = true;
   error: any;
+  spinerGroup: boolean = false;
 
   public state: any = "hidden";
 
@@ -97,9 +98,6 @@ export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
     }
   }
   getMealsByID(num: number) {
-    setTimeout(() => {
-      this.spiner = true;
-    }, 500)
     this.id = this.route.snapshot.params['id'];
     if (this.id == this.identifer) {
       this.oldData(this.page)
@@ -111,21 +109,38 @@ export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
     }
   }
   oldData(num) {
+    this.spinerGroup = true;
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
               (res: Array<any>[]) => {
+                setTimeout(() => {
+                  this.spiner = true;
+                }, 500)
                 this.meals = this.meals.concat(res);
                 this.page += 10;
-              });
+                this.spinerGroup = false;
+              },
+              (error) => {
+                this.spinerGroup = false;
+              }
+            );
   }
   newData(num) {
+    this.spinerGroup = true;
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
               (res: Array<any>[]) => {
-                console.log(res)
+                setTimeout(() => {
+                  this.spiner = true;
+                }, 500)
                 this.meals = res;
                 this.page += 10;
-          });
+                this.spinerGroup = false;
+          },
+          (error) => {
+            this.spinerGroup = false;
+          }
+        );
   }
   postIt(data: any) {
     if (data.piece) {
