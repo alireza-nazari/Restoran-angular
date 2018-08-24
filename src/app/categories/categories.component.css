@@ -64,3 +64,15 @@ a{
     cursor: pointer;
     
 }
+@media screen and (max-width: 590px) {
+    #wrapper{
+        margin-top: 70px;
+    }
+    #first{
+        margin-bottom: 30px;
+    }
+    #first img{
+        display: none;
+    }
+    
+}

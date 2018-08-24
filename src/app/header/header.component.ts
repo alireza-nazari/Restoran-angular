@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   public show: boolean = false;
   public i: number = 0;
 
-  state = 'resp';
+  state = 'normal';
   public width: number;
 
   public number: number = 0;
