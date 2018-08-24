@@ -1,70 +1,79 @@
-<div class="container">
+<div>
+    <div id="wholeWrapper " class=" center">
     <div id="tableHeader">
         <h2>Porudzbine</h2>
-
-        <p #d>{{date | date: 'yyyy-MM-dd'}}</p>
+        <button class="btn btn-primary" (click)="today()" id="today">Današnje porudzbine</button>
         <div id="btnWrapper">
-            <h3>Pretraga <fa class="hvr-grow" id="searchBtn" (click)="animate('calender')" name="search"></fa></h3>
+            <h3>Pretraga
+                <fa class="hvr-grow" id="searchBtn" (click)="animate(expandText)" name="search"></fa>
+            </h3>
             <div [@divState]="state" id="formWrapper">
-                <form>
-                    <div class="form-group" [hidden]="user">
-                        <form>
-                            <label for="exampleInputEmail1">Korisnicko ime</label>
-                            <input #dat type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                ngModel (keyup)="userData(dat)" name="user" autocomplete="off">
-                            <div id="result">
-                                <ul *ngFor="let use of users">
-                                    <li >{{use.username}}({{use.name}})</li>
-                                </ul>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Pretrazi</button>
-                        </form>
-                    </div>
-                    <div class="form-group row" [hidden]="!user">
-                        <div class="col-md-3">
-                            <form #fromTo="ngForm" (ngSubmit)="fromToData(fromTo)">
-                                <label>Datum od</label>
-                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                    name="from" ngModel>
-                                <label>Datum do</label>
-                                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="to" ngModel ngbDatepicker>
-                                <button class="btn btn-primary" id="today" type="submit">Prosledi</button>
+                <form id="multyForm">
+                    <div [hidden]="!user">
+                        <div id="userWrapper">
+                            <form #user="ngForm">
+                                <input #inputUser type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
+                                    ngModel (keyup)="userData(user)" name="user" autocomplete="off">
+                                <div id="result" (clickOutside)="onClickedOutside($event)">
+                                    <ul>
+                                        <li *ngFor="let use of users" (click)="passData(use.username, use.client_id, inputUser)">{{use.username}}({{use.name}})</li>
+                                    </ul>
+                                </div>
+                                <button *ngIf='!more' id="userSubmit" type="submit" class="btn btn-primary" (click)="singleUser(inputUser)">Pretraži</button>
                             </form>
 
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary" (click)="today(d)" id="today">Današnje porudzbine</button>
+                            <div id="moreWrapper" (click)="showAdvanced(expandText)">
+                                <fa class="hvr-grow" id="moreBtn" name="{{arrow}}"></fa>
+                                <p #expandText id="moreBtnText">Detaljnjije</p>
+                                <fa class="hvr-grow" id="moreBtn" name="{{arrow}}"></fa>
+                            </div>
                         </div>
 
+                        <form *ngIf="advanced" class="form-inline" #fromTo="ngForm" (ngSubmit)="fromToData(fromTo, user)">
+                            <div id="fromDate">
+                                <input style="width: 100%" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Datum od"
+                                    name="from" onfocus="(this.type='date')" ngModel>
+                            </div>
+                            <div id="toDate">
+                                <input style="width: 100%" placeholder="Datum do" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    name="to" onfocus="(this.type='date')" ngModel>
+                            </div>
+                            <button class="btn btn-primary" id="todaySubmit" type="submit">Pretraži</button>
+                        </form>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <table border="1px solid black" class="table table-striped">
-        <thead>
-            <tr id="header">
-                <th (click)="setOrder('id')">Broj porudzbine </th>
-                <th>Ime klijenta
-                    <div>
-                        <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Pretrazi" ngModel
-                        [(ngModel)]="term" name="user" autocomplete="off">
-                    </div>
-                </th>
-                <th>Jelo</th>
-                <th>Količina jela</th>
-                <th>Datum narudzbine</th>
+    <div id="tableWrapper">
+        <table border="1px solid black" class="table table-striped">
+            <thead>
+                <tr id="header">
+                    <th (click)="setOrder('id')">Broj porudzbine </th>
+                    <th>Ime klijenta
+                        <div>
+                            <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Pretrazi" ngModel
+                                [(ngModel)]="term" name="user" autocomplete="off">
+                        </div>
+                    </th>
+                    <th>Jelo</th>
+                    <th>Količina jela</th>
+                    <th>Datum narudzbine</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let meal of data | filter: term">
+                <td>{{ meal.id }}</td>
+                <td>{{ meal.name }}({{meal.user}})</td>
+                <td>{{ meal.mealName }}</td>
+                <td>{{ meal.amount}} {{ meal.type }}</td>
+                <td>{{ meal.date }}</td>
             </tr>
-        </thead>
-        <tr *ngFor="let meal of data | filter: term">
-            <td>{{ meal.id }}</td>
-            <td>{{ meal.name }}({{meal.user}})</td>
-            <td>{{ meal.mealName }}</td>
-            <td>{{ meal.amount}} {{ meal.type }}</td>
-            <td>{{ meal.date }}</td>
-        </tr>
-    </table>
-    <div style="text-align: center">
-        <fa class="bounce" name="angle-down" id="angle" (click)="moreOrders()"></fa>
+        </table>
+
     </div>
+    <div style="text-align: center">
+            <fa  name="angle-down" id="angle" (click)="moreOrders()"></fa>
+        </div>
+    </div>
+
 </div>

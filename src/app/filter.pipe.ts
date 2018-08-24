@@ -7,16 +7,21 @@ export class FilterPipe implements PipeTransform {
 
   transform(users: any, term: any): any {
     ///undefined
-    if(term === 'undefined')
-      { 
+    console.log(term)
+    if (term == 'undefined'){
       return users;
     }
-    if(users == ''){
+    else if(users == '') {
       return users;
     }
-    return users.filter(function(user){
-      return user.user.toLowerCase().includes(term.toLowerCase())
-    })
+    else if(term == '') {
+      return users;
+    }
+    else{
+      return users.filter(function (user) {
+        return user.user.toLowerCase().includes(term.toLowerCase())
+      })
+    }
   }
 
 }

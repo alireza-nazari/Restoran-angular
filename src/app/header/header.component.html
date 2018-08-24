@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark orange d-flex justify-content-center" (window:resize)="onResize($event)">
+<nav class="navbar navbar-expand-sm navbar-dark orange d-flex justify-content-center" (window:resize)="onResize($event)" id="navbar">
   <div id="bars">
     <fa name="bars" (click)="animate()"></fa>
   </div>
@@ -13,16 +13,16 @@
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/crud" *ngIf="status">Crud</a>
       </li>
-      <li id="singOutBtnWrapper">
-        <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
-
+      <li>
+        <div id="singOutBtnWrapper">
+          <button class="btn" (click)="singout()" id="singOutBtn">Odjavi se</button>
+        </div>
       </li>
       <li>
         <div id="cartWrapper" class="row">
           <fa name="shopping-cart" animation="slow" routerLink="/carth"></fa>
           <p>{{number}}</p>
         </div>
-
       </li>
     </ul>
   </div>

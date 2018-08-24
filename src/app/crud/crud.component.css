@@ -1,4 +1,13 @@
-
+#crudWrapper{
+    position: absolute;
+    
+    width: 1000px;
+    padding: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 50px !important;
+}
 fa{
     font-size: 28px;
 }
@@ -15,39 +24,6 @@ fa{
     color: green;
 }
 
-@media 
-only screen and (max-width: 760px) {
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td {
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		position: absolute;
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-    }
-    td:nth-of-type(1):before { content: "Naziv jela"; }
-	td:nth-of-type(2):before { content: "Cena jela"; }
-	td:nth-of-type(3):before { content: "Kategorija"; }
-	td:nth-of-type(4):before { content: "Akcija"; }
-}
 #tableHeader{
     border-top-left-radius: 5px; 
     border-top-right-radius: 5px; 

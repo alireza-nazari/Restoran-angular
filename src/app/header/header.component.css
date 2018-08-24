@@ -2,6 +2,12 @@
     box-sizing: border-box;
     font-family: Ubuntu; 
 }
+#navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    overflow: hidden;
+}
 .orange{
     background-color: rgb(255, 68, 0);
     color: white;
@@ -52,6 +58,15 @@ fa{
     #singOutBtn{
         position: relative;
         text-align: left
+    }
+    #cartWrapper{
+        left: 0;
+        margin-left: 17px;
+    }
+    #singOutBtnWrapper{
+        margin-top: 75px;
+        left: 0;
+        margin-left: 17px;
     }
 
 }

@@ -5,7 +5,9 @@ import { observable } from "rxjs";
 
 @Injectable()
 export class OrderService{
-    empty: any = []
+    empty: any = [];
+    last: string = '';
+    data: any = [];
     constructor(public http: HttpClient){}
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -14,19 +16,56 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/scroll?offset=" + id)
     }
     todayOrders(date: any, id: any){
+        console.log(date)
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date+"?offset="+id, {headers: this.headers})
     }
     fromTo(from: any, to: any){
         return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset=0&start="+ from +"&end=" + to)
     }
     user(name: any){
-        console.log(name.key)
+        console.log(this.last)
+        if(name == ''){
+            return this.http.get<any>(environment.apiBaseUrl+"clients/user/" + this.last)
+        }
         if(name != null){
+            this.last = name
             return this.http.get<any>(environment.apiBaseUrl+"clients/user/" + name)
         }
         return this.empty;
     }
     getByUser(id: number){
         return this.http.get<any>(environment.apiBaseUrl+"orders/client/" + id + "?offset0")
+    }
+    createArray(data){
+        this.data = [];
+          for (let r of data) {
+            if (r.piece === false) {
+              this.data.push({
+                type: 'gr.',
+                id: r.order_id,
+                name: r.client.name,
+                date: r.order_date,
+                mealName: r.meal.name,
+                user: r.client.username,
+                amount: r.quantity
+              })
+            } else
+              if (r.piece === true) {
+                this.data.push({
+                  type: 'kom.',
+                  id: r.order_id,
+                  name: r.client.name,
+                  date: r.order_date,
+                  mealName: r.meal.name,
+                  user: r.client.username,
+                  amount: r.quantity
+                })
+              }
+          }
+        return this.data;
+    }
+    combination(from: Date, to: Date, id: any){
+        console.log(from, to, id)
+        return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset=0&start="+ from +"&end="+ to +"&client_id="+ id);
     }
 }

@@ -1,5 +1,15 @@
-.container{
-    margin-top: 3%;
+*{
+    box-sizing: border-box;
+}
+.center {
+    position: absolute;
+    
+    width: 1000px;
+    padding: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 50px !important;
 }
 p{
     display: none;
@@ -7,9 +17,7 @@ p{
 h2{
     margin:20px 10px 0px 10px; 
 }
-table{
-    margin-bottom: 300px
-}
+
 #tableHeader{
     width: 100%;
     color: white;
@@ -24,9 +32,7 @@ table{
     padding-bottom: 8px;
     padding-right: 12px;
 }
-#formWrapper{
-    width: 100%;
-}
+
 #today{
     margin-right: 5px;
 }
@@ -81,26 +87,29 @@ table{
 #today{
     margin-top: 10px;
 }
-#formWrapper{
-    width: 100%;
-}
+
 #result{
     margin-top: 1px;
     position: absolute;
     background-color: white;
     border-radius: 2px;
     z-index: 1;
-    width: 150px;
+    width: 250px;
     overflow: hidden;
     text-align: left;
 }
 #result ul{
-
+    
+    margin-bottom: 0px;
+    
     color: black;
 }
 li{
     list-style-type: none;
-    margin-left: -30px;
+    margin-left: -40px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 th{
     vertical-align: top;
@@ -112,8 +121,8 @@ ul{
     cursor: pointer;
 }
 li:hover{
-    background-color: blue;
-    color: white;
+    background-color: #d9d9d9;
+    color: black;
     cursor: pointer;
 }
 #search{
@@ -144,4 +153,72 @@ li:hover{
 }
 #header th{
 vertical-align: top; 
+}
+#todaySubmit{
+    position: absolute;
+    margin-top: 50px;
+}
+#toDate{
+    margin-left: 10px;
+}
+#userSubmit{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#moreBtn{
+    color: white;
+}
+#moreBtnText{
+    display: inline;
+}
+#moreWrapper{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#tableWrapper{
+    overflow-x: auto;
+}
+#toDate {
+    width: 184px;
+}
+#fromDate{
+    width: 184px;
+}
+@media only screen and (max-width: 1001px) {
+    .center {
+        position: absolute;
+        
+        width: 100%;
+        padding: 10px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        margin-top: 50px !important;
+    }
+}
+@media only screen and (max-width: 780px) {
+    #toDate {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+    #fromDate{
+        width: 100%;
+    }
+    #todaySubmit{
+        margin-top: 80px;
+        margin-left: 82px;
+    }
+    #multyForm {
+        width: 100% !important;
+        border: 1px solid green;
+    }
+    .divWidth{
+        width: 100%;
+    }
+}
+#multyForm {
+    margin: auto;
+    width: 400px;
+    padding: 10px;
 }

@@ -25,7 +25,7 @@
     z-index: 2  ;
 }
 #heading{
-    margin-top: 20px;
+    margin-top: 80px;
     margin-left: 20px; 
     z-index: 3;
     position: absolute;
@@ -38,6 +38,7 @@ img{
     max-height: 100%;
 }
 #imageWrapper{
+    margin-top: 60px;
     box-sizing: border-box;
     position: absolute;
     width: 100%;

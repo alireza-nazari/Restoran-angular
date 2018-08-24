@@ -13,11 +13,10 @@ import { DataService } from '../data.service';
     trigger('divState', [
       state('resp', style({
         'height': '0px',
-       
         'transition': 'height 0.2s',
       })),
       state('expand', style({
-        'height': '140px',
+        'height': '230px',
         
         'transition': 'height 0.2s'
       })),
@@ -43,7 +42,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   public show: boolean = false;
   public i: number = 0;
 
-  state = 'normal';
+  state = 'resp';
   public width: number;
 
   public number: number = 0;
@@ -59,6 +58,7 @@ export class HeaderComponent implements OnInit, DoCheck{
     else{
       this.status = false;
     }
+    console.log
   }
   ngDoCheck(){
     this.number = this.data.returnNumber();

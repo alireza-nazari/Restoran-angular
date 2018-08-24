@@ -48,6 +48,9 @@ import { OrderModule } from 'ngx-order-pipe';
 import { FooterComponent } from './footer/footer.component';
 import { InViewportModule, WindowRef } from '@thisissoon/angular-inviewport';
 import { FilterPipe } from './filter.pipe';
+import { TypePipe } from './type.pipe';
+import { ClickOutsideModule } from 'ng4-click-outside';
+import { DatePipe } from '@angular/common';
 
 const providers = [
   { provide: WindowRef, useValue: window }
@@ -69,7 +72,8 @@ const providers = [
     SelectedDirective,
     CarthComponent,
     FooterComponent,
-    FilterPipe
+    FilterPipe,
+    TypePipe
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,8 @@ const providers = [
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     OrderModule,
-    InViewportModule.forRoot(providers)
+    InViewportModule.forRoot(providers),
+    ClickOutsideModule
   ],
   providers: [
     MealsService,
@@ -99,6 +104,7 @@ const providers = [
     CategoriesService,
     OrderService,
     DataService,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
