@@ -267,7 +267,7 @@ export class OrdersComponent implements OnInit {
         }
       )
   }
-  showAdvanced(paragraph: HTMLParagraphElement, first: HTMLFontElement, second: HTMLFontElement) {
+  showAdvanced(paragraph: HTMLParagraphElement) {
     console.log(this.state)
     if(this.state === 'expand'){
       this.state = 'expandMore';
