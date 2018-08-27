@@ -21,7 +21,7 @@ export class CrudComponent implements OnInit{
   deleteBtn: boolean = true;
 
   addNewMeal: boolean = false;
-
+  offset: number = 0;
   status: number;
   
   i: number = 0;
@@ -36,17 +36,9 @@ export class CrudComponent implements OnInit{
               public tostr: ToastrService,) {
             
                }
-  // ngDoCheck(){
-  //   this.meals.getMeals()
-  //   .subscribe(
-  //     (res: Response[]) => this.data = res,
-  //     (err) => {
-  //       alert("Nije mogce prikazati jela" + err)
-  //     }
-  //   )
-  // }
+
   ngOnInit() {
-    this.meals.getMeals()
+    this.meals.getMeals(this.offset)
     .subscribe(
       (res: Response[]) => this.data = res,
       (err) => {
@@ -104,13 +96,6 @@ export class CrudComponent implements OnInit{
       price: p.value,
       link: url.value
     }, id)
-    // this.meals.getMeals()
-    // .subscribe(
-    //   (res: Response[]) => this.data = res,
-    //   (err) => {
-    //     alert("Nije mogce prikazati jela" + err)
-    //   }
-    // )
   }
 
   newMealData(name: any, price: any, category: any, url: any){
@@ -131,5 +116,20 @@ export class CrudComponent implements OnInit{
   }
   deleteMeal(id: any){
     this.crud.deleteMeal(id)
+  }
+  moreMeals(){
+    this.offset += 10;
+    this.meals.getMeals(this.offset)
+    .subscribe(
+      (res: Response[]) => {
+        if(res == []){
+          this.tostr.info('Prikazali ste sva jela!')
+        }
+        this.data = this.data.concat(res)
+      },
+      (error) => {
+        this.tostr.error('Nije moguce prikazati jela!');
+      }
+    )
   }
 }

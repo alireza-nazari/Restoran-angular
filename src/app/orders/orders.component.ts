@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { DatePipe } from '@angular/common';
 import { OrderService } from './order-service';
@@ -25,7 +25,7 @@ import { FilterPipe } from '../filter.pipe'
 
       })),
       state('expandMore', style({
-        'height': '200px',
+        'height': '240px',
         'transition': 'visibility 0.5s, height 0.2s',
         'visibility': 'visible',
       })),
@@ -33,7 +33,7 @@ import { FilterPipe } from '../filter.pipe'
   ],
 
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   meals: any = [];
   data: any = [];
   users: any = [];
@@ -44,6 +44,10 @@ export class OrdersComponent implements OnInit {
   advanced: boolean = false;
   arrow: string = 'arrow-down'
   userID: any;
+  clickedFunction: string;
+  formData: NgForm;
+  singleUserData: HTMLInputElement;
+
   attachOutsideOnClick: boolean;
   todaysDate : Date;
   result: boolean = false;
@@ -57,6 +61,7 @@ export class OrdersComponent implements OnInit {
   public moreData: any = [];
   public state: any = 'normal';
   public user: boolean;
+  i: number = 0;
   constructor(public orderService: OrderService,
     private datepipe: DatePipe  
   ) {
@@ -71,115 +76,45 @@ export class OrdersComponent implements OnInit {
     this.more = false;
   }
   ngOnInit() {
-    this.today();
-    setInterval(() => {
-      this.today();
-    }, 5000)
+    console.log(this.data)
+    this.today(true);
   }
   all() {
     this.orderService.getOrders(this.id)
       .subscribe(
         (res: Array<any>) => {
-          this.data = [];
-          console.log(this.data)
-          for (let r of res) {
-            if (r.piece === false) {
-              this.data.push({
-                type: 'gr.',
-                id: r.order_id,
-                name: r.client.name,
-                date: r.order_date,
-                mealName: r.meal.name,
-                user: r.client.username,
-                amount: r.quantity
-              })
-            } else
-              if (r.piece === true) {
-                this.data.push({
-                  type: 'kom.',
-                  id: r.order_id,
-                  name: r.client.name,
-                  date: r.order_date,
-                  mealName: r.meal.name,
-                  user: r.client.username,
-                  amount: r.quantity
-                })
-              }
-          }
+          this.data = this.orderService.createArray(res);
         }
       );
   }
-  today() {
-    this.todaysDate = new Date() 
+  today(event: boolean){
+    this.orderService.emptyOut();
+    this.clickedFunction = 'today';
+    this.todaysDate = new Date();
+    if(event == true){
+      this.data = [];
+      this.id = 0;
+    }
     var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
-        (res: Array<any>) => {
-          this.data = [];
-          for (let r of res) {
-            this.latestOrder = r.order_id;
-            if (r.piece === false) {
-              this.data.push({
-                type: 'kom.',
-                id: r.order_id,
-                name: r.client.name,
-                date: r.order_date,
-                mealName: r.meal.name,
-                user: r.client.username,
-                amount: r.quantity
-              })
-            } else
-              if (r.piece === true) {
-                this.data.push({
-                  type: 'gr.',
-                  id: r.order_id,
-                  name: r.client.name,
-                  date: r.order_date,
-                  mealName: r.meal.name,
-                  user: r.client.username,
-                  amount: r.quantity
-                })
-              }
-          }
-          console.log(this.latestOrder)
+        (res: Array<any>) =>{
+          this.data = this.data.concat(this.orderService.createArray(res))
         }
       )
   }
   moreOrders() {
     this.id += 10;
-    console.log(this.id)
-    this.orderService.getOrders(this.id)
-      .subscribe(
-        (res: Array<any>) => {
-          console.log(this.moreData)
-          this.moreData = [];
-          for (let r of res) {
-            if (r.piece === false) {
-              this.moreData.push({
-                type: 'gr.',
-                id: r.order_id,
-                name: r.client.name,
-                date: r.order_date,
-                mealName: r.meal.name,
-                user: r.client.username,
-                amount: r.quantity
-              })
-            } else
-              if (r.piece === true) {
-                this.moreData.push({
-                  type: 'kom.',
-                  id: r.order_id,
-                  name: r.client.name,
-                  date: r.order_date,
-                  mealName: r.meal.name,
-                  user: r.client.username,
-                  amount: r.quantity
-                })
-              }
-          }
-          this.data = this.data.concat(this.moreData)
-        }
-      );
+    if(this.clickedFunction == 'today'){
+      this.today(false)
+    }
+    else if(this.clickedFunction == 'fromToData'){
+      console.log("DSA")
+      this.fromToData(this.formData, false)
+    }
+    else if(this.clickedFunction == 'singleUser'){
+      this.singleUser(false)
+    }
   }
   setOrder(value: string) {
     if (this.order === value) {
@@ -187,24 +122,44 @@ export class OrdersComponent implements OnInit {
     }
     this.order = value;
   }
-  fromToData(form: NgForm) {
+  fromToData(form: NgForm, event: boolean) {
+    this.orderService.emptyOut();
+    this.formData = form;
+    this.clickedFunction = 'fromToData';
+    if(event == true){
+      this.id = 0;
+      this.data = [];
+      console.log(event)
+    }
     if(this.userID == 'undefined' || this.userID == '' || this.userID == null){
-      this.orderService.fromTo(form.value.from, form.value.to)
+      this.orderService.fromTo(this.formData.value.from, this.formData.value.to, this.id)
       .subscribe(
         (res) => {
-          this.data = this.orderService.createArray(res)
+          console.log(res)
+          this.data = this.data.concat(this.orderService.createArray(res))
         },
         (error) => {
           console.log(error)
         }
       )
     }
+    else if(form.value.from == '' && form.value.to == '' && this.userID != null){
+      this.orderService.getByUser(this.userID, this.id)
+      .subscribe(
+        (res) => {
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) =>{
+          alert('Greska')
+        }
+      )
+    }
     else{
-      this.orderService.combination(form.value.from, form.value.to, this.userID)
+      this.orderService.combination(form.value.from, form.value.to, this.userID, this.id)
       .subscribe(
         (res) => {
           console.log(res)
-          this.data = this.orderService.createArray(res);
+          this.data = this.data.concat(this.orderService.createArray(res))
         },
         (error) => {
           console.log(error)
@@ -218,15 +173,17 @@ export class OrdersComponent implements OnInit {
     this.users = [];
   }
   userData(dateOf: any) {
-    this.attachOutsideOnClick = false;
+    if(dateOf.value.user == ''){
+      this.users = [];
+    }else{
     this.orderService.user(dateOf.value.user)
       .subscribe(
         (res) => {
           this.users = res;
-          console.log(res)
           this.result = true;
         }
       )
+    }
   }
   showInput() {
     this.userInput === false ? this.userInput = true : this.userInput = false;
@@ -236,34 +193,12 @@ export class OrdersComponent implements OnInit {
   }
   autocomplete(userName, id, element: HTMLInputElement) {
     element.value = userName;
-    this.orderService.getByUser(id)
+    this.orderService.getByUser(id, this.userID)
       .subscribe(
         (res) => {
+          this.attachOutsideOnClick = true;
           this.data = [];
-          for (let r of res) {
-            if (r.piece === false) {
-              this.data.push({
-                type: 'gr.',
-                id: r.order_id,
-                name: r.client.name,
-                date: r.order_date,
-                mealName: r.meal.name,
-                user: r.client.username,
-                amount: r.quantity
-              })
-            } else
-              if (r.piece === true) {
-                this.data.push({
-                  type: 'kom.',
-                  id: r.order_id,
-                  name: r.client.name,
-                  date: r.order_date,
-                  mealName: r.meal.name,
-                  user: r.client.username,
-                  amount: r.quantity
-                })
-              }
-          }
+          this.data = this.orderService.createArray(res);
         }
       )
   }
@@ -283,19 +218,38 @@ export class OrdersComponent implements OnInit {
       this.more = false;
     }
   }
-  singleUser(data: HTMLInputElement){
-    console.log(data.value, this.userID)
-    this.orderService.getByUser(this.userID)
+  singleUser(event: boolean){
+    if(event == true){
+      this.data = [];
+      this.id = 0;
+    }else if(event == false){
+      
+    }
+    this.orderService.emptyOut();
+    this.clickedFunction = 'singleUser'
+    console.log(this.id)
+    this.orderService.getByUser(this.userID, this.id)
     .subscribe(
       (res) => {      
-        this.data = this.orderService.createArray(res);
+        this.data = this.data.concat(this.orderService.createArray(res))
       },
       (error) =>{
         alert('Greska')
       }
     )
   }
-  onClickedOutside(event){
-    console.log("w");
+  onClickedOutside($event){
+    console.log("Dsa")
+    
+    this.result = false;
+  }
+  ngOnDestroy(){
+    this.orderService.emptyOut();
+  }
+  showAuto(){
+    if(this.users != '' || this.users != 'undefined'){
+      this.result = true;
+      console.log("DSA")
+    }
   }
 }

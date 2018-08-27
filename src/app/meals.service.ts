@@ -21,8 +21,8 @@ export class MealsService{
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
       });
-    getMeals(){
-        return this.http.get(environment.apiBaseUrl +"meal")
+    getMeals(offset: number){
+        return this.http.get(environment.apiBaseUrl +"meal/scroll?offset="+ offset)
     }
 
     postOrder(data: any){

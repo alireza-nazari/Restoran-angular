@@ -23,7 +23,7 @@
                       <label for="dateOfBirth">Izabrano jelo: {{meal.name}}</label><br>
                       <label for="piece">Jedinica mere:</label>
                       <select class="custom-select" #piece>
-                          <option value ="true">Ggit ram</option>
+                          <option value ="true">Gram</option>
                           <option value ="false">Komad</option>
                         </select>
                         <label for="amountInput">Količina:</label>
@@ -37,7 +37,6 @@
                   <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, piece: piece.value, link: meal.link}); c('Save click')">U korpu</button>
                 </div>
               </ng-template>
-
         </div>
     </ul>
     <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">

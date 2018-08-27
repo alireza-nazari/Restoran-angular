@@ -19,8 +19,8 @@ export class OrderService{
         console.log(date)
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date+"?offset="+id, {headers: this.headers})
     }
-    fromTo(from: any, to: any){
-        return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset=0&start="+ from +"&end=" + to)
+    fromTo(from: any, to: any, offset){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset="+offset+"&start="+ from +"&end=" + to)
     }
     user(name: any){
         console.log(this.last)
@@ -33,11 +33,10 @@ export class OrderService{
         }
         return this.empty;
     }
-    getByUser(id: number){
-        return this.http.get<any>(environment.apiBaseUrl+"orders/client/" + id + "?offset0")
+    getByUser(id: number, offset){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/client/" + id + "?offset="+ offset)
     }
     createArray(data){
-        this.data = [];
           for (let r of data) {
             if (r.piece === false) {
               this.data.push({
@@ -64,8 +63,11 @@ export class OrderService{
           }
         return this.data;
     }
-    combination(from: Date, to: Date, id: any){
+    combination(from: Date, to: Date, id: any, offset: any){
         console.log(from, to, id)
-        return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset=0&start="+ from +"&end="+ to +"&client_id="+ id);
+        return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset="+ offset +"&start="+ from +"&end="+ to +"&client_id="+ id);
+    }
+    emptyOut(){
+        this.data = [];
     }
 }

@@ -2,7 +2,7 @@
     <div id="wholeWrapper " class=" center">
     <div id="tableHeader">
         <h2>Porudzbine</h2>
-        <button class="btn btn-primary" (click)="today()" id="today">Današnje porudzbine</button>
+        <button class="btn btn-primary" (click)="today(true)" id="today">Današnje porudzbine</button>
         <div id="btnWrapper">
             <h3>Pretraga
                 <fa class="hvr-grow" id="searchBtn" (click)="animate(expandText)" name="search"></fa>
@@ -13,13 +13,13 @@
                         <div id="userWrapper">
                             <form #user="ngForm">
                                 <input #inputUser type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                    ngModel (keyup)="userData(user)" name="user" autocomplete="off">
-                                <div id="result" (clickOutside)="onClickedOutside($event)">
+                                    ngModel (keyup)="userData(user)" name="user" autocomplete="off" (click)="showAuto()">
+                                <div id="result" *ngIf='result' (clickOutside)="onClickedOutside($event)">
                                     <ul>
                                         <li *ngFor="let use of users" (click)="passData(use.username, use.client_id, inputUser)">{{use.username}}({{use.name}})</li>
                                     </ul>
                                 </div>
-                                <button *ngIf='!more' id="userSubmit" type="submit" class="btn btn-primary" (click)="singleUser(inputUser)">Pretraži</button>
+                                <button *ngIf='!more' id="userSubmit" type="submit" class="btn btn-primary" (click)="singleUser(true)">Pretraži</button>
                             </form>
 
                             <div id="moreWrapper" (click)="showAdvanced(expandText)">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
 
-                        <form *ngIf="advanced" class="form-inline" #fromTo="ngForm" (ngSubmit)="fromToData(fromTo, user)">
+                        <form *ngIf="advanced" class="form-inline" #fromTo="ngForm" (ngSubmit)="fromToData(fromTo, true)">
                             <div id="fromDate">
                                 <input style="width: 100%" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Datum od"
                                     name="from" onfocus="(this.type='date')" ngModel>

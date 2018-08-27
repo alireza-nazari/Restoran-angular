@@ -1,6 +1,5 @@
 #crudWrapper{
     position: absolute;
-    
     width: 1000px;
     padding: 10px;
     left: 0;
@@ -78,4 +77,26 @@ table{
 }
 td{
     word-wrap:break-word
+}
+@media only screen and (max-width: 1001px) {
+    #crudWrapper {
+        
+        position: absolute;
+        width: 100%;
+        padding: 10px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        margin-top: 50px !important;
+    }
+    #tableWrapper{
+        overflow-x: auto;
+    }
+}
+#angle{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#angle:hover{
+    cursor: pointer;
 }
