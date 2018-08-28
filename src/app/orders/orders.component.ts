@@ -261,7 +261,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
     this.orderService.emptyOut();
     
   }
-  showAuto(auto: HTMLDivElement){
+  showAuto(){
     if(this.users != '' || this.users != 'undefined'){
 
       this.result = true;
