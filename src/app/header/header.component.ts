@@ -60,6 +60,9 @@ export class HeaderComponent implements OnInit, DoCheck{
     }
     console.log
   }
+  hide(){
+    this.state = 'resp'
+  }
   ngDoCheck(){
     this.number = this.data.returnNumber();
     console.log(this.state)
