@@ -87,16 +87,23 @@ h2{
 #today{
     margin-top: 10px;
 }
-
+#angleSelector{
+    font-size: 25px
+}
+#angleSelector:hover{
+    cursor: pointer;
+}
 #result{
+    border: 1px solid gray;
     margin-top: 1px;
     position: absolute;
     background-color: white;
     border-radius: 2px;
-    z-index: 1;
-    width: 250px;
+    z-index: 50;
+    width: 310px;
     overflow: hidden;
     text-align: left;
+    visibility: visible;
 }
 #result ul{
     
@@ -155,8 +162,9 @@ li:hover{
 vertical-align: top; 
 }
 #todaySubmit{
-    position: absolute;
-    margin-top: 50px;
+    margin-top: 20px !important; 
+    position: relative;
+    margin: 0 auto;
 }
 #toDate{
     margin-left: 10px;
@@ -185,7 +193,7 @@ vertical-align: top;
     width: 184px;
 }
 @media only screen and (max-width: 1001px) {
-    .center {
+    .center{
         position: absolute;
         width: 100%;
         padding: 10px;
@@ -205,8 +213,9 @@ vertical-align: top;
         width: 100%;
     }
     #todaySubmit{
-        margin-top: 80px;
-        margin-left: 82px;
+        margin-top: 18px !important; 
+        position: relative;
+        margin: 0 auto;
     }
     #multyForm {
         width: 100% !important;

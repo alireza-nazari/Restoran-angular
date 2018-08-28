@@ -34,7 +34,7 @@ import { Subscription, Observable } from 'rxjs';
     ])
   ]
 })
-export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
+export class MenuComponent implements OnInit,  DoCheck{
   meals: any = [];
   response: any = [];
   sub: any;
@@ -88,8 +88,7 @@ export class MenuComponent implements OnInit, AfterContentInit, DoCheck{
     }else{
     }
   }
-  ngAfterContentInit(){
-  }
+
 
   onInViewportChange(inViewport: boolean) {
     this.visible = inViewport;

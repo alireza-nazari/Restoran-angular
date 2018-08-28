@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit {
     )
   }
   getByCategory(id: any){
-   this.router.navigate([id,'meni'],{relativeTo: this.route});
+   this.router.navigate([id,'meni'])
    this.state = 'visible'
   }
   reset(num){

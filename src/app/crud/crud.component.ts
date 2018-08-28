@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, Input, ElementRef, DoCheck } from '@angular/core';
+import { Component, OnInit, ViewChild,  ElementRef} from '@angular/core';
 import { MealsService } from '../meals.service';
 import { CrudService } from '../crud.service';
 import { ResponseOptions } from '@angular/http';
-import { HttpResponse } from '@angular/common/http';
-import { CrudModel } from './crud-model';
+
 import { CategoriesService } from '../categories/categories-service';
 import { ToastrService } from 'ngx-toastr';
-
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -24,7 +23,14 @@ export class CrudComponent implements OnInit{
   offset: number = 0;
   status: number;
   
+  closeResult: string;
+
+  modalName: string;
+  modalDeleteId: any;
+
+
   i: number = 0;
+  a: number = 0;
   public data = [];
   newData: any = [];
   cate: any = [];
@@ -33,7 +39,8 @@ export class CrudComponent implements OnInit{
               public crud: CrudService,
               public responseOptions: ResponseOptions,
               public cat: CategoriesService,
-              public tostr: ToastrService,) {
+              public tostr: ToastrService,
+              private modalService: NgbModal) {
             
                }
 
@@ -57,6 +64,25 @@ export class CrudComponent implements OnInit{
       }
     )
   }
+  open(content, name, id) {
+    this.modalName = name;
+    this.modalDeleteId = id;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
   addMeal(){
     this.i++;
     if(this.i <= 1){
@@ -67,26 +93,48 @@ export class CrudComponent implements OnInit{
       this.i = 0;
     }
   }
-  editMeal(n:any, p :any, c:any, url: any, na:any, pr:any, co:any,ur: any){
-    n.hidden = false;
-    p.hidden = false;
-    c.hidden = false;
-    url.hidden = false;
-    na.hidden = true;
-    pr.hidden = true;
-    co.hidden = true;
-    ur.hidden = true;
-    this.confirmBtn = true;
+  editMeal(n:any, p :any, c:any, url: any, mes: any, na:any, pr:any, co:any,ur: any, me: any){
+    this.a++;
+    if(this.a <= 1){
+      n.hidden = false;
+      p.hidden = false;
+      c.hidden = false;
+      url.hidden = false;
+      mes.hidden = false
+      na.hidden = true;
+      pr.hidden = true;
+      co.hidden = true;
+      ur.hidden = true;
+      me.hidden = true;
+      this.confirmBtn = true;
+    }
+    else{
+      n.hidden = true;
+      p.hidden = true;
+      c.hidden = true;
+      url.hidden = true;
+      mes.hidden = true
+      na.hidden = false;
+      pr.hidden = false;
+      co.hidden = false;
+      ur.hidden = false;
+      me.hidden = false;
+      this.confirmBtn = true;
+      this.a = 0;
+    }
+
   }
-  confirm(n:any, p :any, c:any, id: any,url: any, na:any, pr:any, co:any,ur: any){
+  confirm(n:any, p :any, c:any, mes: any,id: any,url: any, na:any, pr:any, co:any,ur: any, me: any){
     n.hidden = true;
     p.hidden = true;
     c.hidden = true;
+    mes.hidden = true;
     url.hidden = true;
     na.hidden = false;
     pr.hidden = false;
     co.hidden = false;
     ur.hidden = false;
+    me.hidden = false;
     this.confirmBtn = false;
     this.crud.editMeal({
       category: {
@@ -98,15 +146,16 @@ export class CrudComponent implements OnInit{
     }, id)
   }
 
-  newMealData(name: any, price: any, category: any, url: any){
-    if(name.value != "" && price.value != "", category.value != "" && url.value != ""){
+  newMealData(name: any, price: any, category: any, url: any, measure: any){
+    if(name.value != "" && price.value != "", category.value != "" && url.value != "" && measure.value != ""){
       this.crud.postMeal({
         category: {
           category_id: category.value
         },
         name: name.value,
         price: price.value,
-        link: url.value
+        link: url.value,
+        piece: measure.value
       })
       this.addMeal();
       this.tostr.success('Jelo je dodato!');

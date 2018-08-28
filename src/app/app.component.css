@@ -9,3 +9,6 @@
     position: fixed;
     z-index: 20000;
 }
+html {
+    overflow-y: scroll;
+  }

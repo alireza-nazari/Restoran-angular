@@ -52,6 +52,7 @@ import { TypePipe } from './type.pipe';
 import { ClickOutsideModule } from 'ng4-click-outside';
 import { DatePipe } from '@angular/common';
 
+
 const providers = [
   { provide: WindowRef, useValue: window }
 ];
@@ -73,7 +74,8 @@ const providers = [
     CarthComponent,
     FooterComponent,
     FilterPipe,
-    TypePipe
+    TypePipe,
+
   ],
   imports: [
     BrowserModule,

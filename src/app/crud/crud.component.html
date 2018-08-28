@@ -1,6 +1,6 @@
 <div class="container" id="crudWrapper">
   <div id="tableHeader">
-    <h2 id="heading">Upravljanje menijem</h2>
+    <p id="heading">Upravljanje menijem</p>
     <button (click)="addMeal()">
       <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
   </div>
@@ -20,12 +20,15 @@
           <th>
             URL slike
           </th>
+          <th>
+            Jedinica mere
+          </th>
           <th id="akcija">
             Akcija
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style="overflow-x: auto">
         <tr *ngIf="addNewMeal" id="newMeal">
           <td>
             <input type="text" ngModel class="form-control" name="mealName" #name>
@@ -38,40 +41,71 @@
               <option *ngFor="let cat of cate" value="{{cat.category_id}}">{{cat.name}}</option>
             </select>
           </td>
+          
           <td>
             <input type="text" #newUrl class="form-control" name="mealUrl" #url>
+          </td>
+          <td>
+            <select name="measure" ngModely class="form-control" name="measure" #measure>
+              <option value="false">Komad</option>
+              <option value="true">Gram</option>
+            </select>
+          </td>
             <td>
-              <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(name, price, category, url)"></fa>
+              <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(name, price, category, url, measure)"></fa>
             </td>
         </tr>
         <tr *ngFor="let meal of data" selectedRow>
           <td>
-            <input #n [hidden]="edit" type="text" name="mealName" value="{{meal.name}}">
+            <input #n [hidden]="edit" type="text" name="mealName" value="{{meal.name}}" class="form-control">
             <span #na>{{meal.name}}</span>
           </td>
           <td>
-            <input #p [hidden]="edit" type="text" name="mealName" value="{{meal.price}}">
+            <input #p [hidden]="edit" type="text" name="mealName" value="{{meal.price}}" class="form-control">
             <span #pr>{{meal.price}}din</span>
           </td>
           <td>
-            <select #c [hidden]="edit" name="category" name="mealCategory">
+            <select #c [hidden]="edit" name="category" name="mealCategory" class="form-control">
               <option *ngFor="let cat of cate" value="{{cat.category_id}}" #categoryName>{{cat.name}}</option>
             </select>
             <span #co>{{meal.category.name}}</span>
           </td>
           <td>
-            <input #url [hidden]="edit" type="text" name="mealName" value="{{meal.category.link}}">
+            <input #url [hidden]="edit" type="text" name="mealName" value="{{meal.category.link}}" class="form-control">
             <span #ur>{{meal.category.link}}</span>
           </td>
           <td>
-            <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, meal.meal_id,url, na, pr, co, ur)"></fa>
-            <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, url, na, pr, co, ur,confirm)" *ngIf="editBtn"></fa>
-            <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="deleteMeal(meal.meal_id)"></fa>
+              <select #mes [hidden]="edit" name="measure" ngModely class="form-control" name="measure" #measure class="form-control">
+                <option value="false">Komad</option>
+                <option value="true">Gram</option>
+              </select>
+            <span #me>komad/gram</span>
+          </td>
+          <td>
+            <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, mes,meal.meal_id,url, na, pr, co, ur, me)"></fa>
+            <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, url, mes, na, pr, co, ur,me)" *ngIf="editBtn"></fa>
+            <!-- <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="deleteMeal(meal.meal_id)"></fa> -->
+            <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="open(delete, meal.name, meal.meal_id)"></fa>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  <ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Brisanje jela</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Da li ste sigurni da želite da obrišete jelo:</p>
+      <p id="delMealName">{{modalName}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteMeal(modalDeleteId); c('Save click')">Izbriši jelo</button>
+    </div>
+  </ng-template>
   <div style="text-align: center">
     <fa name="angle-down" id="angle" (click)="moreMeals()"></fa>
   </div>

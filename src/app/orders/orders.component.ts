@@ -1,11 +1,11 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
-import { AuthGuardService } from '../auth/auth-guard.service';
+import { Component, OnInit,  OnDestroy,  Input, HostListener} from '@angular/core';
+
 import { DatePipe } from '@angular/common';
 import { OrderService } from './order-service';
 import { trigger, state, style } from '@angular/animations';
-import { INTERNAL_BROWSER_DYNAMIC_PLATFORM_PROVIDERS } from '@angular/platform-browser-dynamic/src/platform_providers';
+
 import { NgForm } from '@angular/forms';
-import { FilterPipe } from '../filter.pipe'
+
 
 @Component({
   selector: 'app-orders',
@@ -33,7 +33,7 @@ import { FilterPipe } from '../filter.pipe'
   ],
 
 })
-export class OrdersComponent implements OnInit, OnDestroy {
+export class OrdersComponent implements OnInit, OnDestroy{
   meals: any = [];
   data: any = [];
   users: any = [];
@@ -47,6 +47,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   clickedFunction: string;
   formData: NgForm;
   singleUserData: HTMLInputElement;
+  sortNumber: number = 0;
+  angleType: string = 'angle-down'
 
   attachOutsideOnClick: boolean;
   todaysDate : Date;
@@ -62,9 +64,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public state: any = 'normal';
   public user: boolean;
   i: number = 0;
+
+
   constructor(public orderService: OrderService,
-    private datepipe: DatePipe  
-  ) {
+              private datepipe: DatePipe) {
   }
   animate(paragraph: HTMLParagraphElement) {
     this.user = true;
@@ -75,8 +78,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.advanced = false;
     this.more = false;
   }
+
   ngOnInit() {
-    console.log(this.data)
     this.today(true);
   }
   all() {
@@ -116,11 +119,21 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.singleUser(false)
     }
   }
-  setOrder(value: string) {
-    if (this.order === value) {
-      this.reverse = !this.reverse;
+  sort(){
+    this.sortNumber +=1;
+    if(this.sortNumber == 1){
+      this.angleType = 'angle-up'
+      this.data.sort(function(a, b){
+        return a.id-b.id;
+      })
+    }else{
+      this.angleType = 'angle-down'
+      this.sortNumber = 0;
+      this.data.sort(function(a, b){
+        return b.id-a.id;
+      })
     }
-    this.order = value;
+
   }
   fromToData(form: NgForm, event: boolean) {
     this.orderService.emptyOut();
@@ -135,7 +148,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.fromTo(this.formData.value.from, this.formData.value.to, this.id)
       .subscribe(
         (res) => {
-          console.log(res)
           this.data = this.data.concat(this.orderService.createArray(res))
         },
         (error) => {
@@ -166,6 +178,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
         }
       )
     }
+    // let xs = [5,4,3,-22,1];
+    // xs.sort((a,b)=>a-b); // Ascending sort
+    // console.log(xs); // [-22,1,3,4,5]
+    
   }
   passData(username, id, input: HTMLInputElement){
     input.value = username;
@@ -238,18 +254,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }
     )
   }
-  onClickedOutside($event){
-    console.log("Dsa")
-    
+  onClickedOutside(auto: HTMLDivElement){
     this.result = false;
   }
   ngOnDestroy(){
     this.orderService.emptyOut();
+    
   }
-  showAuto(){
+  showAuto(auto: HTMLDivElement){
     if(this.users != '' || this.users != 'undefined'){
+      
       this.result = true;
-      console.log("DSA")
     }
   }
 }

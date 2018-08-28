@@ -21,7 +21,7 @@ import { DataService } from '../data.service';
         'transition': 'height 0.2s'
       })),
       state('normal', style({
-        'height': '45px',
+        'height': '0px',
         'transition' : '0.0s'
       }))
     ]),
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   public show: boolean = false;
   public i: number = 0;
 
-  state = 'normal';
+  state = 'resp';
   public width: number;
 
   public number: number = 0;
@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   }
   ngDoCheck(){
     this.number = this.data.returnNumber();
+    console.log(this.state)
   }
   onResize(event) {
     this.width = event.target.innerWidth;

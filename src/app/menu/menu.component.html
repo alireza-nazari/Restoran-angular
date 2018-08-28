@@ -5,9 +5,9 @@
                 alt="meal-image" >
             <div id="wrapper">
                 <li #name>{{meal.name}}</li>
-                <li id="price">{{meal.price}}din</li>
-                <div id="image"> 
-                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="" (page)="show($event)">
+                <div id="image">
+                    <li id="price" >{{meal.price}}din</li>
+                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="img">
             </div>
           </div>
             <ng-template #content let-c="close" let-d="dismiss">
@@ -27,7 +27,7 @@
                           <option value ="false">Komad</option>
                         </select>
                         <label for="amountInput">Količina:</label>
-                        <input class="form-control" type="number" id="amountInput" #amountInput>
+                        <input class="form-control" type="number" id="amountInput" #amountInput required>
                         <div class="input-group-append">
                       </div>
                     </div>

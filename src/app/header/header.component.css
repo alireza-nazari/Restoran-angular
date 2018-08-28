@@ -2,6 +2,9 @@
     box-sizing: border-box;
     font-family: Ubuntu; 
 }
+ul{
+    margin-top: -20px;
+}
 #navbar{
     position: fixed;
     width: 100%;
@@ -68,5 +71,7 @@ fa{
         left: 0;
         margin-left: 17px;
     }
-
+    ul{
+        margin-top: 5px;
+    }
 }
