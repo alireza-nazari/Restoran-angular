@@ -254,7 +254,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
       }
     )
   }
-  onClickedOutside(auto: HTMLDivElement){
+  onClickedOutside(){
     this.result = false;
   }
   ngOnDestroy(){
@@ -263,7 +263,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
   }
   showAuto(auto: HTMLDivElement){
     if(this.users != '' || this.users != 'undefined'){
-      
+
       this.result = true;
     }
   }
