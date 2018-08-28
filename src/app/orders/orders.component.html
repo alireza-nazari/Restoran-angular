@@ -13,7 +13,7 @@
                             <div id="userWrapper">
                                 <form #user="ngForm">
                                     <input #inputUser type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                        ngModel (keyup)="userData(user)" name="user" autocomplete="off" (click)="showAuto(auto)">
+                                        ngModel (keyup)="userData(user)" name="user" autocomplete="off" (click)="showAuto()">
                                     <div #auto id="result" *ngIf='result' (clickOutside)="onClickedOutside()">
                                         <ul>
                                             <li *ngFor="let use of users" (click)="passData(use.username, use.client_id, inputUser)">{{use.username}}({{use.name}})</li>
