@@ -18,6 +18,7 @@ const appRoutes: Routes = [
     
     {path: 'carth', component: CarthComponent, canActivate: [AuthGuard], children: [
     ]},
+    {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
     {path: 'orders', component: OrdersComponent, canActivate: [RoleGuard, AuthGuard], data: {

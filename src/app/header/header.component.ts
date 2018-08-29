@@ -65,8 +65,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   }
   ngDoCheck(){
     this.number = this.data.returnNumber();
-    console.log(this.state)
-  }
+}
   onResize(event) {
     this.width = event.target.innerWidth;
     if(this.width <= 590){

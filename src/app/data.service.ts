@@ -18,7 +18,7 @@ export class DataService {
     state: any;
     navchange: EventEmitter<number> = new EventEmitter();
     action: boolean;
-
+    existingData: Array<any> = [];
 
 
 
@@ -26,23 +26,31 @@ export class DataService {
         var current = localStorage.getItem('number');
         if (current == null) {
             localStorage.setItem('number', '0');
-            localStorage.setItem('new0', JSON.stringify(data))
+            var first = [];
+            first = first.concat(data);
+            
+            localStorage.setItem('cartItems', JSON.stringify(first))
         }
         else {
+            var local = JSON.parse(localStorage.getItem('cartItems'))
+            var passed = [];
+            passed = passed.concat(local) 
             var num = JSON.parse(current);
             num += 1;
             localStorage.setItem('number', num);
-            localStorage.setItem('new' + num, JSON.stringify(data))
-
+            passed = passed.concat(data)
+            localStorage.setItem('cartItems', JSON.stringify(passed))
         }
     }
     getFromLocal() {
     }
-    deleteData(id: any, number: any) {
-
+    deleteData(id: any) {
         var current = localStorage.getItem('number')
-        console.log(id, number);
-        localStorage.removeItem('new' + number.toString())
+        console.log(id);
+        var data = JSON.parse(localStorage.getItem('cartItems'))
+        data.splice(id, 1);
+        var newData = JSON.stringify(data)
+        localStorage.setItem('cartItems', newData)
         this.data.splice(id, 1)
         var numbe = JSON.parse(current);
         numbe -= 1;
@@ -71,42 +79,9 @@ export class DataService {
         var num = localStorage.getItem('number');
         var numb = Number(num);
         if (num == null) {
-            console.log("rsa")
+            
         }
-        else {
-            if (this.data == '') {
-                for (var i = 0; i <= numb; i++) {
-                    console.log(i)
-                    this.pushed = true;
-                    var stat = this.pushed;
-                    var par = localStorage.getItem('new' + i);
-                    var data = JSON.parse(par);
-                    this.data.push({
-                        data,
-                        i,
-                        stat
-                    })
-                    this.pushed = false;
-                }
-                return this.data;
-            } else {
-                for (var i = 0; i <= numb; i++) {
-                    if (this.data[i] == undefined) {
-                        this.pushed = true;
-                        var stat = this.pushed;
-                        var par = localStorage.getItem('new' + i);
-                        var data = JSON.parse(par);
-                        this.data.push({
-                            data,
-                            i,
-                            stat
-                        })
-                        this.pushed = false;
-                    }
-                }
-
-            }
-        }
+        this.data = JSON.parse(localStorage.getItem('cartItems'))
         console.log(this.data)
         return this.data;
     }

@@ -6,10 +6,15 @@
   </div>
   <div id="tableWrapper">
     <table class="table table striped">
+      <form>
       <thead>
         <tr>
           <th>
             Naizv jela
+            <div>
+                <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Pretrazi" ngModel
+                    [(ngModel)]="term" name="user" autocomplete="off">
+            </div>
           </th>
           <th>
             Cena jela
@@ -79,16 +84,20 @@
                 <option value="false">Komad</option>
                 <option value="true">Gram</option>
               </select>
-            <span #me>komad/gram</span>
+             
+                  <span #me>{{meal.piece}}</span>
+ 
+            
           </td>
           <td>
             <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, mes,meal.meal_id,url, na, pr, co, ur, me)"></fa>
             <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, url, mes, na, pr, co, ur,me)" *ngIf="editBtn"></fa>
-            <!-- <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="deleteMeal(meal.meal_id)"></fa> -->
+            
             <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="open(delete, meal.name, meal.meal_id)"></fa>
           </td>
         </tr>
       </tbody>
+    </form>
     </table>
   </div>
   <ng-template #delete let-c="close" let-d="dismiss">

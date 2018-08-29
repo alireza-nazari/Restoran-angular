@@ -13,12 +13,10 @@ import { DataService } from '../data.service';
     trigger('categories', [
       state('hidden', style({
         'height': '0px',
-        'visibility': 'hidden',
-        'transition': 'height 0.3s'
+        'transition': 'height 0s'
       })),
       state('visible', style({
         'height': '200px',
-        'visibility': 'visible',
         'transition': 'height 0.3s'
       }))
     ])
@@ -43,6 +41,7 @@ export class CategoriesComponent implements OnInit {
     this.cat.getCategories()
     .subscribe(
       (data) =>{
+        console.log(data)
         this.categories = data;
         this.state = 'visible'
       }

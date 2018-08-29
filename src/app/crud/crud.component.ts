@@ -14,6 +14,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./crud.component.css']
 })
 export class CrudComponent implements OnInit{
+  term: any;
   edit: boolean = true;
   confirmBtn: boolean = false;
   editBtn: boolean = true;
@@ -43,11 +44,24 @@ export class CrudComponent implements OnInit{
               private modalService: NgbModal) {
             
                }
-
+  type(me: HTMLSpanElement){
+    
+  }
   ngOnInit() {
     this.meals.getMeals(this.offset)
     .subscribe(
-      (res: Response[]) => this.data = res,
+      (res: Response[]) => {
+        this.data = res
+        for(let item of this.data){
+          if(item.piece == false){
+            item.piece = 'komad';
+          }
+          else if(item.piece == true){
+            item.piece = 'gram'
+          }
+        }
+        console.log(res)
+      },
       (err) => {
         alert("Nije mogce prikazati jela" + err)
       }
@@ -125,6 +139,7 @@ export class CrudComponent implements OnInit{
 
   }
   confirm(n:any, p :any, c:any, mes: any,id: any,url: any, na:any, pr:any, co:any,ur: any, me: any){
+    console.log(mes.value)
     n.hidden = true;
     p.hidden = true;
     c.hidden = true;
@@ -142,7 +157,8 @@ export class CrudComponent implements OnInit{
       },
       name: n.value,
       price: p.value,
-      link: url.value
+      link: url.value,
+      piece: mes.value
     }, id)
   }
 
@@ -174,7 +190,18 @@ export class CrudComponent implements OnInit{
         if(res == []){
           this.tostr.info('Prikazali ste sva jela!')
         }
-        this.data = this.data.concat(res)
+
+        this.data = this.data.concat(res);
+        console.log(this.data)
+        for(let item of this.data){
+          console.log(item.piece)
+          if(item.piece == false){
+            item.piece = 'komad';
+          }
+          else if(item.piece == true){
+            item.piece = 'gram'
+          }
+        }
       },
       (error) => {
         this.tostr.error('Nije moguce prikazati jela!');

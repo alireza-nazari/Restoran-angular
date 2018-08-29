@@ -15,7 +15,7 @@ export class CarthComponent implements OnInit{
   closeResult: string;
   public carth: any;
   public menu$: Observable<any>;
-
+  dat: any = [];
   public changed: any = [];
   public show: boolean = false;
   constructor(private modalService: NgbModal,
@@ -28,6 +28,8 @@ export class CarthComponent implements OnInit{
 
   ngOnInit() {
   this.menu$ = this.dataService.getData();
+  this.dat = this.menu$;
+  console.log(this.dat.length)
   console.log(this.dataService.getData());
   }
   open(content) {
@@ -48,7 +50,7 @@ export class CarthComponent implements OnInit{
   }
 
   submit(data: any) {
-    console.log(data[0].data.amount)
+    console.log(data.data.amount)
     if(data[0].data.amount == ''){
       this.tostr.error("Porudzbina nije prosledjena", "Ispunite polje Količina")
     }
@@ -70,18 +72,18 @@ export class CarthComponent implements OnInit{
    
   }
 
-  emptyItem(id, element: HTMLTableRowElement, number: any){
-    console.log(number)
+  emptyItem(id, element: HTMLTableRowElement){
     console.log(id)
     element.remove()
-    this.dataService.deleteData(id, number)
+    this.dataService.deleteData(id)
   } 
-  getIt(data: any) {
-    this.changed = this.menu$;
-    console.log(data)
-    var i = data.position;
-    this.changed[i].data.amount = data.amount;
-    this.menu$ = this.changed;
+  getIt(data: any){
+    var i = JSON.parse(data.position);
+    var local = localStorage.getItem('cartItems');
+    var parsed = JSON.parse(local);
+    parsed[i].amount = data.amount;
+    localStorage.setItem('cartItems', JSON.stringify(parsed))
+
     this.show = false;
     this.tostr.success("Izmenili ste količinu jela: "+ data.name)
   }

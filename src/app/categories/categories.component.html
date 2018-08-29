@@ -1,4 +1,4 @@
-<div class="row d-flex justify-content-center" id="wrapper" [@categories]="state">
+<div class="row d-flex justify-content-center" id="wrapper"  [@categories]="state">
   <a id="first" *ngFor="let category of categories" (click)="getByCategory(category.category_id)">
     <div id="card" class="card hvr-grow" style="width:200px" (click)="reset(category.category_id)">
       <img class="card-img-top" src="{{category.link}}"

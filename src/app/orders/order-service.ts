@@ -70,4 +70,7 @@ export class OrderService{
     emptyOut(){
         this.data = [];
     }
+    singleStartingDate(date: any, offset){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/startDate/"+ date +"?offset="+ offset)
+    }
 }
