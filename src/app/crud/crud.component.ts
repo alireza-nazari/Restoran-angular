@@ -14,7 +14,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./crud.component.css']
 })
 export class CrudComponent implements OnInit{
-  term: any;
+  term: string = '';
   edit: boolean = true;
   confirmBtn: boolean = false;
   editBtn: boolean = true;
@@ -133,7 +133,7 @@ export class CrudComponent implements OnInit{
       co.hidden = false;
       ur.hidden = false;
       me.hidden = false;
-      this.confirmBtn = true;
+      this.confirmBtn = false;
       this.a = 0;
     }
 
@@ -160,6 +160,7 @@ export class CrudComponent implements OnInit{
       link: url.value,
       piece: mes.value
     }, id)
+    
   }
 
   newMealData(name: any, price: any, category: any, url: any, measure: any){

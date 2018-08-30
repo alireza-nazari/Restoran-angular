@@ -15,12 +15,27 @@ export class OrderService{
     getOrders(id: any){
         return this.http.get<any>(environment.apiBaseUrl + "orders/scroll?offset=" + id)
     }
+    singleDate(date: any, id: any){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+ date +"?offset="+id, {headers: this.headers})
+    }
+    singleDateUser(date: any, id: any, offset){
+        return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+id+"&date="+date)
+    }
+    toDate(date: any, offset){
+        return this.http.get<any>(environment.apiBaseUrl +"orders/endDate/"+ date +"?offset="+ offset)
+    }
     todayOrders(date: any, id: any){
         console.log(date)
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date+"?offset="+id, {headers: this.headers})
     }
     fromTo(from: any, to: any, offset){
         return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset="+offset+"&start="+ from +"&end=" + to)
+    }
+    fromAndUser(date: any, id: any, offset: any){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndStartDate?offset="+ offset +"&client_id="+ id +"&start="+ date)
+    }
+    toAndUser(date: any, id: any, offset: any){
+        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndEndDate?offset="+ offset +"&client_id="+ id +"&end="+ date)
     }
     user(name: any){
         console.log(this.last)

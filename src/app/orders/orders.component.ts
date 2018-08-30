@@ -6,6 +6,7 @@ import { trigger, state, style } from '@angular/animations';
 
 import { NgForm } from '@angular/forms';
 import { ToastrService, Toast } from 'ngx-toastr';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 @Component({
   selector: 'app-orders',
@@ -19,7 +20,7 @@ import { ToastrService, Toast } from 'ngx-toastr';
         'visibility': 'hidden',
       })),
       state('expand', style({
-        'height': '135px',
+        'height': '195px',
         'transition': 'visibility 0.5s, height 0.2s',
         'visibility': 'visible',
 
@@ -49,7 +50,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
   singleUserData: HTMLInputElement;
   sortNumber: number = 0;
   angleType: string = 'angle-down'
-
+  singleDateUser: any;
   attachOutsideOnClick: boolean;
   todaysDate : Date;
   result: boolean = false;
@@ -64,8 +65,10 @@ export class OrdersComponent implements OnInit, OnDestroy{
   public state: any = 'normal';
   public user: boolean;
   i: number = 0;
+  iter: number = 0;
   alertContent: string;
   alert: boolean = false;
+  singleDate: boolean = true;
   constructor(public orderService: OrderService,
               private datepipe: DatePipe,
               private tostr: ToastrService) {
@@ -103,7 +106,22 @@ export class OrdersComponent implements OnInit, OnDestroy{
     var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
-        (res: Array<any>) =>{
+        (res) =>{
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Trenuto ne postoje porudzbine za današnji datum'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          } 
           this.data = this.data.concat(this.orderService.createArray(res))
         }
       )
@@ -117,7 +135,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.fromToData(this.formData, false)
     }
     else if(this.clickedFunction == 'singleUser'){
-      this.singleUser(false)
+      this.singleUser(false, this.singleDateUser)
     }
   }
   sort(){
@@ -147,6 +165,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.data = [];
       console.log(event)
     }
+
     if(this.userID == 'undefined' || this.userID == '' || this.userID == null && form.value.from != '' && form.value.to != ''){
       this.orderService.fromTo(this.formData.value.from, this.formData.value.to, this.id)
       .subscribe(
@@ -177,7 +196,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
         }
       )
     }
-    else if(form.value.from != "" && form.value.to == " " || form.value.to == "" || form.value.to == 'undefined'  && this.userID == 'undefined'){
+    else if((this.userID == 'undefined' && form.value.from != "") && (form.value.to == "" || form.value.to == 'undefined')){
       this.orderService.singleStartingDate(form.value.from, this.id)
       .subscribe(
         (res) => {
@@ -267,6 +286,97 @@ export class OrdersComponent implements OnInit, OnDestroy{
         }
       )
     }
+    else if(this.userID == null || this.userID == 'undefined' && form.value.from == '' && form.value.to != ''){
+      this.orderService.toDate(form.value.to, this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          } 
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) => {
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+        }
+      )
+    }
+    else if((this.userID != null || this.userID != 'undefined') && (form.value.from != '' && form.value.to == '')){
+      this.orderService.fromAndUser(form.value.from, this.userID,this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          } 
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) => {
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+        }
+      )
+    }
+
+    else if((this.userID != null || this.userID != 'undefined') && form.value.from == '' && form.value.to != ''){
+      this.orderService.toAndUser(form.value.to, this.userID,this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          } 
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) => {
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+        }
+      )
+    }
   }
   passData(username, id, input: HTMLInputElement){
     input.value = username;
@@ -305,23 +415,27 @@ export class OrdersComponent implements OnInit, OnDestroy{
       )
   }
   showAdvanced(paragraph: HTMLParagraphElement) {
-    console.log(this.state)
-    if(this.state === 'expand'){
-      this.state = 'expandMore';
+    this.iter ++;
+    if(this.iter == 1){
       this.advanced = true;
       paragraph.innerText = 'Manje'
       this.arrow = 'arrow-up';
       this.more = true;
+      this.singleDate = false;
     }else{
-      this.state = 'expand';
+      this.iter = 0;
       paragraph.innerText = 'Detaljnjije';
       this.arrow = 'arrow-down';
       this.advanced = false;
       this.more = false;
+      this.singleDate = true;
     }
   }
-  singleUser(event: boolean){
+  singleUser(event: boolean, forme: NgForm){
+    this.singleDateUser = forme;
+    console.log(this.singleDateUser.value.single)
     this.alert = false;
+    var b;
     if(event == true){
       this.data = [];
       this.id = 0;
@@ -329,36 +443,99 @@ export class OrdersComponent implements OnInit, OnDestroy{
       
     }
     this.orderService.emptyOut();
-    this.clickedFunction = 'singleUser'
-    console.log(this.id)
-    this.orderService.getByUser(this.userID, this.id)
-    .subscribe(
-      (res) => {
-        if(this.data != [] && res == ''){
-          console.log("DS")
+    this.clickedFunction = 'singleUser';
+    if(this.singleDateUser.value.single == '' && this.userID != null){
+      this.orderService.getByUser(this.userID, this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          }       
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Prikazali ste sve porudzbine'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
         }
-        else if(res == ''){
+      )
+    }
+    else if(this.userID == null || this.userID == 'undefined' && this.singleDateUser.value.single != ''){
+      this.orderService.singleDate(this.singleDateUser.value.single, this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          }       
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Nema porudzbina sa zadatim uslovima'
-        }       
-        this.data = this.data.concat(this.orderService.createArray(res))
-      },
-      (error) =>{
-        this.alert = true;
-        setTimeout(() => {
-          this.alert = false
-        }, 10000)
-        this.alertContent = 'Došlo je do greške, pokušajte ponovo'
-      }
-    )
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+        }
+      )
+    }
+    else if(this.userID != null || this.userID != null && this.singleDateUser != ''){
+      this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID ,this.id)
+      .subscribe(
+        (res) => {
+          if(this.data != [] && res == ''){
+            console.log("DS")
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          }       
+          this.data = this.data.concat(this.orderService.createArray(res))
+        },
+        (error) =>{
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+        }
+      )
+    }
+
+   
   }
   onClickedOutside(){
     this.result = false;

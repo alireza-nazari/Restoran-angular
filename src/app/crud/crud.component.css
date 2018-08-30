@@ -53,32 +53,36 @@ fa{
     margin: 20px 5px 
 }
 tr td:nth-child(1){
-    width: 15%;
+    width: 20%;
     text-align: center;
 }
 tr td:nth-child(2){
-   width: 15%;
+   width: 20%;
    text-align: center;
 }
 tr td:nth-child(3){
-    width: 15%;
+    width: 20%;
     text-align: center;
 }
 tr td:nth-child(4){
-    width: 15%;
+    width: 20%;
 }
 tr td:nth-child(5){
-    width: 15%;
+    width: 20%;
     text-align: center;
 }
 tr td:nth-child(6){
-    width: 15%;
+    width: 20%;
     text-align: center;
 }
 thead{
+
+}
+thead tr th{
+    vertical-align: top;
     text-align: center;
 }
-table{
+tbody tr td{
     table-layout: fixed;
 }
 td{
@@ -97,9 +101,6 @@ td{
     }
     #tableWrapper{
         overflow-x: auto;
-    }
-    table{
-        table-layout: auto;
     }
     th{
         vertical-align: top;
