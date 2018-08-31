@@ -124,7 +124,7 @@ export class MenuComponent implements OnInit,  DoCheck{
                     meal.piece = 'omad'
                   }
                 }
-                this.page += 10;
+                this.page += 5;
                 this.spinerGroup = false;
               },
               (error) => {
@@ -150,7 +150,7 @@ export class MenuComponent implements OnInit,  DoCheck{
                     meal.piece = 'Komad'
                   }
                 }
-                this.page += 10;
+                this.page += 5;
                 this.spinerGroup = false;
           },
           (error) => {

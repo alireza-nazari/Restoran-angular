@@ -113,7 +113,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
             setTimeout(() => {
               this.alert = false
             }, 10000)
-            this.alertContent = 'Trenuto ne postoje porudzbine za današnji datum'
+            this.alertContent = 'Trenutno ne postoje porudzbine za današnji datum'
           }
           else if(res == ''){
             this.alert = true;
