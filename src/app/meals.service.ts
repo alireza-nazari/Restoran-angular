@@ -28,19 +28,16 @@ export class MealsService{
     postOrder(data: any){
         this.data = [];
         for(let item of data){
-            console.log(item)
             this.data.push({
                 meal: {
-                    meal_id: item.data.id
+                    meal_id: item.id
                 },
-                piece: item.data.piece,
-                quantity: item.data.amount
+                piece: item.piece,
+                quantity: item.amount
             })
         }
         console.log(this.data)
-        return this.http.post<any>(environment.apiBaseUrl +"orders/list",
-        this.data
-        ,{headers: this.headers})
+        return this.http.post<any>(environment.apiBaseUrl +"orders/list", this.data, {headers: this.headers})
     }
 
 }

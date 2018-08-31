@@ -29,8 +29,6 @@ export class CarthComponent implements OnInit{
   ngOnInit() {
   this.menu$ = this.dataService.getData();
   this.dat = this.menu$;
-  console.log(this.dat.length)
-  console.log(this.dataService.getData());
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -50,11 +48,21 @@ export class CarthComponent implements OnInit{
   }
 
   submit(data: any) {
-    console.log(data.data.amount)
-    if(data[0].data.amount == ''){
+    var state;
+    console.log(data[0].amount)
+    for(let item of data){
+      if(item.amount == ''){
+        state = 'empty';
+      }
+      else if(isNaN(item.amount)){
+        state = 'notNumber';
+        console.log(state)
+      }
+    }
+    if(state == 'empty'){
       this.tostr.error("Porudzbina nije prosledjena", "Ispunite polje Količina")
     }
-    else{
+    else {
       this.meals.postOrder(data)
       .subscribe(
         () => {
@@ -69,7 +77,7 @@ export class CarthComponent implements OnInit{
         }
       )
     }
-   
+
   }
 
   emptyItem(id, element: HTMLTableRowElement){
@@ -82,8 +90,8 @@ export class CarthComponent implements OnInit{
     var local = localStorage.getItem('cartItems');
     var parsed = JSON.parse(local);
     parsed[i].amount = data.amount;
+    this.menu$ = parsed;
     localStorage.setItem('cartItems', JSON.stringify(parsed))
-
     this.show = false;
     this.tostr.success("Izmenili ste količinu jela: "+ data.name)
   }

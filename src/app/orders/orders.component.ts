@@ -383,7 +383,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
     this.userID = id;
     this.users = [];
   }
-  userData(dateOf: any) {
+  userData(dateOf: any){
     if(dateOf.value.user == ''){
       this.userID = null;
       this.users = [];
