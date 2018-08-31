@@ -388,7 +388,8 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.userID = null;
       this.users = [];
     }else{
-    this.orderService.user(dateOf.value.user)
+    var user = dateOf.value.user;
+    this.orderService.user(user.toLowerCase())
       .subscribe(
         (res) => {
           this.users = res;
