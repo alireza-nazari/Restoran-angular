@@ -69,6 +69,8 @@ export class OrdersComponent implements OnInit, OnDestroy{
   alertContent: string;
   alert: boolean = false;
   singleDate: boolean = true;
+  spinerGroup: boolean = false;
+  spinner: boolean = false;
   constructor(public orderService: OrderService,
               private datepipe: DatePipe,
               private tostr: ToastrService) {
@@ -95,6 +97,8 @@ export class OrdersComponent implements OnInit, OnDestroy{
       );
   }
   today(event: boolean){
+    this.spinner = true;
+    this.spinerGroup = true;
     this.alert = false;
     this.orderService.emptyOut();
     this.clickedFunction = 'today';
@@ -123,19 +127,29 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.alertContent = 'Prikazali ste sve porudzbine'
           } 
           this.data = this.data.concat(this.orderService.createArray(res))
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
   }
   moreOrders() {
+    this.spinner = true;
+    this.spinerGroup = true;
     this.id += 10;
     if(this.clickedFunction == 'today'){
-      this.today(false)
+      this.today(false);
+      this.spinner = false;
+      this.spinerGroup = false;
     }
     else if(this.clickedFunction == 'fromToData'){
-      this.fromToData(this.formData, false)
+      this.fromToData(this.formData, false);
+      this.spinner = false;
+      this.spinerGroup = false;
     }
     else if(this.clickedFunction == 'singleUser'){
-      this.singleUser(false, this.singleDateUser)
+      this.singleUser(false, this.singleDateUser);
+      this.spinner = false;
+      this.spinerGroup = false;
     }
   }
   sort(){
@@ -155,17 +169,16 @@ export class OrdersComponent implements OnInit, OnDestroy{
 
   }
   fromToData(form: NgForm, event: boolean) {
+    this.spinner = true;
+    this.spinerGroup = true;
     this.alert = false;
-    console.log(form.value.from, form.value.to, this.userID)
     this.orderService.emptyOut();
     this.formData = form;
     this.clickedFunction = 'fromToData';
     if(event == true){
       this.id = 0;
       this.data = [];
-      console.log(event)
     }
-
     if(this.userID == 'undefined' || this.userID == '' || this.userID == null && form.value.from != '' && form.value.to != ''){
       this.orderService.fromTo(this.formData.value.from, this.formData.value.to, this.id)
       .subscribe(
@@ -186,13 +199,17 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
           this.data = this.data.concat(this.orderService.createArray(res))
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -216,13 +233,17 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
           this.data = this.data.concat(this.orderService.createArray(res))
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -246,13 +267,17 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
           this.data = this.data.concat(this.orderService.createArray(res))
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -275,14 +300,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -305,14 +334,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -335,18 +368,21 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
-
     else if((this.userID != null || this.userID != 'undefined') && form.value.from == '' && form.value.to != ''){
       this.orderService.toAndUser(form.value.to, this.userID,this.id)
       .subscribe(
@@ -366,14 +402,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           } 
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) => {
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -433,6 +473,8 @@ export class OrdersComponent implements OnInit, OnDestroy{
     }
   }
   singleUser(event: boolean, forme: NgForm){
+    this.spinner = true;
+    this.spinerGroup = true;
     this.singleDateUser = forme;
     console.log(this.singleDateUser.value.single)
     this.alert = false;
@@ -464,14 +506,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           }       
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -494,14 +540,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           }       
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }
@@ -524,14 +574,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
             }, 10000)
             this.alertContent = 'Nema porudzbina sa zadatim uslovima'
           }       
-          this.data = this.data.concat(this.orderService.createArray(res))
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
         },
         (error) =>{
           this.alert = true;
           setTimeout(() => {
             this.alert = false
           }, 10000)
-          this.alertContent = 'Došlo je do greške, pokušajte ponovo'
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
         }
       )
     }

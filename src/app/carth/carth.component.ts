@@ -51,13 +51,11 @@ export class CarthComponent implements OnInit{
     var state;
     console.log(data[0].amount)
     for(let item of data){
+      console.log(isNaN(item.amount))
       if(item.amount == ''){
         state = 'empty';
       }
-      else if(isNaN(item.amount)){
-        state = 'notNumber';
-        console.log(state)
-      }
+      
     }
     if(state == 'empty'){
       this.tostr.error("Porudzbina nije prosledjena", "Ispunite polje Količina")
@@ -85,8 +83,13 @@ export class CarthComponent implements OnInit{
     element.remove()
     this.dataService.deleteData(id)
   } 
-  getIt(data: any){
-    var i = JSON.parse(data.position);
+  getIt(data: any, amount: HTMLInputElement){
+    console.log(amount.accessKey)
+    if(data.amount == ''){
+      this.tostr.error("Unesite količinu jela")
+    }
+    else {
+      var i = JSON.parse(data.position);
     var local = localStorage.getItem('cartItems');
     var parsed = JSON.parse(local);
     parsed[i].amount = data.amount;
@@ -94,6 +97,8 @@ export class CarthComponent implements OnInit{
     localStorage.setItem('cartItems', JSON.stringify(parsed))
     this.show = false;
     this.tostr.success("Izmenili ste količinu jela: "+ data.name)
+    }
+    
   }
   showConfirm(elem: HTMLTableRowElement){
     this.show = true;
@@ -104,5 +109,8 @@ export class CarthComponent implements OnInit{
     else{
       this.tostr.error("Količina mora biti broj")
     }
+  }
+  testIfNum(){
+    console.log()
   }
 }

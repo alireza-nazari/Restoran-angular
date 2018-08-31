@@ -79,6 +79,25 @@
                 </tr>
             </table>
         </div>
+        <div *ngIf="spinner" style="height: 100px;" snInViewport [debounce]="300">
+            <div *ngIf="spinerGroup" class="windows8">
+                <div class="wBall" id="wBall_1">
+                  <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_2">
+                  <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_3">
+                  <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_4">
+                  <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_5">
+                  <div class="wInnerBall"></div>
+                </div>
+              </div>
+        </div>
         <div class="alert alert-info" role="alert" *ngIf="alert">
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>

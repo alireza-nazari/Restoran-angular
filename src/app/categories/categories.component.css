@@ -36,9 +36,11 @@ a{
     margin-left: 0px; 
 }
 
-#wrapper{
+#wrapper{   
     height: 100%;
-    margin: 0px 0px
+    margin: 0px 0px;
+    display: flex;
+    flex-wrap: wrap;
 }
 #outletWrapperr{
     width: 100%;
@@ -60,8 +62,7 @@ a{
 .hvr-grow:focus,
 .hvr-grow:active {
     transform: scale(1.05);
-    cursor: pointer;
-    
+    cursor: pointer;  
 }
 @media screen and (max-width: 590px) {
     #wrapper{
@@ -73,5 +74,47 @@ a{
     #first img{
         display: none;
     }
+}
+
+@media screen and (max-width: 1756px) {
+    a:nth-child(1){
+        float: right;
+        text-align: center;
+        border: 1px solid purple;
+        break-after: always;
+    }
+    a:nth-child(2){
+        float: right;
+        border: 1px solid purple;
+        text-align: center;
+        break-after: always;
+    }
+    a:nth-child(3){
+        float: right;
+        border: 1px solid purple;
+        text-align: center;
+        break-after: always;
+    }
+    a:nth-child(4)::after{
+        display: block;
+        white-space: pre;
     
+    }
+    a:nth-child(5){
+        break-after: page;
+        text-align: center;
+        border: 1px solid purple;
+    }
+    a:nth-child(6){
+        border: 1px solid purple;
+        text-align: center;
+    }
+    a:nth-child(7){
+        border: 1px solid purple;
+        text-align: center;
+    }
+    a:nth-child(8){
+        border: 1px solid purple;
+        text-align: center;
+    }
 }

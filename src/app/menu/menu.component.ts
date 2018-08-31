@@ -114,14 +114,14 @@ export class MenuComponent implements OnInit,  DoCheck{
               (res: Array<any>[]) => {
                 setTimeout(() => {
                   this.spiner = true;
-                }, 500)
+                }, 1)
                 this.meals = this.meals.concat(res);
                 for(let meal of this.meals){
                   if(meal.piece == true){
                       meal.piece = 'Gram'
                   }
                   else if(meal.piece == false){
-                    meal.piece = 'omad'
+                    meal.piece = 'Komad'
                   }
                 }
                 this.page += 5;
@@ -139,7 +139,7 @@ export class MenuComponent implements OnInit,  DoCheck{
               (res: Array<any>[]) => {
                 setTimeout(() => {
                   this.spiner = true;
-                }, 500)
+                }, 1)
                 console.log(res)
                 this.meals = res;
                 for(let meal of this.meals){

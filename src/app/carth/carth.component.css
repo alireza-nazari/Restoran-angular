@@ -36,6 +36,10 @@ form thead th{
 #submit{
     font-size: 25px
 }
+#input:invalid{
+    border-color: red;
+}
+
 .hvr-grow {
     display: inline-block;
     vertical-align: middle;
