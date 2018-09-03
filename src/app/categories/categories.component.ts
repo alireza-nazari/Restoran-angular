@@ -60,4 +60,7 @@ export class CategoriesComponent implements OnInit {
       this.data.clicked(true);
     }
   }
+  more(items){
+    console.log(items)
+  }
 }

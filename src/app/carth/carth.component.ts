@@ -84,9 +84,12 @@ export class CarthComponent implements OnInit{
     this.dataService.deleteData(id)
   } 
   getIt(data: any, amount: HTMLInputElement){
-    console.log(amount.accessKey)
+    console.log(amount.value)
     if(data.amount == ''){
       this.tostr.error("Unesite količinu jela")
+    }
+    else if(data.amount <= 0){
+      this.tostr.error("Količina ne može biti negativna")
     }
     else {
       var i = JSON.parse(data.position);

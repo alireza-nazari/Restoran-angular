@@ -4,7 +4,6 @@
 .center {
     position: absolute;
     width: 1000px;
-    /* padding: 10px; */
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -15,6 +14,9 @@ p{
 }
 h2{
     margin:20px 10px 0px 10px; 
+}
+#tableWrapper{
+	overflow-x: scroll;
 }
 
 #tableHeader{
@@ -159,7 +161,7 @@ li:hover{
     transform: scale(1.2);
 }
 #header th{
-vertical-align: top; 
+vertical-align: top;
 }
 #todaySubmit{
     margin-top: 10px !important; 
@@ -189,9 +191,7 @@ vertical-align: top;
 #singleDate{
     margin-top: 10px;
 }
-#tableWrapper{
-    overflow-x: auto;
-}
+
 #toDate {
     width: 185px;
 }
@@ -210,6 +210,9 @@ vertical-align: top;
     }
 }
 @media only screen and (max-width: 780px) {
+	table{
+		overflow: scroll;
+	}
     #toDate {
         width: 100%;
         margin-left: 0px;

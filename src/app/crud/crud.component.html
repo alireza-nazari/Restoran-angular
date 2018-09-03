@@ -5,7 +5,7 @@
       <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
   </div>
   <div id="tableWrapper">
-    <table class="table table striped" style="table-layout: fixed">
+    <table class="table table striped">
       <form>
       <thead>
         <tr>
@@ -33,7 +33,7 @@
           </th>
         </tr>
       </thead>
-      <tbody style="overflow-x: auto">
+      <tbody>
         <tr *ngIf="addNewMeal" id="newMeal">
           <td>
             <input type="text" ngModel class="form-control" name="mealName" #name>
@@ -71,6 +71,7 @@
           </td>
           <td>
             <select #c [hidden]="edit" name="category" name="mealCategory" class="form-control">
+              <option value="">Izaberi</option>
               <option *ngFor="let cat of cate" value="{{cat.category_id}}" #categoryName>{{cat.name}}</option>
             </select>
             <span #co>{{meal.category.name}}</span>
@@ -84,15 +85,11 @@
                 <option value="false">Komad</option>
                 <option value="true">Gram</option>
               </select>
-             
                   <span #me>{{meal.piece}}</span>
- 
-            
           </td>
-          <td>
+          <td style="width: 140px">
             <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, mes,meal.meal_id,url, na, pr, co, ur, me)"></fa>
             <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, url, mes, na, pr, co, ur,me)" *ngIf="editBtn"></fa>
-            
             <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="open(delete, meal.name, meal.meal_id)"></fa>
           </td>
         </tr>

@@ -25,15 +25,15 @@
                                         <fa id="moreBtn" name="{{arrow}}"></fa>
                                     </div>
                                     <div id="singleDate" *ngIf="singleDate">
-                                        <input style="width: 100%" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Datum"
-                                        name="single" onfocus="(this.type='date')" ngModel>
+                                        <input style="width: 100%" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Datum" name="single"
+                                            onfocus="(this.type='date')" ngModel>
                                     </div>
 
                                     <button *ngIf='!more' id="userSubmit" type="submit" class="btn btn-primary">Pretraži</button>
-    
+
                                 </form>
 
-  
+
                             </div>
 
                             <form id="advanced" *ngIf="advanced" class="form-inline" #fromTo="ngForm" (ngSubmit)="fromToData(fromTo, true)">
@@ -53,11 +53,11 @@
             </div>
         </div>
         <div id="tableWrapper">
-            <table border="1px solid black" class="table table-striped" style="table-layout: fixed; width: 100%">
+            <table border="1px solid black" class="table table-striped">
                 <thead>
                     <tr id="header">
                         <th>Broj porudzbine
-                                <fa class="hvr-grow" name="{{angleType}}" (click)="sort()" id="angleSelector"></fa>
+                            <fa class="hvr-grow" name="{{angleType}}" (click)="sort()" id="angleSelector"></fa>
                         </th>
                         <th>Ime klijenta
                             <div>
@@ -70,38 +70,41 @@
                         <th>Datum narudzbine</th>
                     </tr>
                 </thead>
-                <tr *ngFor="let meal of data | filter: term">
-                    <td>{{ meal.id }}</td>
-                    <td>{{ meal.name }}({{meal.user}})</td>
-                    <td>{{ meal.mealName }}</td>
-                    <td>{{ meal.amount}} {{ meal.type }}</td>
-                    <td>{{ meal.date }}</td>
-                </tr>
+                <tbody>
+                    <tr *ngFor="let meal of data | filter: term">
+                        <td>{{ meal.id }}</td>
+                        <td>{{ meal.name }}({{meal.user}})</td>
+                        <td>{{ meal.mealName }}</td>
+                        <td>{{ meal.amount}} {{ meal.type }}</td>
+                        <td>{{ meal.date }}</td>
+                    </tr>
+                </tbody>
+
             </table>
         </div>
         <div *ngIf="spinner" style="height: 100px;" snInViewport [debounce]="300">
             <div *ngIf="spinerGroup" class="windows8">
                 <div class="wBall" id="wBall_1">
-                  <div class="wInnerBall"></div>
+                    <div class="wInnerBall"></div>
                 </div>
                 <div class="wBall" id="wBall_2">
-                  <div class="wInnerBall"></div>
+                    <div class="wInnerBall"></div>
                 </div>
                 <div class="wBall" id="wBall_3">
-                  <div class="wInnerBall"></div>
+                    <div class="wInnerBall"></div>
                 </div>
                 <div class="wBall" id="wBall_4">
-                  <div class="wInnerBall"></div>
+                    <div class="wInnerBall"></div>
                 </div>
                 <div class="wBall" id="wBall_5">
-                  <div class="wInnerBall"></div>
+                    <div class="wInnerBall"></div>
                 </div>
-              </div>
+            </div>
         </div>
         <div class="alert alert-info" role="alert" *ngIf="alert">
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>
-          </div>
+        </div>
         <div style="text-align: center">
             <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
         </div>

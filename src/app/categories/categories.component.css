@@ -1,9 +1,9 @@
 *{
     font-family: Ubuntu; 
 }
-.row{
+/* .row{
     margin-top: 120px;
-}
+} */
 
 a > .card > img{
     height: 70%;
@@ -37,15 +37,22 @@ a{
 }
 
 #wrapper{   
-    height: 100%;
-    margin: 0px 0px;
     display: flex;
     flex-wrap: wrap;
 }
 #outletWrapperr{
     width: 100%;
 }
-
+#moreWrapper{
+    height: 25px;
+    width: 80px;
+    text-align: center;
+    background-color: rgb(255, 68, 0);
+    color: white;
+    margin-top: 440px;
+    position: absolute;
+    z-index: 51;
+}
 .hvr-grow {
     display: inline-block;
     vertical-align: middle;
@@ -75,46 +82,55 @@ a{
         display: none;
     }
 }
+@media screen and (max-width: 768px) {
+
+}
 
 @media screen and (max-width: 1756px) {
     a:nth-child(1){
-        float: right;
         text-align: center;
-        border: 1px solid purple;
-        break-after: always;
+        flex: 1 0 21%;
+        margin: 5px;
     }
     a:nth-child(2){
-        float: right;
-        border: 1px solid purple;
         text-align: center;
-        break-after: always;
+        flex: 1 0 21%;
+        margin: 5px;
     }
     a:nth-child(3){
-        float: right;
-        border: 1px solid purple;
         text-align: center;
-        break-after: always;
+        flex: 1 0 21%;
+        margin: 5px;
     }
-    a:nth-child(4)::after{
-        display: block;
-        white-space: pre;
-    
+    a:nth-child(4){
+        text-align: center;
+        flex: 1 0 21%;
+        margin: 5px;
+       
     }
     a:nth-child(5){
-        break-after: page;
+        margin-top: 30px !important;
         text-align: center;
-        border: 1px solid purple;
+        flex: 1 0 21%;
+        margin: 5px;
     }
     a:nth-child(6){
-        border: 1px solid purple;
+        margin-top: 30px !important;
+
         text-align: center;
+        flex: 1 0 21%;
+        margin: 5px;
     }
     a:nth-child(7){
-        border: 1px solid purple;
+        margin-top: 30px !important;
         text-align: center;
+        flex: 1 0 21%;
+        margin: 5px;
     }
     a:nth-child(8){
-        border: 1px solid purple;
+        margin-top: 30px !important;
         text-align: center;
+        flex: 1 0 21%;
+        margin: 5px;
     }
 }
