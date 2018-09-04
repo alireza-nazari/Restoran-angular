@@ -140,7 +140,6 @@ export class MenuComponent implements OnInit,  DoCheck{
                 setTimeout(() => {
                   this.spiner = true;
                 }, 1)
-                console.log(res)
                 this.meals = res;
                 for(let meal of this.meals){
                   if(meal.piece == true){

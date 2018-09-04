@@ -8,6 +8,7 @@ export class OrderService{
     empty: any = [];
     last: string = '';
     data: any = [];
+    change: any = [];
     constructor(public http: HttpClient){}
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -52,30 +53,16 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl+"orders/client/" + id + "?offset="+ offset)
     }
     createArray(data){
-          for (let r of data) {
-            if (r.piece === false) {
-              this.data.push({
-                type: 'gr.',
-                id: r.order_id,
-                name: r.client.name,
-                date: r.order_date,
-                mealName: r.meal.name,
-                user: r.client.username,
-                amount: r.quantity
-              })
-            } else
-              if (r.piece === true) {
-                this.data.push({
-                  type: 'kom.',
-                  id: r.order_id,
-                  name: r.client.name,
-                  date: r.order_date,
-                  mealName: r.meal.name,
-                  user: r.client.username,
-                  amount: r.quantity
-                })
-              }
-          }
+        this.data = data;
+        console.log(this.data)
+        for(let meal of this.data){
+            if(meal.piece == true){
+                meal.piece = 'gram'
+            }
+            else if(meal.piece == false){
+              meal.piece = 'kom'
+            }
+        }
         return this.data;
     }
     combination(from: Date, to: Date, id: any, offset: any){
@@ -87,5 +74,20 @@ export class OrderService{
     }
     singleStartingDate(date: any, offset){
         return this.http.get<any>(environment.apiBaseUrl+"orders/startDate/"+ date +"?offset="+ offset)
+    }
+    changeStatus(data){
+        console.log(data)
+        for(let item of data){
+            item.display = false;
+            for(let item of data){
+                if(item.piece == 'gram'){
+                    item.piece = 'true'
+                }
+                else if(item.piece == 'kom'){
+                  item.piece = false
+                }
+            }
+        }
+        return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
 }

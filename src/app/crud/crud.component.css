@@ -54,12 +54,12 @@ fa{
 
  td{
     display:table-cell;
-    max-width: 480px;
+    width: 480px;
     text-align: center
 }
 th{
     display:table-cell;
-    max-width: 200px;
+    width: 800px;
 } 
 thead tr th{
     vertical-align: top;

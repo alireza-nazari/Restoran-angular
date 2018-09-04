@@ -112,7 +112,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
       .subscribe(
         (res) =>{
           if(this.data != [] && res == ''){
-            console.log("DS")
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -127,6 +126,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.alertContent = 'Prikazali ste sve porudzbine'
           } 
           this.data = this.data.concat(this.orderService.createArray(res))
+          console.log(this.data)
           this.spinner = false;
           this.spinerGroup = false;
         }
@@ -429,7 +429,14 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.users = [];
     }else{
     var user = dateOf.value.user;
-    this.orderService.user(user.toLowerCase())
+    user.toLowerCase();
+    for(let use of this.users){
+      var temp = use.nuserID
+      if(user == temp){
+        this.userID = use.client_id;
+      }
+    }
+    this.orderService.user(user)
       .subscribe(
         (res) => {
           this.users = res;
@@ -437,10 +444,10 @@ export class OrdersComponent implements OnInit, OnDestroy{
         }
       )
     }
+    console.log(this.userID)
   }
   showInput() {
     this.userInput === false ? this.userInput = true : this.userInput = false;
-    console.log(this.userInputTr)
     this.userInputTr === 'normal' ? this.userInputTr = 'expand' : this.userInputTr = 'normal';
 
   }
@@ -476,7 +483,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
     this.spinner = true;
     this.spinerGroup = true;
     this.singleDateUser = forme;
-    console.log(this.singleDateUser.value.single)
     this.alert = false;
     var b;
     if(event == true){
@@ -492,7 +498,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
       .subscribe(
         (res) => {
           if(this.data != [] && res == ''){
-            console.log("DS")
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -526,7 +531,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
       .subscribe(
         (res) => {
           if(this.data != [] && res == ''){
-            console.log("DS")
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -560,7 +564,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
       .subscribe(
         (res) => {
           if(this.data != [] && res == ''){
-            console.log("DS")
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -597,7 +600,18 @@ export class OrdersComponent implements OnInit, OnDestroy{
   }
   ngOnDestroy(){
     this.orderService.emptyOut();
-    
+    for(let dat of this.data){
+      dat.display = false;
+    }
+    this.orderService.changeStatus(this.data)
+    .subscribe(
+      (res) => {
+        console.log(res)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
   closeAlert(){
     this.alert = false;
@@ -607,5 +621,4 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.result = true;
     }
   }
-  
 }

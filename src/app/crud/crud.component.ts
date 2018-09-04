@@ -172,7 +172,8 @@ export class CrudComponent implements OnInit{
         name: name.value,
         price: price.value,
         link: url.value,
-        piece: measure.value
+        piece: measure.value,
+        display: false
       })
       this.addMeal();
       this.tostr.success('Jelo je dodato!');

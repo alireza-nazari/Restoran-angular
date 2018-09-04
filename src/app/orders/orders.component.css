@@ -1,6 +1,12 @@
 *{
     box-sizing: border-box;
 }
+.seen{
+	background-color: lightgray;
+}
+.new{
+	background-color: lightgreen;
+}
 .center {
     position: absolute;
     width: 1000px;

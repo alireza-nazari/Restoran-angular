@@ -33,10 +33,10 @@ export class MealsService{
                     meal_id: item.id
                 },
                 piece: item.piece,
-                quantity: item.amount
+                quantity: item.amount,
+                display: true
             })
         }
-        console.log(this.data)
         return this.http.post<any>(environment.apiBaseUrl +"orders/list", this.data, {headers: this.headers})
     }
 

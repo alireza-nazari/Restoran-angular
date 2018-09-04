@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { MealsService } from '../meals.service';
 import { ToastrService } from 'ngx-toastr';
 import { isNumeric } from 'rxjs/internal-compatibility';
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-carth',
   templateUrl: './carth.component.html',
@@ -22,13 +23,12 @@ export class CarthComponent implements OnInit{
     private dataService: DataService,
     private meals: MealsService,
     private tostr: ToastrService,
-    config: NgbTooltipConfig) { 
+    private router: Router) { 
       
     }
 
   ngOnInit() {
   this.menu$ = this.dataService.getData();
-  this.dat = this.menu$;
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -55,7 +55,6 @@ export class CarthComponent implements OnInit{
       if(item.amount == ''){
         state = 'empty';
       }
-      
     }
     if(state == 'empty'){
       this.tostr.error("Porudzbina nije prosledjena", "Ispunite polje Količina")
@@ -64,7 +63,13 @@ export class CarthComponent implements OnInit{
       this.meals.postOrder(data)
       .subscribe(
         () => {
-          this.tostr.success("Porudzbina je uspešno prosledjena!")
+          this.tostr.success("Porudzbina je uspešno prosledjena!");
+          this.menu$ = null;
+          localStorage.setItem('cartItems', '[]');
+          localStorage.removeItem('number');
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 500)
         },
         (error) => {
          if(error.status == 401){

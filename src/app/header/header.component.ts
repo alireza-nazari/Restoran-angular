@@ -3,7 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { HeaderService } from './header-service';
 import { trigger, state, style } from '@angular/animations';
 import { DataService } from '../data.service';
-
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-header',
@@ -51,8 +51,11 @@ export class HeaderComponent implements OnInit, DoCheck{
               private head: HeaderService,
               private data: DataService) { }
   ngOnInit(){
-    this.tokenValue = localStorage.getItem('role');
-    if(this.tokenValue === 'admin'){
+    const token = this.auth.getToken();
+    
+    const tokenPayload = decode(token);
+
+    if(tokenPayload.role === 'admin'){
       this.status = true;
     }
     else{
