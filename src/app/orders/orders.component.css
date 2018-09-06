@@ -21,10 +21,16 @@ p{
 h2{
     margin:20px 10px 0px 10px; 
 }
+#number{
+	position: relative;
+	z-index: 54;
+}
 #tableWrapper{
 	overflow-x: scroll;
 }
-
+#inputText{
+	width: 100%;
+}
 #tableHeader{
     width: 100%;
     color: white;
@@ -119,27 +125,27 @@ h2{
     
     color: black;
 }
-li{
+/* li{
     list-style-type: none;
     margin-left: -40px;
     padding-left: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
-}
+} */
 th{
     vertical-align: top;
 }
-ul{
+/* ul{
     margin-bottom: 1px;
-}
+} */
 #searchBtn{
     cursor: pointer;
 }
-li:hover{
+/* li:hover{
     background-color: #d9d9d9;
     color: black;
     cursor: pointer;
-}
+} */
 #search{
     text-align: right;
     font-size: 20px;
@@ -201,8 +207,9 @@ vertical-align: top;
 #toDate {
     width: 185px;
 }
-#fromDate{
-    width: 185px;
+#users{
+	height: 200px;
+	overflow-y: scroll;
 }
 @media only screen and (max-width: 1001px) {
     .center{
@@ -228,7 +235,7 @@ vertical-align: top;
         width: 100%;
     }
     #todaySubmit{
-        margin-top: 69px !important; 
+        margin-top: 80px !important; 
         position: absolute;
         margin-right: 5px;
     }
@@ -236,7 +243,7 @@ vertical-align: top;
         width: 100% !important;
     }
     .divWidth{
-        width: 100%;
+       width: 100%;
     }
     #btnWrapper{
         text-align: center;

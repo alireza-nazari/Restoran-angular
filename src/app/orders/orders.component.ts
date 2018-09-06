@@ -1,4 +1,4 @@
-import { Component, OnInit,  OnDestroy,  Input, HostListener} from '@angular/core';
+import { Component, OnInit,  OnDestroy,  Input, HostListener, ViewChild, ElementRef} from '@angular/core';
 
 import { DatePipe } from '@angular/common';
 import { OrderService } from './order-service';
@@ -6,12 +6,15 @@ import { trigger, state, style } from '@angular/animations';
 
 import { NgForm } from '@angular/forms';
 import { ToastrService, Toast } from 'ngx-toastr';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
 
+import { AuthService } from '../auth/auth.service';
+import decode from 'jwt-decode';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
+  providers: [NgbDropdownConfig],
   animations: [
     trigger('divState', [
       state('normal', style({
@@ -71,9 +74,23 @@ export class OrdersComponent implements OnInit, OnDestroy{
   singleDate: boolean = true;
   spinerGroup: boolean = false;
   spinner: boolean = false;
+  admin: boolean;
+  simpleUser: boolean;
+  current: string;
+  allUsers: any = [];
+  checkedUsers: any = [];
+  names: any = '';
+  itera: number;
+  allNumber: number = 0;
+  showedNumber: number = 0
+  remainNumber: number = 0;
+  angle: boolean = false;
   constructor(public orderService: OrderService,
               private datepipe: DatePipe,
-              private tostr: ToastrService) {
+              private auth: AuthService,
+              config: NgbDropdownConfig
+            ) {
+              config.autoClose = ("outside");
   }
   animate(paragraph: HTMLParagraphElement) {
     this.user = true;
@@ -86,7 +103,33 @@ export class OrdersComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.today(true);
+    const token = this.auth.getToken();
+    const tokenPayload = decode(token);
+    this.current = tokenPayload.name;
+    if(tokenPayload.role == 'admin'){
+      this.getUsers();
+      this.today(true);
+      this.admin = true;
+      this.simpleUser = false;
+    }
+    else{
+      this.userID = tokenPayload.id
+      this.admin = false;
+      this.simpleUser = true;
+    }
+    
+  }
+  getUsers(){
+    this.orderService.allUsers()
+    .subscribe(
+      (res) => {
+        this.allUsers = res;
+        console.log(this.allUsers)
+      },
+      (error) => {
+        alert("Doslo je do greske")
+      }
+    )
   }
   all() {
     this.orderService.getOrders(this.id)
@@ -94,9 +137,13 @@ export class OrdersComponent implements OnInit, OnDestroy{
         (res: Array<any>) => {
           this.data = this.orderService.createArray(res);
         }
-      );
+    );
   }
   today(event: boolean){
+    for(let dat of this.data){
+      dat.display = false;
+    }
+
     this.spinner = true;
     this.spinerGroup = true;
     this.alert = false;
@@ -106,11 +153,20 @@ export class OrdersComponent implements OnInit, OnDestroy{
     if(event == true){
       this.data = [];
       this.id = 0;
+      this.allNumber = 0;
+      this.showedNumber = 0
+      this.remainNumber = 0;
     }
     var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
         (res) =>{
+          if(res != ''){
+            this.allNumber = res[0].numberOfElements;
+            this.showedNumber += res.length;
+            this.remainNumber = this.allNumber - this.showedNumber;
+          }
+          console.log(this.remainNumber)
           if(this.data != [] && res == ''){
             this.alert = true;
             setTimeout(() => {
@@ -129,8 +185,10 @@ export class OrdersComponent implements OnInit, OnDestroy{
           console.log(this.data)
           this.spinner = false;
           this.spinerGroup = false;
+          this.angle = true;
         }
       )
+     
   }
   moreOrders() {
     this.spinner = true;
@@ -479,12 +537,56 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.singleDate = true;
     }
   }
+  checkAll(checkBox: HTMLUListElement){
+    this.itera += 1;
+    var number = checkBox.children.length;
+    if(this.itera == 1){
+      for(let i = 1; i < number; i++){
+        checkBox.children[i].children[0].checked = true;
+        console.log(checkBox.children[i].children[0].value)
+      }
+      this.itera +=1
+    }
+    else{
+      for(let i = 1; i < number; i++){
+        checkBox.children[i].children[0].checked = false;
+      }
+      this.itera = 0;
+    }
+
+  }
+  checkboxValue(id, name, check: HTMLInputElement, selected: HTMLInputElement){
+    if(this.names == ''){
+      this.names += name;
+    }
+    else if(check.checked == true){
+      this.names += ","+ name;
+    }
+      this.checkedUsers.push({
+        id: id,
+        name: name,
+        state: check.checked
+      })
+      this.checkedUsers.forEach((item, index) =>{
+        if(item.id == id && item.state == false){
+         this.checkedUsers.splice(index, 1);
+         this.names = this.names.replace(item.name, '');         
+         this.checkedUsers.forEach((ite, inde) =>{
+          if(ite.id == id && ite.state == true){
+            this.checkedUsers.splice(inde, 1);
+            this.names = this.names.replace(ite.name, '');
+         }  
+        }
+      }),
+      selected.value = this.names;
+  }
   singleUser(event: boolean, forme: NgForm){
     this.spinner = true;
     this.spinerGroup = true;
     this.singleDateUser = forme;
     this.alert = false;
-    var b;
+
+    console.log(forme)
     if(event == true){
       this.data = [];
       this.id = 0;
@@ -493,8 +595,42 @@ export class OrdersComponent implements OnInit, OnDestroy{
     }
     this.orderService.emptyOut();
     this.clickedFunction = 'singleUser';
-    if(this.singleDateUser.value.single == '' && this.userID != null){
+    if((this.userID != null || this.userID != '' || this.userID != 'undefined') && this.forme == ''){
       this.orderService.getByUser(this.userID, this.id)
+      .subscribe(
+        (res) => {
+          
+          if(this.data != [] && res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if(res == ''){
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          }       
+          this.data = this.data.concat(this.orderService.createArray(res));
+          this.spinner = false;
+          this.spinerGroup = false;
+        },
+        (error) =>{
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške, pokušajte ponovo';
+          this.spinner = false;
+          this.spinerGroup = false;
+        }
+      )
+    }
+    else if(this.checkedUsers != ''){
+      this.orderService.getByUser(this.checkedUsers, this.id)
       .subscribe(
         (res) => {
           if(this.data != [] && res == ''){

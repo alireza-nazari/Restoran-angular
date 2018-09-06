@@ -21,9 +21,7 @@ const appRoutes: Routes = [
     {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     {path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
-    {path: 'orders', component: OrdersComponent, canActivate: [RoleGuard, AuthGuard], data: {
-        role: 'admin'
-    }},
+    {path: 'orders', component: OrdersComponent, canActivate: [ AuthGuard]},
     {path: 'crud', component: CrudComponent, canActivate: [RoleGuard, AuthGuard], data: {
         role: 'admin'
     }},

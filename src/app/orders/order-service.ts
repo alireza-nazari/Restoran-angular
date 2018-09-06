@@ -9,6 +9,7 @@ export class OrderService{
     last: string = '';
     data: any = [];
     change: any = [];
+    ids: any;
     constructor(public http: HttpClient){}
     private headers = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -20,7 +21,18 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+ date +"?offset="+id, {headers: this.headers})
     }
     singleDateUser(date: any, id: any, offset){
-        return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+id+"&date="+date)
+        console.log(id.constructor === Array)
+        this.ids = null;
+        id.forEach((item, index) => {
+            console.log(index)
+            if(index == 0){         
+                this.ids = item.id
+            }
+            else{
+                this.ids += ","+item.id
+            }
+        })
+        return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+this.ids+"&date="+date)
     }
     toDate(date: any, offset){
         return this.http.get<any>(environment.apiBaseUrl +"orders/endDate/"+ date +"?offset="+ offset)
@@ -33,10 +45,30 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset="+offset+"&start="+ from +"&end=" + to)
     }
     fromAndUser(date: any, id: any, offset: any){
-        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndStartDate?offset="+ offset +"&client_id="+ id +"&start="+ date)
+        this.ids = null;
+        id.forEach((item, index) => {
+            console.log(index)
+            if(index == 0){         
+                this.ids = item.id
+            }
+            else{
+                this.ids += ","+item.id
+            }
+        })
+        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndStartDate?offset="+ offset +"&client_id="+ this.ids +"&start="+ date)
     }
     toAndUser(date: any, id: any, offset: any){
-        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndEndDate?offset="+ offset +"&client_id="+ id +"&end="+ date)
+        this.ids = null;
+        id.forEach((item, index) => {
+            console.log(index)
+            if(index == 0){         
+                this.ids = item.id
+            }
+            else{
+                this.ids += ","+item.id
+            }
+        })
+        return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndEndDate?offset="+ offset +"&client_id="+ this.ids +"&end="+ date)
     }
     user(name: any){
         console.log(this.last)
@@ -49,20 +81,32 @@ export class OrderService{
         }
         return this.empty;
     }
-    getByUser(id: number, offset){
-        return this.http.get<any>(environment.apiBaseUrl+"orders/client/" + id + "?offset="+ offset)
+    getByUser(data: any, offset){
+        data.forEach((item, index) => {
+            console.log(index)
+            if(index == 0){         
+                this.ids = item.id
+            }
+            else{
+                this.ids += ","+item.id
+            }
+        })
+        console.log(this.ids)
+        return this.http.get<any>(environment.apiBaseUrl+"orders/clients?offset="+ offset +"&id="+ this.ids)
+
     }
     createArray(data){
         this.data = data;
         console.log(this.data)
         for(let meal of this.data){
-            if(meal.piece == true){
+            if(meal.piece == true || meal.piece == 'gram'){
                 meal.piece = 'gram'
             }
-            else if(meal.piece == false){
+            else if(meal.piece == false || meal.piece == 'kom'){
               meal.piece = 'kom'
             }
         }
+        console.log(this.data)
         return this.data;
     }
     combination(from: Date, to: Date, id: any, offset: any){
@@ -74,6 +118,12 @@ export class OrderService{
     }
     singleStartingDate(date: any, offset){
         return this.http.get<any>(environment.apiBaseUrl+"orders/startDate/"+ date +"?offset="+ offset)
+    }
+    currentUser(offset){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+offset);
+    }
+    allUsers(){
+        return this.http.get<any>(environment.apiBaseUrl+"clients");
     }
     changeStatus(data){
         console.log(data)
@@ -89,5 +139,8 @@ export class OrderService{
             }
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
+    }
+    users(id, offset){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/clients?offset="+ offset +"&id=6,7,17")
     }
 }

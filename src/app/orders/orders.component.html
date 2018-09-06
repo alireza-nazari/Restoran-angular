@@ -12,12 +12,23 @@
                         <div [hidden]="!user">
                             <div id="userWrapper">
                                 <form #user="ngForm" (ngSubmit)="singleUser(true, user)">
-                                    <input #inputUser type="text" class="form-control" id="input" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                        ngModel (keyup)="userData(user)" name="user" autocomplete="off" (click)="showAuto()">
-                                    <div #auto id="result" *ngIf='result' (clickOutside)="onClickedOutside()">
-                                        <ul>
-                                            <li *ngFor="let use of users" (click)="passData(use.username, use.client_id, inputUser)">{{use.username}}({{use.name}})</li>
-                                        </ul>
+                                    <div *ngIf="simpleUser">
+                                        <input [value]="current" type="text" class="form-control" id="input" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
+                                            name="user" autocomplete="off" readonly>
+                                    </div>
+                                    <div *ngIf="admin">
+                                        <div>
+                                            <div ngbDropdown>
+                                                   
+                                                <input #inputClick type="text" class="form-control" id="inputText" aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime" name="user"
+                                                    autocomplete="off" readonly id="dropIt" ngbDropdownToggle>
+                                                <ul #dooo id="users" ngbDropdownMenu aria-labelledby="dropIt">
+                                                    <li #all><input type="checkbox" name="everything" (click)="checkAll(dooo)">Odaberi sve/poništi</li>
+                                                    <li  *ngFor="let use of allUsers" class="dropdown-item">
+                                                        <input #checkBo type="checkbox" name="userSelect" value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)" ngModel>{{use.name}}({{use.username}})</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="moreWrapper" (click)="showAdvanced(expandText)" role="button" class="btn btn-success">
                                         <fa id="moreBtn" name="{{arrow}}"></fa>
@@ -73,7 +84,7 @@
                 <tbody>
                     <tr *ngFor="let meal of data | filter: term" [ngClass]="{'new': meal.display == true ,'seen': meal.display == false}">
                         <td>{{ meal.order_id}}</td>
-                        <td>{{ meal.meal.name }}({{meal.client.name}})</td>
+                        <td>{{ meal.client.name }}({{meal.client.username}})</td>
                         <td>{{ meal.meal.name }}</td>
                         <td>{{ meal.quantity}} {{meal.piece}}</td>
                         <td>{{ meal.order_date}}</td>
@@ -105,8 +116,9 @@
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>
         </div>
-        <div style="text-align: center">
+        <div style="text-align: center" >
             <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
+            <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
         </div>
     </div>
 
