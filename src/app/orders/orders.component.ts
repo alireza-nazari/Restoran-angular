@@ -577,7 +577,10 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.names = this.names.replace(ite.name, '');
          }  
         })
+      }
+    })
       selected.value = this.names;
+      
   }
   singleUser(event: boolean, forme: NgForm){
     this.spinner = true;
