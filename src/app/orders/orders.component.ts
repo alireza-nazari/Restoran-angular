@@ -576,8 +576,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
             this.checkedUsers.splice(inde, 1);
             this.names = this.names.replace(ite.name, '');
          }  
-        }
-      }),
+        })
       selected.value = this.names;
   }
   singleUser(event: boolean, forme: NgForm){
