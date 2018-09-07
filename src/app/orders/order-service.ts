@@ -21,17 +21,21 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+ date +"?offset="+id, {headers: this.headers})
     }
     singleDateUser(date: any, id: any, offset){
-        console.log(id.constructor === Array)
-        this.ids = null;
-        id.forEach((item, index) => {
-            console.log(index)
-            if(index == 0){         
-                this.ids = item.id
-            }
-            else{
-                this.ids += ","+item.id
-            }
-        })
+        if(id.constructor === Array){
+            this.ids = null;
+            id.forEach((item, index) => {
+                console.log(index)
+                if(index == 0){         
+                    this.ids = item.id
+                }
+                else{
+                    this.ids += ","+item.id
+                }
+            })
+        }else{
+            this.ids = id
+        }
+
         return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+this.ids+"&date="+date)
     }
     toDate(date: any, offset){
@@ -46,6 +50,7 @@ export class OrderService{
     }
     fromAndUser(date: any, id: any, offset: any){
         this.ids = null;
+        if(id.constructor === Array){
         id.forEach((item, index) => {
             console.log(index)
             if(index == 0){         
@@ -55,10 +60,15 @@ export class OrderService{
                 this.ids += ","+item.id
             }
         })
+        }
+        else{
+            this.ids = id;
+        }
         return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndStartDate?offset="+ offset +"&client_id="+ this.ids +"&start="+ date)
     }
     toAndUser(date: any, id: any, offset: any){
         this.ids = null;
+        if(id.constructor === Array){
         id.forEach((item, index) => {
             console.log(index)
             if(index == 0){         
@@ -68,6 +78,9 @@ export class OrderService{
                 this.ids += ","+item.id
             }
         })
+         }else{
+        this.ids = id;
+     }
         return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndEndDate?offset="+ offset +"&client_id="+ this.ids +"&end="+ date)
     }
     user(name: any){
@@ -82,6 +95,9 @@ export class OrderService{
         return this.empty;
     }
     getByUser(data: any, offset){
+        console.log(data)
+        this.ids = null;
+        if(data.constructor === Array){
         data.forEach((item, index) => {
             console.log(index)
             if(index == 0){         
@@ -91,6 +107,10 @@ export class OrderService{
                 this.ids += ","+item.id
             }
         })
+    }
+    else{
+        this.ids = data;
+    }
         console.log(this.ids)
         return this.http.get<any>(environment.apiBaseUrl+"orders/clients?offset="+ offset +"&id="+ this.ids)
 
@@ -110,6 +130,20 @@ export class OrderService{
         return this.data;
     }
     combination(from: Date, to: Date, id: any, offset: any){
+        this.ids = null;
+        if(id.constructor === Array){
+        id.forEach((item, index) => {
+            console.log(index)
+            if(index == 0){         
+                this.ids = item.id
+            }
+            else{
+                this.ids += ","+item.id
+            }
+        })
+         }else{
+        this.ids = id;
+     }
         console.log(from, to, id)
         return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset="+ offset +"&start="+ from +"&end="+ to +"&client_id="+ id);
     }
@@ -126,7 +160,7 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl+"clients");
     }
     changeStatus(data){
-        console.log(data)
+
         for(let item of data){
             item.display = false;
             for(let item of data){
@@ -140,7 +174,7 @@ export class OrderService{
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
-    users(id, offset){
-        return this.http.get<any>(environment.apiBaseUrl+"orders/clients?offset="+ offset +"&id=6,7,17")
+    myOrders(offset){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+ offset)
     }
 }

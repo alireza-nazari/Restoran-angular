@@ -85,6 +85,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
   showedNumber: number = 0
   remainNumber: number = 0;
   angle: boolean = false;
+  inputCheck: HTMLInputElement;
   constructor(public orderService: OrderService,
               private datepipe: DatePipe,
               private auth: AuthService,
@@ -113,11 +114,15 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.simpleUser = false;
     }
     else{
+      this.myOrders()
       this.userID = tokenPayload.id
       this.admin = false;
       this.simpleUser = true;
     }
     
+  }
+  event(eve: HTMLInputElement){
+    console.log(eve.value)
   }
   getUsers(){
     this.orderService.allUsers()
@@ -141,9 +146,9 @@ export class OrdersComponent implements OnInit, OnDestroy{
   }
   today(event: boolean){
     for(let dat of this.data){
-      dat.display = false;
+      dat.display = true;
     }
-
+    console.log(this.data)
     this.spinner = true;
     this.spinerGroup = true;
     this.alert = false;
@@ -209,20 +214,25 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.spinner = false;
       this.spinerGroup = false;
     }
+    else if(this.clickedFunction  == 'myOrders'){
+      this.myOrders();
+      this.spinner = false;
+      this.spinerGroup = false;
+    }
   }
   sort(){
-    this.sortNumber +=1;
+    this.sortNumber += 1;
     if(this.sortNumber == 1){
       this.angleType = 'angle-up'
       this.data.sort(function(a, b){
-        return a.id-b.id;
+        return a.order_id - b.order_id;
       })
     }else{
       this.angleType = 'angle-down'
-      this.sortNumber = 0;
       this.data.sort(function(a, b){
-        return b.id-a.id;
+        return b.order_id - a.order_id;
       })
+      this.sortNumber = 0;
     }
 
   }
@@ -537,24 +547,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.singleDate = true;
     }
   }
-  checkAll(checkBox: HTMLUListElement){
-    this.itera += 1;
-    var number = checkBox.children.length;
-    if(this.itera == 1){
-      for(let i = 1; i < number; i++){
-        checkBox.children[i].children[0].checked = true;
-        console.log(checkBox.children[i].children[0].value)
-      }
-      this.itera +=1
-    }
-    else{
-      for(let i = 1; i < number; i++){
-        checkBox.children[i].children[0].checked = false;
-      }
-      this.itera = 0;
-    }
-
-  }
   checkboxValue(id, name, check: HTMLInputElement, selected: HTMLInputElement){
     if(this.names == ''){
       this.names += name;
@@ -570,9 +562,11 @@ export class OrdersComponent implements OnInit, OnDestroy{
       this.checkedUsers.forEach((item, index) =>{
         if(item.id == id && item.state == false){
          this.checkedUsers.splice(index, 1);
+         console.log(this.userID)
          this.names = this.names.replace(item.name, '');         
          this.checkedUsers.forEach((ite, inde) =>{
           if(ite.id == id && ite.state == true){
+            this.userID.splice(index, 1);
             this.checkedUsers.splice(inde, 1);
             this.names = this.names.replace(ite.name, '');
          }  
@@ -583,6 +577,19 @@ export class OrdersComponent implements OnInit, OnDestroy{
       
   }
   singleUser(event: boolean, forme: NgForm){
+    this.angle = false;
+    if(this.userID == null && forme.value.single == '' && forme.value.userSelect == ''){
+      this.data = [];
+      this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+      this.alertContent = 'Morate ispuniti bar jedno polje!';
+    }
+    else{
+    if(this.admin == true){
+      this.userID = this.checkedUsers;
+    }
     this.spinner = true;
     this.spinerGroup = true;
     this.singleDateUser = forme;
@@ -597,7 +604,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
     }
     this.orderService.emptyOut();
     this.clickedFunction = 'singleUser';
-    if((this.userID != null || this.userID != '' || this.userID != 'undefined') && forme == ''){
+    if((this.userID != null || this.userID != '' || this.userID != 'undefined') && (this.singleDateUser.value.single == '' || this.singleDateUser.value.single == 'undefined') ){
       this.orderService.getByUser(this.userID, this.id)
       .subscribe(
         (res) => {
@@ -664,7 +671,8 @@ export class OrdersComponent implements OnInit, OnDestroy{
         }
       )
     }
-    else if(this.userID == null || this.userID == 'undefined' && this.singleDateUser.value.single != ''){
+    else if((this.userID == null || this.userID == 'undefined') && this.singleDateUser.value.single != ''){
+      console.log("wwww")
       this.orderService.singleDate(this.singleDateUser.value.single, this.id)
       .subscribe(
         (res) => {
@@ -730,8 +738,55 @@ export class OrdersComponent implements OnInit, OnDestroy{
         }
       )
     }
-
-   
+  }
+  }
+  myOrders(){
+    this.angle = false;
+    this.spinner = true;
+    this.spinerGroup = true;
+    this.clickedFunction = 'myOrders';
+    this.orderService.myOrders(this.id)
+    .subscribe(
+      (res) => {
+        if(this.data != [] && res == ''){
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Prikazali ste sve porudzbine'
+        }
+        else if(res == ''){
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+        }       
+        this.data = this.data.concat(this.orderService.createArray(res));
+        this.spinner = false;
+        this.spinerGroup = false;
+      },
+      (error) =>{
+        if(error.status == 401){
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Morate se ponovo prijaviti';
+          this.spinner = false;
+          this.spinerGroup = false;
+        }
+        else{
+          this.alert = true;
+          setTimeout(() => {
+            this.alert = false
+          }, 10000)
+          this.alertContent = 'Došlo je do greške';
+          this.spinner = false;
+          this.spinerGroup = false;
+        }
+      }
+    )
   }
   onClickedOutside(){
     this.result = false;
@@ -741,15 +796,6 @@ export class OrdersComponent implements OnInit, OnDestroy{
     for(let dat of this.data){
       dat.display = false;
     }
-    this.orderService.changeStatus(this.data)
-    .subscribe(
-      (res) => {
-        console.log(res)
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
   }
   closeAlert(){
     this.alert = false;

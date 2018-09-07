@@ -15,6 +15,10 @@
     margin: 0 auto;
     margin-top: 50px !important;
 }
+#todayWrapper{
+	height: 35px;
+	width: 150px;
+}
 p{
     display: none;
 }
@@ -42,9 +46,20 @@ h2{
 #btnWrapper{
     text-align: center;
     margin: 5px 5px;
-    margin-top: -50px
+    margin-top: 50px
 }
-
+#userSelect{
+	width: 15px;
+	height: 15px;
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: black;
+    text-decoration: none;
+    background-color: white;
+}
+#users li{
+	margin-left: -20px;
+}
 #today{
     margin-right: 5px;
 }
@@ -176,7 +191,7 @@ th{
 vertical-align: top;
 }
 #todaySubmit{
-    margin-top: 10px !important; 
+	margin-top: 10px !important;
     position: relative;
     margin: 0 auto;
 }
@@ -203,7 +218,9 @@ vertical-align: top;
 #singleDate{
     margin-top: 10px;
 }
-
+#fromDate{
+	width: 185px;
+}
 #toDate {
     width: 185px;
 }
@@ -235,9 +252,9 @@ vertical-align: top;
         width: 100%;
     }
     #todaySubmit{
-        margin-top: 80px !important; 
-        position: absolute;
-        margin-right: 5px;
+        margin-top: 69px !important; 
+		position: absolute;
+		margin-left: 0px !important;
     }
     #multyForm {
         width: 100% !important;
@@ -257,7 +274,7 @@ vertical-align: top;
         position: absolute;
         left: 0;
         margin-top: 55px;
-        margin-left: 24px;
+        margin-left: 25px;
     }
 }
 #multyForm {

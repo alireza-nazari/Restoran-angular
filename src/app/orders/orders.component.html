@@ -1,8 +1,10 @@
 <div>
     <div id="wholeWrapper " class=" center">
         <div id="tableHeader">
-            <h2>Porudzbine</h2>
-            <button class="btn btn-primary" (click)="today(true)" id="today">Današnje porudzbine</button>
+            <div id="todayWrapper">
+                <h2>Porudzbine</h2>
+                <button *ngIf="admin" class="btn btn-primary" (click)="today(true)" id="today">Današnje porudzbine</button>
+            </div>
             <div id="btnWrapper">
                 <h3>Pretraga
                     <fa class="hvr-grow" id="searchBtn" (click)="animate(expandText)" name="search"></fa>
@@ -19,13 +21,14 @@
                                     <div *ngIf="admin">
                                         <div>
                                             <div ngbDropdown>
-                                                   
-                                                <input #inputClick type="text" class="form-control" id="inputText" aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime" name="user"
-                                                    autocomplete="off" readonly id="dropIt" ngbDropdownToggle>
+
+                                                <input #inputClick type="text" class="form-control" id="inputText" aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime"
+                                                    name="user" autocomplete="off" readonly id="dropIt" ngbDropdownToggle>
                                                 <ul #dooo id="users" ngbDropdownMenu aria-labelledby="dropIt">
-                                                    <li #all><input type="checkbox" name="everything" (click)="checkAll(dooo)">Odaberi sve/poništi</li>
-                                                    <li  *ngFor="let use of allUsers" class="dropdown-item">
-                                                        <input #checkBo type="checkbox" name="userSelect" value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)" ngModel>{{use.name}}({{use.username}})</li>
+                                                    <li #all>
+                                                    <li *ngFor="let use of allUsers" class="dropdown-item">
+                                                        <input #checkBo type="checkbox" id="userSelect" name="userSelect" value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)"
+                                                            ngModel><span>{{use.name}}({{use.username}})</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -36,7 +39,7 @@
                                         <fa id="moreBtn" name="{{arrow}}"></fa>
                                     </div>
                                     <div id="singleDate" *ngIf="singleDate">
-                                        <input style="width: 100%" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Datum" name="single"
+                                        <input style="width: 100%" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Datum" name="single" (click)="event($event)"
                                             onfocus="(this.type='date')" ngModel>
                                     </div>
 
@@ -116,7 +119,7 @@
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>
         </div>
-        <div style="text-align: center" >
+        <div style="text-align: center">
             <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
             <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
         </div>
