@@ -597,7 +597,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
     }
     this.orderService.emptyOut();
     this.clickedFunction = 'singleUser';
-    if((this.userID != null || this.userID != '' || this.userID != 'undefined') && this.forme == ''){
+    if((this.userID != null || this.userID != '' || this.userID != 'undefined') && forme == ''){
       this.orderService.getByUser(this.userID, this.id)
       .subscribe(
         (res) => {
