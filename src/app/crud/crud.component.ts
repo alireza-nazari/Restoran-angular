@@ -44,14 +44,12 @@ export class CrudComponent implements OnInit{
               private modalService: NgbModal) {
             
                }
-  type(me: HTMLSpanElement){
-    
-  }
   ngOnInit() {
     this.meals.getMeals(this.offset)
     .subscribe(
       (res: Response[]) => {
-        this.data = res
+        this.data = res;
+        console.log(this.data)
         for(let item of this.data){
           if(item.piece == false){
             item.piece = 'komad';
@@ -60,7 +58,6 @@ export class CrudComponent implements OnInit{
             item.piece = 'gram'
           }
         }
-        console.log(res)
       },
       (err) => {
         alert("Nije mogce prikazati jela" + err)
@@ -70,8 +67,6 @@ export class CrudComponent implements OnInit{
     .subscribe(
       (res: Response) => {
         this.cate = res;
-        console.log(res);
-        
       },
       (error) => {
         this.tostr.error('Došlo je do greške!');

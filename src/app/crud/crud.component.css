@@ -51,15 +51,21 @@ fa{
     color: white;
     margin: 20px 5px 
 }
-
- td{
+table{
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+td{
     display:table-cell;
-    width: 480px;
+    width: 20px;
     text-align: center
 }
 th{
     display:table-cell;
-    width: 800px;
+    width: 20px;
+    height: 100px;
 } 
 thead tr th{
     vertical-align: top;
@@ -71,11 +77,13 @@ td{
 @media only screen and (max-width: 1001px) {
     #crudWrapper {
         position: absolute;
-        
         padding: 10px;
         left: 0;
         right: 0;
         margin-top: 50px !important;
+    }
+    table{
+        table-layout: inherit;
     }
     #tableWrapper{
         overflow-x: scroll;

@@ -85,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let meal of data | filter: term" [ngClass]="{'new': meal.display == true ,'seen': meal.display == false}">
+                    <tr *ngFor="let meal of data | filter: term" [ngClass]="{'new': meal.display == true && admin == true ,'seen': meal.display == false && admin == true}">
                         <td>{{ meal.order_id}}</td>
                         <td>{{ meal.client.name }}({{meal.client.username}})</td>
                         <td>{{ meal.meal.name }}</td>
@@ -124,5 +124,7 @@
             <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
         </div>
     </div>
+    <div>
 
+    </div>
 </div>

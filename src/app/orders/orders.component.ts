@@ -145,8 +145,9 @@ export class OrdersComponent implements OnInit, OnDestroy{
     );
   }
   today(event: boolean){
-    for(let dat of this.data){
-      dat.display = true;
+    if(this.admin == true && event == true){
+      this.orderService.changeStatus(this.data)
+      .subscribe()
     }
     console.log(this.data)
     this.spinner = true;
@@ -166,6 +167,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
         (res) =>{
+          console.log(res)
           if(res != ''){
             this.allNumber = res[0].numberOfElements;
             this.showedNumber += res.length;
@@ -793,9 +795,11 @@ export class OrdersComponent implements OnInit, OnDestroy{
   }
   ngOnDestroy(){
     this.orderService.emptyOut();
-    for(let dat of this.data){
-      dat.display = false;
+    if(this.admin == true){
+      this.orderService.changeStatus(this.data)
+      .subscribe()
     }
+
   }
   closeAlert(){
     this.alert = false;

@@ -117,12 +117,11 @@ export class OrderService{
     }
     createArray(data){
         this.data = data;
-        console.log(this.data)
         for(let meal of this.data){
-            if(meal.piece == true || meal.piece == 'gram'){
+            if(meal.piece == true){
                 meal.piece = 'gram'
             }
-            else if(meal.piece == false || meal.piece == 'kom'){
+            else if(meal.piece == false){
               meal.piece = 'kom'
             }
         }
@@ -160,17 +159,8 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl+"clients");
     }
     changeStatus(data){
-
         for(let item of data){
             item.display = false;
-            for(let item of data){
-                if(item.piece == 'gram'){
-                    item.piece = 'true'
-                }
-                else if(item.piece == 'kom'){
-                  item.piece = false
-                }
-            }
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }

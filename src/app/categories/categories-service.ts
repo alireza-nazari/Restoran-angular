@@ -13,7 +13,6 @@ export class CategoriesService{
         return this.http.get<any>(environment.apiBaseUrl + "category");
     }
     getByCategory(id: any, page: number){
-        console.log(id, page)
         return this.http.get<any>(environment.apiBaseUrl + "meal/category/" + id +"/scroll?offset="+ page);
     }
 }

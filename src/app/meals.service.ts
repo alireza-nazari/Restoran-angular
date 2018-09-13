@@ -32,7 +32,7 @@ export class MealsService{
                 meal: {
                     meal_id: item.id
                 },
-                piece: item.piece,
+                piece: item.type,
                 quantity: item.amount,
                 display: true
             })

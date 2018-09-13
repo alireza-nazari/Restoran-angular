@@ -31,7 +31,7 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, link: meal.link}); c('Save click')">U korpu</button>
+                  <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, type: meal.piece ,link: meal.link}); c('Save click')">U korpu</button>
                 </div>
               </ng-template>
         </div>

@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, OnDestroy, DoCheck, ElementRef } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit} from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
 import { Observable } from "rxjs";
 import { MealsService } from '../meals.service';
 import { ToastrService } from 'ngx-toastr';
 import { isNumeric } from 'rxjs/internal-compatibility';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-carth',
   templateUrl: './carth.component.html',
@@ -49,7 +50,16 @@ export class CarthComponent implements OnInit{
 
   submit(data: any) {
     var state;
-    console.log(data[0].amount)
+    console.log(data)
+    for(let meal of data){
+      if(meal.type == 'gram'){
+          meal.type = true
+      }
+      else if(meal.type == 'kom'){
+        meal.type = false
+      }
+    }
+    console.log(data)
     for(let item of data){
       console.log(isNaN(item.amount))
       if(item.amount == ''){
@@ -67,9 +77,9 @@ export class CarthComponent implements OnInit{
           this.menu$ = null;
           localStorage.setItem('cartItems', '[]');
           localStorage.removeItem('number');
-          setTimeout(() => {
-            this.router.navigate(['']);
-          }, 500)
+          // setTimeout(() => {
+          //   this.router.navigate(['']);
+          // }, 500)
         },
         (error) => {
          if(error.status == 401){
@@ -80,7 +90,6 @@ export class CarthComponent implements OnInit{
         }
       )
     }
-
   }
 
   emptyItem(id, element: HTMLTableRowElement){
@@ -89,7 +98,7 @@ export class CarthComponent implements OnInit{
     this.dataService.deleteData(id)
   } 
   getIt(data: any, amount: HTMLInputElement){
-    console.log(amount.value)
+    console.log(data)
     if(data.amount == ''){
       this.tostr.error("Unesite količinu jela")
     }

@@ -3,6 +3,7 @@
 }
 #tableWrapper{
     height: 500px;
+    min-width: 400px;
 }
 .scrol{
     display: block;
@@ -14,8 +15,12 @@ thead{
     position: sticky;
 }
 img{
+    padding-left: 5px;
     width: 120px;
     height: 80px;
+}
+#name{
+    padding-left: 5px;
 }
 #tableActions{
     width: 100%;

@@ -118,10 +118,10 @@ export class MenuComponent implements OnInit,  DoCheck{
                 this.meals = this.meals.concat(res);
                 for(let meal of this.meals){
                   if(meal.piece == true){
-                      meal.piece = 'Gram'
+                      meal.piece = 'gram'
                   }
                   else if(meal.piece == false){
-                    meal.piece = 'Komad'
+                    meal.piece = 'kom'
                   }
                 }
                 this.page += 5;
@@ -137,16 +137,17 @@ export class MenuComponent implements OnInit,  DoCheck{
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
               (res: Array<any>[]) => {
+                console.log(res)
                 setTimeout(() => {
                   this.spiner = true;
                 }, 1)
                 this.meals = res;
                 for(let meal of this.meals){
                   if(meal.piece == true){
-                      meal.piece = 'Gram'
+                      meal.piece = 'gram'
                   }
                   else if(meal.piece == false){
-                    meal.piece = 'Komad'
+                    meal.piece = 'kom'
                   }
                 }
                 this.page += 5;
@@ -156,29 +157,6 @@ export class MenuComponent implements OnInit,  DoCheck{
             this.spinerGroup = false;
           }
         );
-  }
-  postIt(data: any) {
-    if (data.piece) {
-      this.type = "grama";
-    }
-    else {
-      this.type = "komad/a";
-    }
-    this.mealsService.postOrder(data)
-      .subscribe(
-        (res: Response) => {
-          this.tostr.success('Količina: ' + data.amount + ' ' + this.type, 'Porudzbina: ' + data.info);
-          console.log(res)
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.tostr.error('Vaša sesija je istekla', 'Porudzbina nije prosledjena!');
-          }
-          else {
-            this.tostr.error('Došlo je do greške', 'Pokušajte ponovo!')
-          }
-        }
-      )
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -201,6 +179,7 @@ export class MenuComponent implements OnInit,  DoCheck{
     }
   }
   sendIt(data: any) {
+    console.log(data)
     this.menuData.sendData(data);
     this.tostr.success('Prosledjeno u korpu');
   }

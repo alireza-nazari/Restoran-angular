@@ -5,8 +5,8 @@
       <fa name="plus" id="addMeal"></fa>Dodaj jelo</button>
   </div>
   <div id="tableWrapper">
-    <table class="table table striped">
       <form>
+    <table class="table table striped">
       <thead>
         <tr>
           <th>
@@ -60,7 +60,7 @@
               <fa name="check" id="hideDrop" id="confirm" (click)="newMealData(name, price, category, url, measure)"></fa>
             </td>
         </tr>
-        <tr *ngFor="let meal of data | filter: term" selectedRow>
+        <tr *ngFor="let meal of data | filter: term">
           <td>
             <input #n [hidden]="edit" type="text" name="mealName" value="{{meal.name}}" class="form-control">
             <span #na>{{meal.name}}</span>
@@ -94,8 +94,9 @@
           </td>
         </tr>
       </tbody>
-    </form>
+ 
     </table>
+    </form>
   </div>
   <ng-template #delete let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -115,5 +116,4 @@
   <div style="text-align: center">
     <fa name="angle-down" id="angle" (click)="moreMeals()"></fa>
   </div>
-
 </div>

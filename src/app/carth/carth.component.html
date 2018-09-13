@@ -1,8 +1,12 @@
+
 <div class="container">
   <h3>Korpa</h3>
+
   <div id="tableWrapper" class="scrol" style="margin-top: 50px">
+      <form #user="ngForm" (ngSubmit)="submit(menu$)">
     <table class="table">
-        <form #user="ngForm" (ngSubmit)="submit(menu$)">
+      
+       
         <thead>
           <tr>
             <th>Jelo</th>
@@ -10,6 +14,7 @@
             <th>Akcija</th>
           </tr>
         </thead>
+       
         <tbody *ngFor="let item of menu$;let i = index" id="tableBody">
           <tr #element id="singleOrderWrapper" >
             <td>
@@ -17,27 +22,25 @@
                 <div>
                     <img src="{{item.link}}" alt="img">
                 </div>
-                <div>
+                <div id="name">
                     <p #name>{{item.info}}</p>
                 </div>
               </div>
             </td>
+           
             <td id="inputWrapper">
-              <input id="input"  type="number" value="{{item.amount}}" #amount (click)="showConfirm(actions)" size="2" class="form-control" name="amount" >
-            </td>
+              <input id="input"  type="number" value="{{item.amount}}" #amount (click)="showConfirm(actions)" size="2" class="form-control" name="amount">
             <td #actions id="actions">
-              <fa class="hvr-grow " [hidden]="!show" name="check"id="submit" (click)="getIt({position : i,name: item.info, id: item.id, amount: amount.value, piece: item.piece}, amount)"></fa>
+              <fa class="hvr-grow " [hidden]="!show" name="check"id="submit" (click)="getIt({position : i,name: item.info, id: item.id, amount: amount.value, piece: item.type}, amount)"></fa>
               <fa class="hvr-grow " name="times" id="delete" (click)="emptyItem(i, element)"></fa>
             </td>
           </tr>    
         </tbody>
-        <div id="tableActions">
-            <p>Ukupna cena:</p>
-            <p id="wholePrice"></p>
-            <button id="submitButton" class="btn btn-primary" type="submit" >Poruči</button>
-          </div>
-      </form>
     </table>
+    <div id="tableActions">
 
+        <button id="submitButton" class="btn btn-primary" type="submit" >Poruči</button>
+      </div>
+  </form>
   </div>
 </div>
