@@ -77,9 +77,9 @@ export class CarthComponent implements OnInit{
           this.menu$ = null;
           localStorage.setItem('cartItems', '[]');
           localStorage.removeItem('number');
-          // setTimeout(() => {
-          //   this.router.navigate(['']);
-          // }, 500)
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 500)
         },
         (error) => {
          if(error.status == 401){
