@@ -29,7 +29,7 @@
             </td>
            
             <td id="inputWrapper">
-              <input id="input"  type="number" value="{{item.amount}}" #amount (click)="showConfirm(actions)" size="2" class="form-control" name="amount">
+              <input id="input"  type="number" value="{{item.amount}}" #amount (click)="showConfirm(actions)" size="2" min="0" class="form-control" name="amount">
             <td #actions id="actions">
               <fa class="hvr-grow " [hidden]="!show" name="check"id="submit" (click)="getIt({position : i,name: item.info, id: item.id, amount: amount.value, piece: item.type}, amount)"></fa>
               <fa class="hvr-grow " name="times" id="delete" (click)="emptyItem(i, element)"></fa>

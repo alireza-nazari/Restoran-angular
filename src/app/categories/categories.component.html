@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center" id="wrapper"  [@categories]="state">
   <a #items id="first" *ngFor="let category of categories" (click)="getByCategory(category.category_id)" >
-    <div id="card" class="card hvr-grow" style="width:200px" (click)="reset(category.category_id)">
+    <div id="card" class="card hvr-grow" style="width:200px">
       <img class="card-img-top" src="{{category.link}}"
         alt="Card image">
       <div class="card-body">
@@ -8,8 +8,8 @@
       </div>
     </div>
   </a>
-  <div id="outletWrapperr">
-      <router-outlet></router-outlet>
+  <div id="outletWrapperr" #outlet>
+      <router-outlet ></router-outlet>
   </div>
 </div>
 

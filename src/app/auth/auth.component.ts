@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit{
   show: boolean = false;
   alertMessageValue: string;
   alertType: string;
-
+  authe: boolean = false;
 
 
 
@@ -29,13 +29,11 @@ export class AuthComponent implements OnInit{
 
 
   ngOnInit(){
-
   }
 
   onSingUp(form: NgForm){
     const user = form.value.user;
     const pass = form.value.pass;
-    console.log(user, pass);
     this.authService.singIn(user, pass).subscribe(
       res => {},
       error => {

@@ -51,7 +51,7 @@ import { FilterPipe } from './filter.pipe';
 import { TypePipe } from './type.pipe';
 import { ClickOutsideModule } from 'ng4-click-outside';
 import { DatePipe } from '@angular/common';
-
+import { CKEditorModule } from 'ngx-ckeditor';
 
 const providers = [
   { provide: WindowRef, useValue: window }
@@ -91,7 +91,8 @@ const providers = [
     BrowserAnimationsModule,
     OrderModule,
     InViewportModule.forRoot(providers),
-    ClickOutsideModule
+    ClickOutsideModule,
+    CKEditorModule
   ],
   providers: [
     MealsService,

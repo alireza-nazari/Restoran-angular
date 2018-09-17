@@ -193,6 +193,13 @@ export class OrdersComponent implements OnInit, OnDestroy{
           this.spinner = false;
           this.spinerGroup = false;
           this.angle = true;
+        },
+        (error) => {
+          this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Došlo je do greške, pokušajte ponovo'
         }
       )
      

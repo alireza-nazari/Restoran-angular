@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
 import { CategoriesService } from './categories-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { trigger, state, style } from '@angular/animations';
@@ -23,7 +23,7 @@ import { DataService } from '../data.service';
   ]
 })
 export class CategoriesComponent implements OnInit {
-
+  @ViewChild('outlet') public outlet: ElementRef;
   public categories: any = [];
   public state: any = 'hidden';
 
@@ -49,16 +49,8 @@ export class CategoriesComponent implements OnInit {
   }
   getByCategory(id: any){
    this.router.navigate([id,'meni'])
-   this.state = 'visible'
-  }
-  reset(num){
-    if(this.element == num){
-      this.data.clicked(false);
-    }
-    else{
-      this.element = num;
-      this.data.clicked(true);
-    }
+   this.state = 'visible';
+   this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
   }
   more(items){
     console.log(items)
