@@ -843,8 +843,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   allToday(){
     this.data = [];
-    this.id = 0;
-    this.userID = null;
+    this.orderService.emptyOut();
     this.angle = false;
     this.spinner = true;
     this.spinerGroup = true;
@@ -853,7 +852,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.orderService.allTodayOrders(transformdate)
       .subscribe(
         (res) => {
+
           this.data = res;
+          this.data = this.orderService.createArray(res)
           if (this.data != [] && res == '') {
             this.alert = true;
             setTimeout(() => {
@@ -891,6 +892,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             this.spinerGroup = false;
           }
         }
+
       )
       }
 }
