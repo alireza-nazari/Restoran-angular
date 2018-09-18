@@ -14,7 +14,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
 import { concat } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-
+import { debounce } from "typescript-debounce-decorator";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -65,7 +65,7 @@ export class MenuComponent implements OnInit,  DoCheck{
   subed: Subscription;
   subede: Subscription;
   spiner: boolean = false;
-
+  @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
   constructor(private mealsService: MealsService,
@@ -99,6 +99,7 @@ export class MenuComponent implements OnInit,  DoCheck{
   getMealsByID(num: number) {
     this.id = this.route.snapshot.params['id'];
     if (this.id == this.identifer) {
+      
       this.oldData(this.page)
     }
     else {
@@ -107,7 +108,9 @@ export class MenuComponent implements OnInit,  DoCheck{
       this.newData(this.page)
     }
   }
+  @debounce(1000)
   oldData(num) {
+    
     this.spinerGroup = true;
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(
@@ -132,7 +135,9 @@ export class MenuComponent implements OnInit,  DoCheck{
               }
             );
   }
+  @debounce(1000)
   newData(num) {
+    this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
     this.spinerGroup = true;
           var sub = this.cate.getByCategory(this.id, num)
             .subscribe(

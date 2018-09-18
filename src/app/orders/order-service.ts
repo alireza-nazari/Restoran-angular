@@ -169,6 +169,7 @@ export class OrderService{
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
+
     myOrders(offset){
         return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+ offset)
     }
@@ -177,5 +178,8 @@ export class OrderService{
     }
     reopenOrders(date: any){
         return this.http.put<any>(environment.apiBaseUrl+"orders/updateOrderClosed/"+ date +"?status=false", {headers: this.headers});
+    }
+    allTodayOrders(date: any){
+        return this.http.get<any>(environment.apiBaseUrl+"orders/singleDate/"+date);
     }
 }

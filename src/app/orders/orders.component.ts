@@ -146,6 +146,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
       );
   }
   today(event: boolean) {
+    if(this.admin == true && event == true){
+      this.orderService.emptyOut();
+     
+    }
     if (event == true) {
       this.data = [];
       this.id = 0;
@@ -154,7 +158,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.remainNumber = 0;
       transformdate = null;
     }
-
     var transformdate: any;
     this.spinner = true;
     this.spinerGroup = true;
@@ -585,6 +588,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   singleUser(event: boolean, forme: NgForm) {
     this.angle = false;
+    this.singleDateUser = forme;
     if (this.userID == null && forme.value.single == '' && forme.value.userSelect == '') {
       this.data = [];
       this.alert = true;
@@ -593,21 +597,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }, 10000)
       this.alertContent = 'Morate ispuniti bar jedno polje!';
     }
-    else {
-      if (this.admin == true) {
+    else{
+      if(this.admin == true) {
         this.userID = this.checkedUsers;
       }
       this.spinner = true;
       this.spinerGroup = true;
       this.singleDateUser = forme;
       this.alert = false;
-
-      console.log(forme)
       if (event == true) {
         this.data = [];
         this.id = 0;
-      } else if (event == false) {
-
       }
       this.orderService.emptyOut();
       this.clickedFunction = 'singleUser';
@@ -679,7 +679,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
           )
       }
       else if ((this.userID == null || this.userID == 'undefined') && this.singleDateUser.value.single != '') {
-        console.log("wwww")
         this.orderService.singleDate(this.singleDateUser.value.single, this.id)
           .subscribe(
             (res) => {
@@ -712,7 +711,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             }
           )
       }
-      else if (this.userID != null || this.userID != null && this.singleDateUser != '') {
+      else if(this.userID != 'undefined' && this.singleDateUser.value.single != '') {
         this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID, this.id)
           .subscribe(
             (res) => {
@@ -841,5 +840,56 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.tostr.error("Došlo je do greške", "Pokušajte ponovo");
         }
       )
+  }
+  allToday(){
+    this.data = [];
+    this.id = 0;
+    this.userID = null;
+    this.angle = false;
+    this.spinner = true;
+    this.spinerGroup = true;
+    this.todaysDate = new Date();
+    var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
+    this.orderService.allTodayOrders(transformdate)
+      .subscribe(
+        (res) => {
+          this.data = res;
+          if (this.data != [] && res == '') {
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Prikazali ste sve porudzbine'
+          }
+          else if (res == '') {
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+          }
+          this.spinner = false;
+          this.spinerGroup = false;
+        },
+        (error) => {
+          if (error.status == 401) {
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Morate se ponovo prijaviti';
+            this.spinner = false;
+            this.spinerGroup = false;
+          }
+          else {
+            this.alert = true;
+            setTimeout(() => {
+              this.alert = false
+            }, 10000)
+            this.alertContent = 'Došlo je do greške';
+            this.spinner = false;
+            this.spinerGroup = false;
+          }
+        }
   }
 }
