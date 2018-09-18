@@ -47,10 +47,11 @@ export class CategoriesComponent implements OnInit {
       }
     )
   }
-  getByCategory(id: any){
+  getByCategory(id: any, out: ElementRef){
+    this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
    this.router.navigate([id,'meni'])
    this.state = 'visible';
-   this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
+   
   }
   more(items){
     console.log(items)

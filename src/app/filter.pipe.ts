@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(users: any, term: any): any {
-    console.log(term)
     if (term == 'undefined'){
       return users;
     }
@@ -18,7 +17,7 @@ export class FilterPipe implements PipeTransform {
     }
     else{
       return users.filter(function (user) {
-        return user.name.toLowerCase().includes(term.toLowerCase())
+        return user.client.username.toLowerCase().includes(term.toLowerCase())
       })
     }
   }

@@ -125,7 +125,6 @@ export class OrderService{
               meal.piece = 'kom'
             }
         }
-        console.log(this.data)
         return this.data;
     }
     combination(from: Date, to: Date, id: any, offset: any){
@@ -161,10 +160,22 @@ export class OrderService{
     changeStatus(data){
         for(let item of data){
             item.display = false;
+            if(item.piece == 'gram'){
+                item.piece = true
+            }
+            else if(item.piece == 'kom'){
+              item.piece = false
+            }
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
     myOrders(offset){
         return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+ offset)
+    }
+    closeOrders(date: any){
+        return this.http.post<any>(environment.apiBaseUrl+"orders/orderClosed?date="+ date +"&status=true", {headers: this.headers});
+    }
+    reopenOrders(date: any){
+        return this.http.put<any>(environment.apiBaseUrl+"orders/updateOrderClosed/"+ date +"?status=false", {headers: this.headers});
     }
 }

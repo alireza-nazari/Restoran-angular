@@ -44,9 +44,20 @@ h2{
     margin-bottom: -5px;
 }
 #btnWrapper{
+
     text-align: center;
     margin: 5px 5px;
     margin-top: 50px
+}
+#closeOrders{
+	margin-right: 10px;
+
+	right: 0;
+	border: 2px solid white;
+}
+#todayOrdBtn{
+	margin-left: 10px;
+	border: 2px solid white;
 }
 #userSelect{
 	width: 15px;

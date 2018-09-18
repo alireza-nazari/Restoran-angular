@@ -3,7 +3,14 @@
         <div id="tableHeader">
             <div id="todayWrapper">
                 <h2>Porudzbine</h2>
-                <button *ngIf="admin" class="btn btn-primary" (click)="today(true)" id="today">Današnje porudzbine</button>
+                <div class="d-flex flex-row">
+                    <div class="p-2">
+                        <button *ngIf="admin" class="btn btn-primary" (click)="today(true)" id="todayOrdBtn">Današnje porudzbine</button>
+                    </div>
+                    <div class="p-2">
+                        <button *ngIf="admin" class="btn btn-danger" (click)="closeTodayOrders()" id="closeOrders">Zatvori porudzbine</button>
+                    </div>
+                </div>
             </div>
             <div id="btnWrapper">
                 <h3>Pretraga
@@ -15,19 +22,23 @@
                             <div id="userWrapper">
                                 <form #user="ngForm" (ngSubmit)="singleUser(true, user)">
                                     <div *ngIf="simpleUser">
-                                        <input [value]="current" type="text" class="form-control" id="input" aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime"
-                                            name="user" autocomplete="off" readonly>
+                                        <input [value]="current" type="text" class="form-control" id="input"
+                                            aria-describedby="emailHelp" placeholder="Unesi koriscnicko ime" name="user"
+                                            autocomplete="off" readonly>
                                     </div>
                                     <div *ngIf="admin">
                                         <div>
                                             <div ngbDropdown>
 
-                                                <input #inputClick type="text" class="form-control" id="inputText" aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime"
-                                                    name="user" autocomplete="off" readonly id="dropIt" ngbDropdownToggle>
+                                                <input #inputClick type="text" class="form-control" id="inputText"
+                                                    aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime"
+                                                    name="user" autocomplete="off" readonly id="dropIt"
+                                                    ngbDropdownToggle>
                                                 <ul #dooo id="users" ngbDropdownMenu aria-labelledby="dropIt">
                                                     <li #all>
                                                     <li *ngFor="let use of allUsers" class="dropdown-item">
-                                                        <input #checkBo type="checkbox" id="userSelect" name="userSelect" value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)"
+                                                        <input #checkBo type="checkbox" id="userSelect" name="userSelect"
+                                                            value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)"
                                                             ngModel><span>{{use.name}}({{use.username}})</span></li>
                                                 </ul>
                                             </div>
@@ -39,8 +50,9 @@
                                         <fa id="moreBtn" name="{{arrow}}"></fa>
                                     </div>
                                     <div id="singleDate" *ngIf="singleDate">
-                                        <input style="width: 100%" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Datum" name="single" (click)="event($event)"
-                                            onfocus="(this.type='date')" ngModel>
+                                        <input style="width: 100%" type="text" class="form-control" aria-describedby="emailHelp"
+                                            placeholder="Datum" name="single" (click)="event($event)" onfocus="(this.type='date')"
+                                            ngModel>
                                     </div>
 
                                     <button *ngIf='!more' id="userSubmit" type="submit" class="btn btn-primary">Pretraži</button>
@@ -52,12 +64,14 @@
 
                             <form id="advanced" *ngIf="advanced" class="form-inline" #fromTo="ngForm" (ngSubmit)="fromToData(fromTo, true)">
                                 <div id="fromDate">
-                                    <input style="width: 100%" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Datum od"
-                                        name="from" onfocus="(this.type='date')" ngModel>
+                                    <input style="width: 100%" type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Datum od" name="from" onfocus="(this.type='date')"
+                                        ngModel>
                                 </div>
                                 <div id="toDate">
-                                    <input style="width: 100%" placeholder="Datum do" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                        name="to" onfocus="(this.type='date')" ngModel>
+                                    <input style="width: 100%" placeholder="Datum do" type="text" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" name="to" onfocus="(this.type='date')"
+                                        ngModel>
                                 </div>
                                 <button class="btn btn-primary" id="todaySubmit" type="submit">Pretraži</button>
                             </form>
@@ -75,8 +89,8 @@
                         </th>
                         <th>Ime klijenta
                             <div>
-                                <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Pretrazi" ngModel
-                                    [(ngModel)]="term" name="user" autocomplete="off">
+                                <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName"
+                                    placeholder="Pretrazi" ngModel [(ngModel)]="term" name="user" autocomplete="off">
                             </div>
                         </th>
                         <th>Jelo</th>
