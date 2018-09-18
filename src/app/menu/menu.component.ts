@@ -12,9 +12,9 @@ import { CategoriesService } from '../categories/categories-service';
 import { trigger, state, style } from '@angular/animations';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
-import { concat } from 'rxjs/operators';
+
 import { Subscription, Observable } from 'rxjs';
-import { debounce } from "typescript-debounce-decorator";
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -68,10 +68,8 @@ export class MenuComponent implements OnInit,  DoCheck{
   @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
-  constructor(private mealsService: MealsService,
-    private searchService: SearchService,
-    private router: Router,
-    private auth: AuthGuardService,
+  constructor(
+
     private tostr: ToastrService,
     private route: ActivatedRoute,
     private cate: CategoriesService,
@@ -108,7 +106,7 @@ export class MenuComponent implements OnInit,  DoCheck{
       this.newData(this.page)
     }
   }
-  @debounce(1000)
+
   oldData(num) {
     
     this.spinerGroup = true;
@@ -135,7 +133,7 @@ export class MenuComponent implements OnInit,  DoCheck{
               }
             );
   }
-  @debounce(1000)
+
   newData(num) {
     this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
     this.spinerGroup = true;
