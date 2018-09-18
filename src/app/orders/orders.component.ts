@@ -872,7 +872,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.spinerGroup = false;
         },
         (error) => {
-          if (error.status == 401) {
+          if(error.status == 401) {
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -881,7 +881,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             this.spinner = false;
             this.spinerGroup = false;
           }
-          else {
+          else{
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -891,5 +891,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
             this.spinerGroup = false;
           }
         }
-  }
+      )
+      }
 }
