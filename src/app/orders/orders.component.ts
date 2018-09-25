@@ -156,7 +156,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.allNumber = 0;
       this.showedNumber = 0
       this.remainNumber = 0;
-      transformdate = null;
+      transformdate = '';
     }
     var transformdate: any;
     this.spinner = true;
@@ -496,34 +496,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
         )
     }
   }
-  passData(username, id, input: HTMLInputElement) {
-    input.value = username;
-    this.userID = id;
-    this.users = [];
-  }
-  userData(dateOf: any) {
-    if (dateOf.value.user == '') {
-      this.userID = null;
-      this.users = [];
-    } else {
-      var user = dateOf.value.user;
-      user.toLowerCase();
-      for (let use of this.users) {
-        var temp = use.nuserID
-        if (user == temp) {
-          this.userID = use.client_id;
-        }
-      }
-      this.orderService.user(user)
-        .subscribe(
-          (res) => {
-            this.users = res;
-            this.result = true;
-          }
-        )
-    }
-    console.log(this.userID)
-  }
   showInput() {
     this.userInput === false ? this.userInput = true : this.userInput = false;
     this.userInputTr === 'normal' ? this.userInputTr = 'expand' : this.userInputTr = 'normal';
@@ -572,11 +544,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.checkedUsers.forEach((item, index) => {
       if (item.id == id && item.state == false) {
         this.checkedUsers.splice(index, 1);
-        console.log(this.userID)
-        this.names = this.names.replace(item.name, '');
+        this.names = this.names.replace(','+ item.name, '');
         this.checkedUsers.forEach((ite, inde) => {
           if (ite.id == id && ite.state == true) {
-            this.userID.splice(index, 1);
             this.checkedUsers.splice(inde, 1);
             this.names = this.names.replace(ite.name, '');
           }
@@ -584,11 +554,16 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }
     })
     selected.value = this.names;
-
+   
   }
   singleUser(event: boolean, forme: NgForm) {
     this.angle = false;
     this.singleDateUser = forme;
+    console.log(this.singleDateUser.value.single)
+    if (event == true) {
+      this.data = [];
+      this.id = 0;
+    }
     if (this.userID == null && forme.value.single == '' && forme.value.userSelect == '') {
       this.data = [];
       this.alert = true;
@@ -605,50 +580,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.spinerGroup = true;
       this.singleDateUser = forme;
       this.alert = false;
-      if (event == true) {
-        this.data = [];
-        this.id = 0;
-      }
       this.orderService.emptyOut();
       this.clickedFunction = 'singleUser';
-      if ((this.userID != null || this.userID != '' || this.userID != 'undefined') && (this.singleDateUser.value.single == '' || this.singleDateUser.value.single == 'undefined')) {
+      if((this.userID != null || this.userID != '' || this.userID != 'undefined') && this.singleDateUser.value.single == '' ){
         this.orderService.getByUser(this.userID, this.id)
           .subscribe(
             (res) => {
 
-              if (this.data != [] && res == '') {
-                this.alert = true;
-                setTimeout(() => {
-                  this.alert = false
-                }, 10000)
-                this.alertContent = 'Prikazali ste sve porudzbine'
-              }
-              else if (res == '') {
-                this.alert = true;
-                setTimeout(() => {
-                  this.alert = false
-                }, 10000)
-                this.alertContent = 'Nema porudzbina sa zadatim uslovima'
-              }
-              this.data = this.data.concat(this.orderService.createArray(res));
-              this.spinner = false;
-              this.spinerGroup = false;
-            },
-            (error) => {
-              this.alert = true;
-              setTimeout(() => {
-                this.alert = false
-              }, 10000)
-              this.alertContent = 'Došlo je do greške, pokušajte ponovo';
-              this.spinner = false;
-              this.spinerGroup = false;
-            }
-          )
-      }
-      else if (this.checkedUsers != '') {
-        this.orderService.getByUser(this.checkedUsers, this.id)
-          .subscribe(
-            (res) => {
               if (this.data != [] && res == '') {
                 this.alert = true;
                 setTimeout(() => {
@@ -711,7 +649,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             }
           )
       }
-      else if(this.userID != 'undefined' && this.singleDateUser.value.single != '') {
+      else if(this.userID != null && this.singleDateUser.value.single != '') {
         this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID, this.id)
           .subscribe(
             (res) => {
@@ -801,11 +739,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.result = false;
   }
   ngOnDestroy() {
-    this.orderService.emptyOut();
-    if (this.admin == true) {
-      this.orderService.changeStatus(this.data)
-        .subscribe()
-    }
+    // this.orderService.emptyOut();
+    // if (this.admin == true) {
+    //   this.orderService.changeStatus(this.data)
+    //     .subscribe()
+    // }
   }
   closeAlert() {
     this.alert = false;

@@ -47,7 +47,7 @@ h2{
 
     text-align: center;
     margin: 5px 5px;
-    margin-top: 50px
+    margin-top: 80px
 }
 #closeOrders{
 	margin-right: 10px;
@@ -275,7 +275,8 @@ vertical-align: top;
     }
     #btnWrapper{
         text-align: center;
-        margin: 5px 5px;
+		margin: 5px 5px;
+		margin-top: 60px !important;
     }
     #moreWrapper{
         margin-top: 103px;

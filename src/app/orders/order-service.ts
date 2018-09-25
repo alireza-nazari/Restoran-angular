@@ -95,11 +95,9 @@ export class OrderService{
         return this.empty;
     }
     getByUser(data: any, offset){
-        console.log(data)
         this.ids = null;
         if(data.constructor === Array){
         data.forEach((item, index) => {
-            console.log(index)
             if(index == 0){         
                 this.ids = item.id
             }
@@ -111,9 +109,7 @@ export class OrderService{
     else{
         this.ids = data;
     }
-        console.log(this.ids)
         return this.http.get<any>(environment.apiBaseUrl+"orders/clients?offset="+ offset +"&id="+ this.ids)
-
     }
     createArray(data){
         this.data = data;
@@ -142,8 +138,7 @@ export class OrderService{
          }else{
         this.ids = id;
      }
-        console.log(from, to, id)
-        return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset="+ offset +"&start="+ from +"&end="+ to +"&client_id="+ id);
+        return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset="+ offset +"&start="+ from +"&end="+ to +"&client_id="+ this.ids);
     }
     emptyOut(){
         this.data = [];
@@ -169,7 +164,6 @@ export class OrderService{
         }
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
-
     myOrders(offset){
         return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+ offset)
     }
