@@ -1,19 +1,18 @@
 <div>
     <div id="wholeWrapper " class=" center">
         <div id="tableHeader">
-            <div id="todayWrapper">
-                <h2>Porudzbine</h2>
-                <div class="d-flex flex-row flex-sm-row">
-                    <div class="p-2">
+            <div id="todayWrapper" class="row container-fluid">
+                <div class="col-md-12 container"><h2>Porudzbine</h2>
+                </div>
+                    <div class="col-md-4 col-sm-12">
                         <button *ngIf="admin" class="btn btn-primary" (click)="today(true)" id="todayOrdBtn">Današnje porudzbine</button>
                     </div>
-                    <div class="p-2">
-                            <button *ngIf="admin" class="btn btn-success" (click)="allToday()" id="closeOrders">Sve današnje porudzbine</button>
+                    <div class="col-md-4 col-sm-12">
+                            <button *ngIf="admin" class="btn btn-success" (click)="allToday()" id="allToday">Sve današnje porudzbine</button>
                     </div>
-                    <div class="p-2">
-                        <button *ngIf="admin" class="btn btn-danger" (click)="closeTodayOrders()">Zatvori porudzbine</button>
+                    <div class="col-md-4 col-sm-12">
+                        <button *ngIf="admin" class="btn btn-danger" (click)="closeTodayOrders()" id="closeOrders">Zatvori porudzbine</button>
                     </div>
-                </div>
             </div>
             <div id="btnWrapper">
                 <h3>Pretraga

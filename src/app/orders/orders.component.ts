@@ -739,11 +739,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.result = false;
   }
   ngOnDestroy() {
-    // this.orderService.emptyOut();
-    // if (this.admin == true) {
-    //   this.orderService.changeStatus(this.data)
-    //     .subscribe()
-    // }
+    this.orderService.emptyOut();
+    if (this.admin == true) {
+      this.orderService.changeStatus(this.data)
+        .subscribe()
+    }
   }
   closeAlert() {
     this.alert = false;
