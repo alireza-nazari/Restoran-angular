@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit, DoCheck{
     else{
       this.status = false;
     }
-    console.log
+
   }
   hide(){
     this.state = 'resp'
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit, DoCheck{
 }
   onResize(event) {
     this.width = event.target.innerWidth;
-    if(this.width <= 590){
+    if(this.width <= 610){
       this.state = 'resp';
     }else{
       this.state = 'normal'

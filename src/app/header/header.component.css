@@ -52,7 +52,7 @@ fa{
     margin-left: 4%;
     margin-right: 20px;
 }
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 610px) {
     #bars{
         visibility: visible;
         text-align: right;

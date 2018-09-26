@@ -146,6 +146,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
       );
   }
   today(event: boolean) {
+    this.userID = null;
+    this.formData = null;
+    this.singleDateUser = '';
     if(this.admin == true && event == true){
       this.orderService.emptyOut();
      
@@ -466,7 +469,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
         .subscribe(
           (res) => {
             if (this.data != [] && res == '') {
-              console.log("DS")
               this.alert = true;
               setTimeout(() => {
                 this.alert = false
@@ -582,6 +584,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.alert = false;
       this.orderService.emptyOut();
       this.clickedFunction = 'singleUser';
+      console.log(this.singleDateUser.value.single, this.userID)
       if((this.userID != null || this.userID != '' || this.userID != 'undefined') && this.singleDateUser.value.single == '' ){
         this.orderService.getByUser(this.userID, this.id)
           .subscribe(
@@ -616,7 +619,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             }
           )
       }
-      else if ((this.userID == null || this.userID == 'undefined') && this.singleDateUser.value.single != '') {
+      else if ((this.userID == null || this.userID == '') && this.singleDateUser.value.single != '') {
         this.orderService.singleDate(this.singleDateUser.value.single, this.id)
           .subscribe(
             (res) => {
@@ -649,7 +652,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             }
           )
       }
-      else if(this.userID != null && this.singleDateUser.value.single != '') {
+      else if(this.userID != null  && this.singleDateUser.value.single != '') {
         this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID, this.id)
           .subscribe(
             (res) => {
