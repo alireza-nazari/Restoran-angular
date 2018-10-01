@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
+import { JwtInteceptor } from './auth/jwt.interceptor';
 import { AuthGuardService } from './auth/auth-guard.service';
 // import { JwtHelperService as _JwtHelperService} from '@auth0/angular-jwt';
 import { RoleGuardService } from './auth/role-guard.service';

@@ -78,3 +78,8 @@ fa{
         margin-top: 5px;
     }
 }
+@media print {
+    *{
+        visibility: hidden;
+    }
+}

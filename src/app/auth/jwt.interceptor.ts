@@ -10,6 +10,7 @@ export class JwtInteceptor implements HttpInterceptor{
 
     intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>>{
+        console.log("DSA")
         return next.handle(request).do((event: HttpEvent<any>) =>{
             if(event instanceof HttpRequest) {
                console.log("jwt intexte")

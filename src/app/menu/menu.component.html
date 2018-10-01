@@ -1,58 +1,72 @@
 <div id="list" class="col" #cont>
-    <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center" >
-        <div id="mealWrapper">
-            <img src="{{meal.link}}"
-                alt="meal-image" >
-            <div id="wrapper">
-                <li #name>{{meal.name}}</li>
-                <div id="image">
-                    <li id="price" >{{meal.price}}din</li>
-                <img class="hvr-grow" (click)="open(content)"e id="orderToggle" src="../../assets/imageedit_2_6871258977.png" alt="img">
-            </div>
-          </div>
-            <ng-template #content let-c="close" let-d="dismiss">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="modal-basic-title">Porudzbina</h4>
-                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true" id="close">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form class="form-group">
-                    <div class="form-group">
-                      <label for="dateOfBirth">Izabrano jelo: {{meal.name}}</label><br>
-                      <label for="piece">Jedinica mere:</label>
-                      <p>{{meal.piece}}</p>
-                        <label for="amountInput">Količina:</label>
-                        <input class="form-control" type="number" min="0" id="amountInput" #amountInput required>
-                        <div class="input-group-append">
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, type: meal.piece ,link: meal.link}); c('Save click')">U korpu</button>
-                </div>
-              </ng-template>
+  <ul id="menu" *ngFor="let meal of meals" class="d-flex justify-content-center">
+    <div id="mealWrapper">
+      <img src="{{meal.link}}" alt="meal-image">
+      <div id="wrapper">
+        <li #name>{{meal.name}}</li>
+        <div id="image">
+          <li id="price">{{meal.price}}din</li>
+          <img class="hvr-grow" (click)="open(content)" e id="orderToggle" src="../../assets/imageedit_2_6871258977.png"
+            alt="img">
         </div>
-    </ul>
-    <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
-        <div *ngIf="spinerGroup" class="windows8">
-            <div class="wBall" id="wBall_1">
-              <div class="wInnerBall"></div>
+      </div>
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Porudzbina</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true" id="close">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-group">
+            <div class="form-group">
+              <label for="dateOfBirth">Izabrano jelo: {{meal.name}}</label><br>
+              <label for="piece">Jedinica mere:</label>
+              <p>{{meal.piece}}</p>
+              <label for="amountInput">Količina:</label>
+              <input class="form-control" type="number" min="0" id="amountInput" #amountInput required>
+              <div class="input-group-append">
+              </div>
             </div>
-            <div class="wBall" id="wBall_2">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_3">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_4">
-              <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_5">
-              <div class="wInnerBall"></div>
-            </div>
-          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="sendIt({id: meal.meal_id, info: meal.name ,amount: amountInput.value, type: meal.piece ,link: meal.link}); c('Save click')">U
+            korpu</button>
+        </div>
+      </ng-template>
     </div>
+  </ul>
+  <div id="showMoreButtonWrapper" [hidden]="more">
+    <button id="showMoreButton" class="btn btn-success" (click)="showMore()">Prikaži još</button>
+  </div>
+  <div id="alertWr" class="d-flex justify-content-center">
+    <div class="alert alert-info row" role="alert" *ngIf="alert" id="alertWrap">
+      <div>
+        <p>Prikazali ste sve!</p>
+      </div>
+      <div id="timesWrap">
+        <fa id="exit" (click)="closeAlert()" name="times"></fa>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
+    <div *ngIf="spinerGroup" class="windows8">
+      <div class="wBall" id="wBall_1">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_2">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_3">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_4">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_5">
+        <div class="wInnerBall"></div>
+      </div>
+    </div>
+  </div>
 </div>

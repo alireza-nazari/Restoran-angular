@@ -31,7 +31,8 @@ export class CategoriesComponent implements OnInit {
   
   count: number = 0;
   element: number = 0;
-
+  image: any;
+  bodyR: any;
   constructor(private cat: CategoriesService,
               private router: Router,
               private route: ActivatedRoute,
@@ -47,12 +48,25 @@ export class CategoriesComponent implements OnInit {
       }
     )
   }
-  getByCategory(id: any, out: ElementRef){
+  getByCategory(id: any, out: ElementRef, img: HTMLImageElement, body: HTMLDivElement){
    this.router.navigate([id,'meni'])
    this.state = 'visible';
-   
-  }
-  more(items){
-    console.log(items)
+   img.classList.remove('inactive');
+   body.classList.remove('inactive');
+   body.classList.add('active');
+   img.classList.add('active');
+   console.log(img, this.image)
+   if(this.image == undefined && this.bodyR == undefined){
+    this.image = img;
+    this.bodyR = body;
+   }
+   else{
+    this.image.classList.remove('active');
+    this.bodyR.classList.remove('active');
+    this.image.classList.add('inactive');
+    this.bodyR.classList.add('inactive');
+    this.image = img;
+    this.bodyR = body;
+   }
   }
 }

@@ -34,7 +34,7 @@ import { Subscription, Observable } from 'rxjs';
     ])
   ]
 })
-export class MenuComponent implements OnInit,  DoCheck{
+export class MenuComponent implements OnInit, DoCheck {
   meals: any = [];
   response: any = [];
   sub: any;
@@ -56,7 +56,7 @@ export class MenuComponent implements OnInit,  DoCheck{
 
   previousPage: number;
 
-  
+
 
   identifer: any;
   subscribeState: string;
@@ -65,6 +65,10 @@ export class MenuComponent implements OnInit,  DoCheck{
   subed: Subscription;
   subede: Subscription;
   spiner: boolean = false;
+  alert: boolean = false;
+  times: number = 0;
+  more: boolean = true;
+  last: any = [];
   @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
@@ -77,30 +81,29 @@ export class MenuComponent implements OnInit,  DoCheck{
     private menuData: DataService) {
 
   }
-  ngDoCheck(){
-    if(this.id != this.route.snapshot.params['id'] || this.id == 'undefined')
-    {
+  ngDoCheck() {
+    if (this.id != this.route.snapshot.params['id'] || this.id == 'undefined') {
       this.meals = [];
       this.page = 0;
       this.getMealsByID(this.page)
-    }else{
+    } else {
     }
   }
-
-
+  closeAlert() {
+    this.alert = false;
+  }
   onInViewportChange(inViewport: boolean) {
     this.visible = inViewport;
-    if (this.visible == true) {
+    if(this.visible == true) {
       this.getMealsByID(this.page)
     }
   }
   getMealsByID(num: number) {
     this.id = this.route.snapshot.params['id'];
     if (this.id == this.identifer) {
-      
       this.oldData(this.page)
     }
-    else {
+    else{
       this.page = 0;
       this.identifer = this.id
       this.newData(this.page)
@@ -108,58 +111,75 @@ export class MenuComponent implements OnInit,  DoCheck{
   }
 
   oldData(num) {
-    
+    this.alert = false;
     this.spinerGroup = true;
-          var sub = this.cate.getByCategory(this.id, num)
-            .subscribe(
-              (res: Array<any>[]) => {
-                setTimeout(() => {
-                  this.spiner = true;
-                }, 1)
-                this.meals = this.meals.concat(res);
-                for(let meal of this.meals){
-                  if(meal.piece == true){
-                      meal.piece = 'gram'
-                  }
-                  else if(meal.piece == false){
-                    meal.piece = 'kom'
-                  }
-                }
-                this.page += 5;
-                this.spinerGroup = false;
-              },
-              (error) => {
-                this.spinerGroup = false;
+    var sub = this.cate.getByCategory(this.id, num)
+      .subscribe(
+        (res: Array<any>[]) => {
+          this.last = res;
+          if (res.length > 0) {
+            setTimeout(() => {
+              this.spiner = true;
+            }, 1)
+            this.meals = this.meals.concat(res);
+            for (let meal of this.meals) {
+              if (meal.piece == true) {
+                meal.piece = 'gram'
               }
-            );
+              else if (meal.piece == false) {
+                meal.piece = 'kom'
+              }
+            }
+            this.page += 5;
+          }
+          if (res.length == 0) {
+            this.alert = true;
+          }
+          this.spinerGroup = false;
+        },
+        (error) => {
+          this.spinerGroup = false;
+        }
+      );
   }
-
-  newData(num) {
-    this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
-    this.spinerGroup = true;
-          var sub = this.cate.getByCategory(this.id, num)
-            .subscribe(
-              (res: Array<any>[]) => {
-                console.log(res)
-                setTimeout(() => {
-                  this.spiner = true;
-                }, 1)
-                this.meals = res;
-                for(let meal of this.meals){
-                  if(meal.piece == true){
-                      meal.piece = 'gram'
-                  }
-                  else if(meal.piece == false){
-                    meal.piece = 'kom'
-                  }
-                }
-                this.page += 5;
-                this.spinerGroup = false;
+  newData(num){
+    this.more = true;
+      this.alert = false;
+      this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
+      this.spinerGroup = true;
+      var sub = this.cate.getByCategory(this.id, num)
+        .subscribe(
+          (res: Array<any>[]) => {
+            setTimeout(() => {
+              this.spiner = true;
+            }, 1)
+            this.meals = res;
+            for (let meal of this.meals) {
+              if (meal.piece == true) {
+                meal.piece = 'gram'
+              }
+              else if (meal.piece == false) {
+                meal.piece = 'kom'
+              }
+            }
+            this.page += 5;
+            this.spinerGroup = false;
+            this.more = false;
           },
           (error) => {
             this.spinerGroup = false;
           }
         );
+    
+  }
+  showMore(){
+    if(this.last.length == 0){
+      this.oldData(this.page);
+    }
+    else{
+      this.oldData(this.page);
+      this.page += 5;
+    }
   }
   open(content) {
     this.modalService.open(content, { centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -186,7 +206,7 @@ export class MenuComponent implements OnInit,  DoCheck{
     this.menuData.sendData(data);
     this.tostr.success('Prosledjeno u korpu');
   }
-  ngOnInit(){
-    
+  ngOnInit() {
+
   }
 }

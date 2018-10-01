@@ -80,10 +80,13 @@
                         </div>
                     </form>
                 </div>
+                <div id="printWrapper">
+                    <button class="btn btn-success" id="printBtn" (click)="createPdf()">Štampaj<fa *ngIf="admin" name="print"  id="print"></fa></button>
+                </div>
             </div>
         </div>
         <div id="tableWrapper">
-            <table border="1px solid black" class="table">
+            <table border="1px solid black" class="table" id="tablePrint" #table>
                 <thead>
                     <tr id="header">
                         <th>Broj porudzbine
@@ -100,7 +103,7 @@
                         <th>Datum narudzbine</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     <tr *ngFor="let meal of data | filter: term" [ngClass]="{'new': meal.display == true && admin == true ,'seen': meal.display == false && admin == true}">
                         <td>{{ meal.order_id}}</td>
                         <td>{{ meal.client.name }}({{meal.client.username}})</td>
@@ -135,7 +138,7 @@
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>
         </div>
-        <div style="text-align: center">
+        <div style="text-align: center" id="more">
             <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
             <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
         </div>
