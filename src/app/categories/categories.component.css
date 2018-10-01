@@ -68,6 +68,12 @@ a{
     transform: scale(1.05);
     cursor: pointer;  
 }
+.inactive{
+    filter: brightness(70%);
+}
+.active{
+    filter: brightness(100%);
+}
 @media screen and (max-width: 590px) {
     #wrapper{
         margin-top: 70px;
@@ -82,7 +88,12 @@ a{
 @media screen and (max-width: 768px) {
 
 }
-
+.half-black {
+    background: rgba(0, 0, 0, 0.5);
+  }
+.notClicked{
+    opacity: 1;
+}
 @media screen and (max-width: 1756px) {
     a:nth-child(1){
         text-align: center;

@@ -10,6 +10,8 @@ import { ToastrService, Toast } from 'ngx-toastr';
 import { AuthService } from '../auth/auth.service';
 import decode from 'jwt-decode';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas'; 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -86,6 +88,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   remainNumber: number = 0;
   angle: boolean = false;
   inputCheck: HTMLInputElement;
+  
   constructor(public orderService: OrderService,
     private datepipe: DatePipe,
     private auth: AuthService,
@@ -122,6 +125,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
   }
+  createPdf(table: HTMLTableElement){
+    window.print();
+  }
   event(eve: HTMLInputElement) {
     console.log(eve.value)
   }
@@ -151,9 +157,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.singleDateUser = '';
     if(this.admin == true && event == true){
       this.orderService.emptyOut();
-     
     }
-    if (event == true) {
+    if(event == true) {
       this.data = [];
       this.id = 0;
       this.allNumber = 0;
@@ -173,6 +178,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
         (res) => {
+          console.log(res)
           if (res != '') {
             this.allNumber = res[0].numberOfElements;
             this.showedNumber += res.length;
@@ -206,7 +212,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.alertContent = 'Došlo je do greške, pokušajte ponovo'
         }
       )
-
   }
   moreOrders() {
     this.spinner = true;
