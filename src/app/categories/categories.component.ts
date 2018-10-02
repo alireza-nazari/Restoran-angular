@@ -56,7 +56,6 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
   }
   clickedCategory(body: HTMLDivElement){
     var last = localStorage.getItem('lastCate');
-    if(localStorage.getItem('lastCate') == null){
     var i = body.innerHTML;
     localStorage.setItem('lastCate',i);
     console.log()
@@ -72,12 +71,6 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
      this.bodyR.classList.remove('active');
      this.bodyR.classList.add('inactive');
      this.bodyR = body;
-    }
-    }
-    else{
-      this.bodyR = last;
-      // this.bodyR.classList.remove('inactive');
-      // this.bodyR.classList.add('active');
     }
   }
 }

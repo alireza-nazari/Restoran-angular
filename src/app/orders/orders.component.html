@@ -31,7 +31,6 @@
                                     <div *ngIf="admin">
                                         <div>
                                             <div ngbDropdown>
-
                                                 <input #inputClick type="text" class="form-control" id="inputText"
                                                     aria-describedby="emailHelp" placeholder="Izaberi koriscnicko ime"
                                                     name="user" autocomplete="off" readonly id="dropIt"
@@ -41,7 +40,7 @@
                                                     <li *ngFor="let use of allUsers" class="dropdown-item">
                                                         <input #checkBo type="checkbox" id="userSelect" name="userSelect"
                                                             value="{{use.client_id}}" (click)="checkboxValue(use.client_id, use.name,checkBo, inputClick)"
-                                                            ngModel><span>{{use.name}}({{use.username}})</span></li>
+                                                            ngModel><span (click)="checkTrue(checkBo)">{{use.name}}({{use.username}})</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -80,8 +79,8 @@
                         </div>
                     </form>
                 </div>
-                <div id="printWrapper">
-                    <button class="btn btn-success" id="printBtn" (click)="createPdf()">Štampaj<fa *ngIf="admin" name="print"  id="print"></fa></button>
+                <div id="printWrapper" *ngIf="admin">
+                    <button class="btn btn-success" id="printBtn" (click)="createPdf()">Štampaj<fa name="print"  id="print"></fa></button>
                 </div>
             </div>
         </div>

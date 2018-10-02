@@ -126,7 +126,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   }
   createPdf(){
-    window.print();
+    if(this.data.length > 0){
+      window.print();
+    }
+    else{
+      alert("Morate prvo prikazati porudzbine!");
+    }
+    
   }
   event(eve: HTMLInputElement) {
     console.log(eve.value)
@@ -150,6 +156,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.data = this.orderService.createArray(res);
         }
       );
+  }
+  checkTrue(check: HTMLSelectElement){
+    
   }
   today(event: boolean) {
     this.userID = null;
