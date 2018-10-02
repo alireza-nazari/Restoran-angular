@@ -50,7 +50,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="300">
+  <div *ngIf="spiner" style="height: 100px;" snInViewport (inViewportChange)="onInViewportChange($event)" [debounce]="2000">
     <div *ngIf="spinerGroup" class="windows8">
       <div class="wBall" id="wBall_1">
         <div class="wInnerBall"></div>

@@ -72,6 +72,9 @@ ul{
 	height: 50px;
 	position: absolute;
 }
+#exit:hover{
+	cursor: pointer;
+}
 .modal-header{
     background-color: rgb(255, 68, 0);
     color: white;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from '@angular/core';
 import { CategoriesService } from './categories-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { trigger, state, style } from '@angular/animations';
@@ -22,8 +22,7 @@ import { DataService } from '../data.service';
     ])
   ]
 })
-export class CategoriesComponent implements OnInit {
-  @ViewChild('outlet') public outlet: ElementRef;
+export class CategoriesComponent implements OnInit, AfterContentInit {
   public categories: any = [];
   public state: any = 'hidden';
 
@@ -33,40 +32,52 @@ export class CategoriesComponent implements OnInit {
   element: number = 0;
   image: any;
   bodyR: any;
+  imageTag: any;
   constructor(private cat: CategoriesService,
               private router: Router,
               private route: ActivatedRoute,
               private data: DataService) { }
-
+  ngAfterContentInit(){
+  }
   ngOnInit() {
     this.cat.getCategories()
     .subscribe(
       (data) =>{
-        console.log(data)
         this.categories = data;
         this.state = 'visible'
       }
     )
+    
   }
-  getByCategory(id: any, out: ElementRef, img: HTMLImageElement, body: HTMLDivElement){
-   this.router.navigate([id,'meni'])
-   this.state = 'visible';
-   img.classList.remove('inactive');
-   body.classList.remove('inactive');
-   body.classList.add('active');
-   img.classList.add('active');
-   console.log(img, this.image)
-   if(this.image == undefined && this.bodyR == undefined){
-    this.image = img;
-    this.bodyR = body;
-   }
-   else{
-    this.image.classList.remove('active');
-    this.bodyR.classList.remove('active');
-    this.image.classList.add('inactive');
-    this.bodyR.classList.add('inactive');
-    this.image = img;
-    this.bodyR = body;
-   }
+  getByCategory(id: any, out: ElementRef, body: HTMLDivElement){
+     this.router.navigate([id,'meni']);
+     this.state = 'visible';
+    this.clickedCategory(body);
+  }
+  clickedCategory(body: HTMLDivElement){
+    var last = localStorage.getItem('lastCate');
+    if(localStorage.getItem('lastCate') == null){
+    var i = body.innerHTML;
+    localStorage.setItem('lastCate',i);
+    console.log()
+    body.children[0].classList.remove('inactive');
+    body.children[0].classList.add('active');
+    if(this.image == undefined && this.bodyR == undefined){
+     this.bodyR = body;
+    }
+    else if(this.bodyR == body){
+
+    }
+    else{
+     this.bodyR.classList.remove('active');
+     this.bodyR.classList.add('inactive');
+     this.bodyR = body;
+    }
+    }
+    else{
+      this.bodyR = last;
+      // this.bodyR.classList.remove('inactive');
+      // this.bodyR.classList.add('active');
+    }
   }
 }

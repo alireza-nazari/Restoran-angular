@@ -69,6 +69,7 @@ export class MenuComponent implements OnInit, DoCheck {
   times: number = 0;
   more: boolean = true;
   last: any = [];
+  check: number;
   @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
@@ -93,9 +94,10 @@ export class MenuComponent implements OnInit, DoCheck {
     this.alert = false;
   }
   onInViewportChange(inViewport: boolean) {
+    console.log("DSa")
     this.visible = inViewport;
-    if(this.visible == true) {
-      this.getMealsByID(this.page)
+    if(this.visible == true){
+      this.getMealsByID(this.page);
     }
   }
   getMealsByID(num: number) {
@@ -116,7 +118,6 @@ export class MenuComponent implements OnInit, DoCheck {
     var sub = this.cate.getByCategory(this.id, num)
       .subscribe(
         (res: Array<any>[]) => {
-          this.last = res;
           if (res.length > 0) {
             setTimeout(() => {
               this.spiner = true;
@@ -134,6 +135,10 @@ export class MenuComponent implements OnInit, DoCheck {
           }
           if (res.length == 0) {
             this.alert = true;
+            setTimeout(() => {
+              this.alert = false;
+            }, 5000)
+            
           }
           this.spinerGroup = false;
         },
@@ -141,6 +146,7 @@ export class MenuComponent implements OnInit, DoCheck {
           this.spinerGroup = false;
         }
       );
+     
   }
   newData(num){
     this.more = true;
@@ -170,7 +176,6 @@ export class MenuComponent implements OnInit, DoCheck {
             this.spinerGroup = false;
           }
         );
-    
   }
   showMore(){
     if(this.last.length == 0){
