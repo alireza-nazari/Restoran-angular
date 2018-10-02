@@ -125,7 +125,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
 
   }
-  createPdf(table: HTMLTableElement){
+  createPdf(){
     window.print();
   }
   event(eve: HTMLInputElement) {
