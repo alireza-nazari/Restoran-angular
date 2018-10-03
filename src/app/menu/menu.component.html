@@ -24,8 +24,9 @@
               <label for="piece">Jedinica mere:</label>
               <p>{{meal.piece}}</p>
               <label for="amountInput">Količina:</label>
-              <input class="form-control" type="number" min="0" id="amountInput" #amountInput required>
-              <div class="input-group-append">
+              <div id="amountInputWrap" class="row">
+                <div><input class="form-control" type="number" min="1" id="amountInput" #amountInput required></div>
+                <div><p id="typeAm">{{meal.piece}}/a</p></div>
               </div>
             </div>
           </form>

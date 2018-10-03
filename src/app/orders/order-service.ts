@@ -21,7 +21,7 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+ date +"?offset="+id, {headers: this.headers})
     }
     singleDateUser(date: any, id: any, offset){
-        if(id.constructor === Array){
+        if(id === Array){
             this.ids = null;
             id.forEach((item, index) => {
                 console.log(index)
@@ -35,7 +35,6 @@ export class OrderService{
         }else{
             this.ids = id
         }
-
         return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+this.ids+"&date="+date)
     }
     toDate(date: any, offset){

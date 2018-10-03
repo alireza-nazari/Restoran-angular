@@ -290,6 +290,15 @@ vertical-align: top;
 		left: 0;
 		top: 0;
 	  }
+	  #printBtn{
+		  visibility: hidden;
+	  }
+	  #btnWrapper{
+		  visibility: hidden;
+	  }
+	  *{
+		  overflow-y: none;
+	  }
 }
 @media only screen and (max-width: 1001px) {
     .center{
@@ -384,7 +393,9 @@ vertical-align: top;
 	height:78px;
 	margin:auto;
 }
-
+#searchH:hover{
+	cursor: pointer;
+}
 .windows8 .wBall {
 	position: absolute;
 	width: 74px;

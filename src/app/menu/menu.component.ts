@@ -1,18 +1,12 @@
+import { ToastrConfig} from 'ngx-toastr';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, AfterContentInit, DoCheck } from '@angular/core';
-import { MealsService } from '../meals.service';
-
-import { SearchService } from '../search.service';
-import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
-
-
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { AuthGuardService } from '../auth/auth-guard.service';
-import { ToastrService, Toast } from 'ngx-toastr';
+import { ToastrService} from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories-service';
 import { trigger, state, style } from '@angular/animations';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Subscription, Observable } from 'rxjs';
 
 @Component({
@@ -74,13 +68,11 @@ export class MenuComponent implements OnInit, DoCheck {
   @Input('page') masterName: string;
 
   constructor(
-
     private tostr: ToastrService,
     private route: ActivatedRoute,
     private cate: CategoriesService,
     private modalService: NgbModal,
     private menuData: DataService) {
-
   }
   ngDoCheck() {
     if (this.id != this.route.snapshot.params['id'] || this.id == 'undefined') {
@@ -128,7 +120,7 @@ export class MenuComponent implements OnInit, DoCheck {
                 meal.piece = 'gram'
               }
               else if (meal.piece == false) {
-                meal.piece = 'kom'
+                meal.piece = 'komad'
               }
             }
             this.page += 5;
@@ -165,7 +157,7 @@ export class MenuComponent implements OnInit, DoCheck {
                 meal.piece = 'gram'
               }
               else if (meal.piece == false) {
-                meal.piece = 'kom'
+                meal.piece = 'komad'
               }
             }
             this.page += 5;
@@ -207,9 +199,12 @@ export class MenuComponent implements OnInit, DoCheck {
     }
   }
   sendIt(data: any) {
-    console.log(data)
-    this.menuData.sendData(data);
-    this.tostr.success('Prosledjeno u korpu');
+    if(data.amount < 1){
+      alert("Kolicina mora biti veca od 0")
+    }else{
+      this.menuData.sendData(data);
+      this.tostr.success('Prosledjeno u korpu');
+    }
   }
   ngOnInit() {
 

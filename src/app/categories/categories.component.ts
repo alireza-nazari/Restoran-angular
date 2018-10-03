@@ -33,11 +33,13 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
   image: any;
   bodyR: any;
   imageTag: any;
+
   constructor(private cat: CategoriesService,
               private router: Router,
               private route: ActivatedRoute,
               private data: DataService) { }
   ngAfterContentInit(){
+
   }
   ngOnInit() {
     this.cat.getCategories()
@@ -47,18 +49,13 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
         this.state = 'visible'
       }
     )
-    
   }
-  getByCategory(id: any, out: ElementRef, body: HTMLDivElement){
+  getByCategory(id: any, out: ElementRef, body: any){
      this.router.navigate([id,'meni']);
      this.state = 'visible';
     this.clickedCategory(body);
   }
   clickedCategory(body: HTMLDivElement){
-    var last = localStorage.getItem('lastCate');
-    var i = body.innerHTML;
-    localStorage.setItem('lastCate',i);
-    console.log()
     body.children[0].classList.remove('inactive');
     body.children[0].classList.add('active');
     if(this.image == undefined && this.bodyR == undefined){

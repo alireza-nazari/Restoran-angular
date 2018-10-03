@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.1.7",
+    "@angular/animations": "^6.1.9",
     "@angular/cli": "^6.2.1",
     "@angular/common": "^6.1.7",
     "@angular/compiler": "^6.1.7",
@@ -53,7 +53,7 @@
     "ngx-ckeditor": "^0.3.2",
     "ngx-infinite-scroll": "^6.0.1",
     "ngx-order-pipe": "^2.0.1",
-    "ngx-toastr": "^9.0.2",
+    "ngx-toastr": "^9.1.0",
     "path": "^0.12.7",
     "rxjs": "^6.3.2",
     "rxjs-compat": "^6.3.2",

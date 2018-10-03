@@ -15,8 +15,8 @@
                     </div>
             </div>
             <div id="btnWrapper">
-                <h3>Pretraga
-                    <fa class="hvr-grow" id="searchBtn" (click)="animate(expandText)" name="search"></fa>
+                <h3 id="searchH" (click)="animate(expandText)">Pretraga
+                    <fa class="hvr-grow" id="searchBtn"  name="search"></fa>
                 </h3>
                 <div [@divState]="state" id="formWrapper">
                     <form id="multyForm">
@@ -133,13 +133,13 @@
                 </div>
             </div>
         </div>
+        <div style="text-align: center" id="more" [hidden]="moreBool">
+            <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
+            <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
+        </div>
         <div class="alert alert-info" role="alert" *ngIf="alert">
             {{alertContent}}
             <fa id="exit" (click)="closeAlert()" name="times"></fa>
-        </div>
-        <div style="text-align: center" id="more">
-            <fa name="angle-down" id="angle" (click)="moreOrders()"></fa>
-            <h5 *ngIf="angle" id="number">Imate još: {{remainNumber}} porudzbina</h5>
         </div>
     </div>
     <div>

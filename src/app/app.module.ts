@@ -53,11 +53,11 @@ import { TypePipe } from './type.pipe';
 import { ClickOutsideModule } from 'ng4-click-outside';
 import { DatePipe } from '@angular/common';
 import { CKEditorModule } from 'ngx-ckeditor';
+import { CrudImageService } from './crud/crud-image-service';
 
 const providers = [
   { provide: WindowRef, useValue: window }
 ];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,9 +109,15 @@ const providers = [
     OrderService,
     DataService,
     DatePipe,
+    CrudImageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInteceptor,
       multi: true
     }],
   bootstrap: [AppComponent]

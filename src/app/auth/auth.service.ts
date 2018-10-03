@@ -48,7 +48,6 @@ export class AuthService{
                 const novo = data.replace(/['"]+/g, '');
                 localStorage.setItem('token', novo);
                 const tokenPayload = decode(novo);
-                localStorage.setItem('role', tokenPayload.role);
                 this.router.navigate(['/'])
                 this.logingState();
             },
@@ -57,7 +56,6 @@ export class AuthService{
     public singOut(): void{
         this.show = false;
         localStorage.removeItem('token');
-        localStorage.removeItem('role');
         this.router.navigate(['/login'])
         this.logingState();
     }

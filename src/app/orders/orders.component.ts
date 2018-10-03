@@ -88,7 +88,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   remainNumber: number = 0;
   angle: boolean = false;
   inputCheck: HTMLInputElement;
-  
+  moreBool: boolean = false;
   constructor(public orderService: OrderService,
     private datepipe: DatePipe,
     private auth: AuthService,
@@ -123,7 +123,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.simpleUser = true;
       this.myOrders()
     }
-
   }
   createPdf(){
     if(this.data.length > 0){
@@ -160,7 +159,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   checkTrue(check: HTMLSelectElement){
     
   }
-  today(event: boolean) {
+  today(event: boolean){
+    this.moreBool = false;
     this.userID = null;
     this.formData = null;
     this.singleDateUser = '';
@@ -187,21 +187,20 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.orderService.todayOrders(transformdate, this.id)
       .subscribe(
         (res) => {
-          console.log(res)
           if (res != '') {
             this.allNumber = res[0].numberOfElements;
             this.showedNumber += res.length;
             this.remainNumber = this.allNumber - this.showedNumber;
           }
 
-          if (this.data == [] && res == '') {
+          if (this.data.length == 0 && res == '') {
             this.alert = true;
             setTimeout(() => {
               this.alert = false
             }, 10000)
-            this.alertContent = 'Trenutno ne postoje porudzbine za današnji datum'
+            this.alertContent = 'Trenutno ne postoje porudzbine za današnji datum';
           }
-          else if (res == '' && this.data != []) {
+          else if (res == '' && this.data.length > 0) {
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -264,6 +263,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   }
   fromToData(form: NgForm, event: boolean) {
+    this.moreBool = false;
     this.spinner = true;
     this.spinerGroup = true;
     this.alert = false;
@@ -278,7 +278,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.fromTo(this.formData.value.from, this.formData.value.to, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -312,7 +312,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.singleStartingDate(form.value.from, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -346,7 +346,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.getByUser(this.userID, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -380,7 +380,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.combination(form.value.from, form.value.to, this.userID, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -414,7 +414,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.toDate(form.value.to, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -448,7 +448,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.fromAndUser(form.value.from, this.userID, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               console.log("DS")
               this.alert = true;
               setTimeout(() => {
@@ -482,7 +482,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.orderService.toAndUser(form.value.to, this.userID, this.id)
         .subscribe(
           (res) => {
-            if (this.data != [] && res == '') {
+            if (this.data.length > 0 && res == '') {
               this.alert = true;
               setTimeout(() => {
                 this.alert = false
@@ -573,6 +573,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
    
   }
   singleUser(event: boolean, forme: NgForm) {
+    this.moreBool = false;
     this.angle = false;
     this.singleDateUser = forme;
     console.log(this.singleDateUser.value.single)
@@ -603,8 +604,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.orderService.getByUser(this.userID, this.id)
           .subscribe(
             (res) => {
-
-              if (this.data != [] && res == '') {
+              if (this.data.length > 0 && res == '') {
                 this.alert = true;
                 setTimeout(() => {
                   this.alert = false
@@ -637,7 +637,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.orderService.singleDate(this.singleDateUser.value.single, this.id)
           .subscribe(
             (res) => {
-              if (this.data != [] && res == '') {
+              if (this.data.length > 0 && res == '') {
                 this.alert = true;
                 setTimeout(() => {
                   this.alert = false
@@ -670,7 +670,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID, this.id)
           .subscribe(
             (res) => {
-              if (this.data != [] && res == '') {
+              if (this.data.length > 0 && res == '') {
                 this.alert = true;
                 setTimeout(() => {
                   this.alert = false
@@ -702,7 +702,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   myOrders() {
-
+    this.moreBool = false;
     this.angle = false;
     this.spinner = true;
     this.spinerGroup = true;
@@ -712,7 +712,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.orderService.singleDateUser(transformdate, this.userID, this.id)
       .subscribe(
         (res) => {
-          if (this.data != [] && res == '') {
+          if (this.data.length > 0 && res == '') {
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -802,6 +802,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.angle = false;
     this.spinner = true;
     this.spinerGroup = true;
+    this.moreBool = true;
     this.todaysDate = new Date();
     var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
     this.orderService.allTodayOrders(transformdate)
@@ -810,7 +811,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
           this.data = res;
           this.data = this.orderService.createArray(res)
-          if (this.data != [] && res == '') {
+          if (this.data.length > 0 && res == '') {
             this.alert = true;
             setTimeout(() => {
               this.alert = false
@@ -822,7 +823,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.alert = false
             }, 10000)
-            this.alertContent = 'Nema porudzbina sa zadatim uslovima'
+            this.alertContent = 'Trenutno ne postoje porudzbine za današnji datum';
           }
           this.spinner = false;
           this.spinerGroup = false;
