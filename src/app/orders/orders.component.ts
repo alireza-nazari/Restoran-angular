@@ -191,6 +191,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         (res) => {
           if (res != '') {
             this.allNumber = res[0].numberOfElements;
+            console.log(res[0].numberOfElements)
             this.showedNumber += res.length;
             this.remainNumber = this.allNumber - this.showedNumber;
           }

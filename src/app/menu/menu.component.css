@@ -20,9 +20,9 @@ ul{
 #list{
     position: relative;
     margin-right: 0;
-    height: 500px;
+	height: 500px;
+	
 }
-
 #alertWrapper{
     position: absolute;
     bottom: 0;

@@ -26,11 +26,10 @@ export class OrderService{
         if(id.constructor == Array){
             id.forEach((item, index) => {
                 if(index == 0){         
-                    this.ids = item.id
+                    this.ids = item.id;
                 }
                 else{
                     this.ids += ","+ item.id;
-
                 }
             })
         }else{
@@ -64,7 +63,7 @@ export class OrderService{
         })
         }
         else{
-            this.ids = id;
+            this.ids = id.id;
         }
         return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndStartDate?offset="+ offset +"&client_id="+ this.ids +"&start="+ date)
     }

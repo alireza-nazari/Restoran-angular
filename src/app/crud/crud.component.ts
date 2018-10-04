@@ -65,6 +65,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         (res: Response[]) => {
           this.data = res;
           this.numberOfPages = this.data[0].numberOfMeals;
+          console.log(res)
           for (let item of this.data) {
             if (item.piece == false) {
               item.piece = 'komad';
@@ -248,7 +249,6 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       link: url.value,
       piece: mes.value
     }, id)
-
   }
 
   newMealData(name: any, price: any, category: any, url: any, measure: any) {
