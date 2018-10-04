@@ -54,6 +54,8 @@ import { ClickOutsideModule } from 'ng4-click-outside';
 import { DatePipe } from '@angular/common';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { CrudImageService } from './crud/crud-image-service';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 const providers = [
   { provide: WindowRef, useValue: window }
@@ -93,7 +95,14 @@ const providers = [
     OrderModule,
     InViewportModule.forRoot(providers),
     ClickOutsideModule,
-    CKEditorModule
+    CKEditorModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyD_AmoYeq33oQHIhay6dOfVfrtuTY_gslU",
+      authDomain: "us-central",
+      storageBucket: "file-upload-f2fd3.appspot.com",
+      projectId: "file-upload-f2fd3",
+    }),
+    AngularFireStorageModule
   ],
   providers: [
     MealsService,
