@@ -599,7 +599,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.alert = false;
       this.orderService.emptyOut();
       this.clickedFunction = 'singleUser';
-      console.log(this.singleDateUser.value.single, this.userID)
       if((this.userID != null || this.userID != '' || this.userID != 'undefined') && this.singleDateUser.value.single == '' ){
         this.orderService.getByUser(this.userID, this.id)
           .subscribe(

@@ -33,10 +33,14 @@ fa{
     background-color: rgb(255, 68, 0) !important;
     border-color: rgb(255, 68, 0) !important;
 }
+#imageInput{
+    width: 100px;
+}
 .modal-fade{
     overflow-y: scroll;
 }
 #imgPrew{
+    margin-top: -20px;
     height: 70px;
     width: 80px;
 }

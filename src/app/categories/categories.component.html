@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center" id="wrapper" [@categories]="state">
-    <a #items id="first" *ngFor="let category of categories" (click)="getByCategory(category.category_id, outlet, body)" #body>
+    <a #items id="first" *ngFor="let category of categories" (click)="getByCategory(category.category_id, outlet, now)" #body>
       <div id="card" class="card hvr-grow inactive" style="width:200px" #now>
         <img class="card-img-top " src="{{category.link}}" alt="Card image" id="mealImg">
         <div class="card-body" >

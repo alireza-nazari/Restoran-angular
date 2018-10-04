@@ -108,9 +108,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
           button.disabled = false;
           this.uploadMsg = 'Slika je uspešno postavljena!';
         }
-        setTimeout(() =>{
-          // console.log(this.task.task.uploadUrl_)
-        }, 1000)
+          console.log(this.task.task)
       },
       (error) => {
         this.uploadMsg = 'Došlo je do greške, pokušajte ponovo!'
@@ -300,6 +298,6 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       )
   }
   ngOnDestroy(){
-    this.uploadSubscribe.unsubscribe()
+    // this.uploadSubscribe.unsubscribe()
   }
 }

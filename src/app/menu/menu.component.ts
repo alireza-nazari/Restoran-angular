@@ -64,6 +64,7 @@ export class MenuComponent implements OnInit, DoCheck {
   more: boolean = true;
   last: any = [];
   check: number;
+  
   @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
@@ -168,6 +169,7 @@ export class MenuComponent implements OnInit, DoCheck {
             this.spinerGroup = false;
           }
         );
+        console.log(sub)
   }
   showMore(){
     if(this.last.length == 0){

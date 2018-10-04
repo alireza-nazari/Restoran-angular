@@ -52,7 +52,7 @@
               <span #co>{{meal.category.name}}</span>
             </td>
             <td>
-              <input #url [hidden]="edit" type="text" name="mealName" value="{{meal.link}}" class="form-control">
+              <input #url [hidden]="edit" type="file" #newUrl (change)="onFileSelected($event, addMeal)" name="mealName" id="imageInput"><br>
               <img #ur src="{{meal.link}}" alt="" id="imgPrew">
             </td>
             <td>
@@ -106,7 +106,7 @@
         <option *ngFor="let cat of cate" value="{{cat.category_id}}">{{cat.name}}</option>
       </select>
       <label for="mealUrl">Slika</label><br>
-      <input type="file" #newUrl (change)="onFileSelected($event, addMeal)" name="mealUrl"  #url><br>
+      <input type="file" #newUrl (change)="onFileSelected($event, addMeal)" name="mealUrl" #url><br>
       <label for="measure">Jedinica mere</label>
       <select name="measure" ngModely class="form-control" name="measure" #measure>
         <option value="false">Komad</option>
@@ -119,7 +119,8 @@
       <p>{{uploadMsg}}</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="newMealData(name, price, category, url, measure); c('Save click')" #addMeal>Dodaj
+      <button type="button" class="btn btn-success" (click)="newMealData(name, price, category, url, measure); c('Save click')"
+        #addMeal>Dodaj
         jelo</button>
     </div>
   </ng-template>

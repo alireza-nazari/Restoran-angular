@@ -21,30 +21,33 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+ date +"?offset="+id, {headers: this.headers})
     }
     singleDateUser(date: any, id: any, offset){
-        if(id === Array){
-            this.ids = null;
+        console.log(id)
+        this.ids = null;
+        if(id.constructor == Array){
             id.forEach((item, index) => {
-                console.log(index)
                 if(index == 0){         
                     this.ids = item.id
                 }
                 else{
-                    this.ids += ","+item.id
+                    this.ids += ","+ item.id;
+
                 }
             })
         }else{
-            this.ids = id
+            this.ids = id[0].id;
         }
         return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+this.ids+"&date="+date)
     }
     toDate(date: any, offset){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl +"orders/endDate/"+ date +"?offset="+ offset)
     }
     todayOrders(date: any, id: any){
-        console.log(date)
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl + "orders/date/"+date+"?offset="+id, {headers: this.headers})
     }
     fromTo(from: any, to: any, offset){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl + "orders/period?offset="+offset+"&start="+ from +"&end=" + to)
     }
     fromAndUser(date: any, id: any, offset: any){
@@ -69,7 +72,6 @@ export class OrderService{
         this.ids = null;
         if(id.constructor === Array){
         id.forEach((item, index) => {
-            console.log(index)
             if(index == 0){         
                 this.ids = item.id
             }
@@ -83,7 +85,7 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl + "orders/clientAndEndDate?offset="+ offset +"&client_id="+ this.ids +"&end="+ date)
     }
     user(name: any){
-        console.log(this.last)
+        this.ids = null;
         if(name == ''){
             return this.http.get<any>(environment.apiBaseUrl+"clients/user/" + this.last)
         }
@@ -140,15 +142,19 @@ export class OrderService{
         return this.http.get<any>(environment.apiBaseUrl+"orders/combination?offset="+ offset +"&start="+ from +"&end="+ to +"&client_id="+ this.ids);
     }
     emptyOut(){
+        this.ids = null;
         this.data = [];
     }
     singleStartingDate(date: any, offset){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl+"orders/startDate/"+ date +"?offset="+ offset)
     }
     currentUser(offset){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+offset);
     }
     allUsers(){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl+"clients");
     }
     changeStatus(data){
@@ -164,15 +170,19 @@ export class OrderService{
         return this.http.put<any>(environment.apiBaseUrl+"orders/listOforders", data, {headers: this.headers});
     }
     myOrders(offset){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl+"orders/myorders?offset="+ offset)
     }
     closeOrders(date: any){
+        this.ids = null;
         return this.http.post<any>(environment.apiBaseUrl+"orders/orderClosed?date="+ date +"&status=true", {headers: this.headers});
     }
     reopenOrders(date: any){
+        this.ids = null;
         return this.http.put<any>(environment.apiBaseUrl+"orders/updateOrderClosed/"+ date +"?status=false", {headers: this.headers});
     }
     allTodayOrders(date: any){
+        this.ids = null;
         return this.http.get<any>(environment.apiBaseUrl+"orders/singleDate/"+date);
     }
 }

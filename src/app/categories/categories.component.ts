@@ -56,8 +56,9 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
     this.clickedCategory(body);
   }
   clickedCategory(body: HTMLDivElement){
-    body.children[0].classList.remove('inactive');
-    body.children[0].classList.add('active');
+    console.log(body)
+    body.classList.remove('inactive');
+    body.classList.add('active');
     if(this.image == undefined && this.bodyR == undefined){
      this.bodyR = body;
     }
