@@ -21,6 +21,9 @@ fa{
 #confirm{
     color: green;
 }
+#progress{
+    margin-top: 10px;
+}
 /deep/ .page-link{
     color: rgb(255, 68, 0) !important;
 }
