@@ -106,7 +106,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.advanced = false;
     this.more = false;
   }
-
   ngOnInit() {
     const token = this.auth.getToken();
     const tokenPayload = decode(token);
@@ -118,7 +117,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.simpleUser = false;
     }
     else {
-      this.userID = tokenPayload.id
+      this.userID = ({
+        id: tokenPayload.id
+      })
+      // this.userID = tokenPayload.id
       this.admin = false;
       this.simpleUser = true;
       this.myOrders()

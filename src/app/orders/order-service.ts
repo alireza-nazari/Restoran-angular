@@ -34,7 +34,7 @@ export class OrderService{
                 }
             })
         }else{
-            this.ids = id[0].id;
+            this.ids = id.id;
         }
         return this.http.get<any>(environment.apiBaseUrl +"orders/clientAndDate?offset="+offset+"&client_id="+this.ids+"&date="+date)
     }

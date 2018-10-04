@@ -9,7 +9,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable, Subscription } from 'rxjs';
-
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -49,6 +49,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
   precentageOfUpload: any;
   uploadMsg: string;
   uploadSubscribe: Subscription;
+  imageUrl: Observable<any>;
   @ViewChild('selectedRow') row: ElementRef;
   constructor(public meals: MealsService,
     public crud: CrudService,
@@ -98,7 +99,6 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
     this.ref = this.afStorage.ref(id);
     this.task = this.ref.put(this.selectedFile);
     this.uploadProgress = this.task.percentageChanges();
-  
     this.uploadSubscribe = this.uploadProgress
     .subscribe(
       (res) =>{
@@ -114,7 +114,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         this.uploadMsg = 'Došlo je do greške, pokušajte ponovo!'
       }
     )
-    
+   
   }
   pageNum(event) {
     var now = event.toElement.innerText[0];
