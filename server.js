@@ -11,8 +11,3 @@ app.get('/*', function(req, res) {
 res.sendFile(path.join(__dirname + '/dist/restoran-app/index.html'));
 })
 app.listen(process.env.PORT || 8080);
-
-var http = require("http");
-setInterval(function() {
-    http.get("https://restoranappp.herokuapp.com");
-}, 300000); 
