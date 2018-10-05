@@ -299,6 +299,12 @@ vertical-align: top;
 	  *{
 		  overflow-y: none;
 	  }
+	  #searchInput{
+		visibility: hidden !important;
+	  }
+	  #searchName{
+		visibility: hidden !important; 
+	  }
 }
 @media only screen and (max-width: 1001px) {
     .center{

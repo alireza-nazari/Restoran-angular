@@ -92,9 +92,9 @@
                             <fa class="hvr-grow" name="{{angleType}}" (click)="sort()" id="angleSelector"></fa>
                         </th>
                         <th>Ime klijenta
-                            <div>
+                            <div id="searchInput">
                                 <input #dat type="text" class="form-control" id="searchName" aria-describedby="searchName"
-                                    placeholder="Pretrazi" ngModel [(ngModel)]="term" name="user" autocomplete="off">
+                                    placeholder="Pretrazi" ngModel [(ngModel)]="term" name="user" autocomplete="off"> 
                             </div>
                         </th>
                         <th>Jelo</th>
@@ -111,7 +111,6 @@
                         <td>{{ meal.order_date}}</td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
         <div *ngIf="spinner" style="height: 100px;" snInViewport [debounce]="300">

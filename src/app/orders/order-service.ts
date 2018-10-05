@@ -115,7 +115,7 @@ export class OrderService{
         this.data = data;
         for(let meal of this.data){
             if(meal.piece == true){
-                meal.piece = 'gram'
+                meal.piece = 'grama'
             }
             else if(meal.piece == false){
               meal.piece = 'kom'
@@ -159,7 +159,7 @@ export class OrderService{
     changeStatus(data){
         for(let item of data){
             item.display = false;
-            if(item.piece == 'gram'){
+            if(item.piece == 'grama'){
                 item.piece = true
             }
             else if(item.piece == 'kom'){
