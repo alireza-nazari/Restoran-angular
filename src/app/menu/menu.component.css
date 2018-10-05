@@ -23,6 +23,9 @@ ul{
 	height: 500px;
 	
 }
+ /deep/ #toast-container{
+	margin-top: 60px !important;
+}
 #alertWrapper{
     position: absolute;
     bottom: 0;

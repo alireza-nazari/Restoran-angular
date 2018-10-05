@@ -1,5 +1,5 @@
 import { ToastrConfig} from 'ngx-toastr';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, AfterContentInit, DoCheck } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject,ElementRef, AfterViewInit, Input, AfterContentInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService} from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories-service';
@@ -8,7 +8,6 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Subscription, Observable } from 'rxjs';
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -64,7 +63,7 @@ export class MenuComponent implements OnInit, DoCheck {
   more: boolean = true;
   last: any = [];
   check: number;
-  
+  doc: any;
   @ViewChild('cont') public outlet: ElementRef;
   @Input('page') masterName: string;
 
@@ -73,7 +72,7 @@ export class MenuComponent implements OnInit, DoCheck {
     private route: ActivatedRoute,
     private cate: CategoriesService,
     private modalService: NgbModal,
-    private menuData: DataService) {
+    private menuData: DataService){
   }
   ngDoCheck() {
     if (this.id != this.route.snapshot.params['id'] || this.id == 'undefined') {

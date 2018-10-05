@@ -32,19 +32,18 @@ export class CrudService{
         )
     }
     postMeal(data:any){
-        console.log(data);
         return this.http.post(environment.apiBaseUrl+"meal",data,{headers: this.headers})
         .subscribe(
             (res: Response) => {
-                console.log(res);     
+                this.tostr.success('Jelo je izmenjeno!');   
             },
             (error) =>{
-                console.log(error);     
+                this.tostr.error('Jelo je nije izmenjeno!');       
             }
         )
     }
     editMeal(data, id: any){
-        console.log(id);
+        console.log(data);
         return this.http.put(environment.apiBaseUrl+"meal/"+id,data,{headers: this.headers})
         .subscribe(
             (res: Response) => {

@@ -52,7 +52,7 @@
               <span #co>{{meal.category.name}}</span>
             </td>
             <td>
-              <input #url [hidden]="edit" type="file" #newUrl (change)="onFileSelected($event, addMeal)" name="mealName" id="imageInput"><br>
+              <input #url [hidden]="edit" type="file" #newUrl (change)="onFileSelected($event, controls)" name="mealName" id="imageInput"><br>
               <img #ur src="{{meal.link}}" alt="" id="imgPrew">
             </td>
             <td>
@@ -62,8 +62,8 @@
               </select>
               <span #me>{{meal.piece}}</span>
             </td>
-            <td style="width: 140px">
-              <fa name="check" id="hideDrop" id="confirm" *ngIf="confirmBtn" (click)="confirm(n, p, c, mes,meal.meal_id,url, na, pr, co, ur, me)"></fa>
+            <td style="width: 140px" #controls>
+              <fa name="check" id="hideDrop" id="confirm" role="button" *ngIf="confirmBtn" (click)="confirm(n, p, c, mes,meal.meal_id,url, na, pr, co, ur, me)"></fa>
               <fa name="edit" id="hideDrop" id="edit" (click)="editMeal(n, p, c, url, mes, na, pr, co, ur,me)" *ngIf="editBtn"></fa>
               <fa name="trash" id="hideDrop" id="delete" *ngIf="deleteBtn" (click)="open(delete, meal.name, meal.meal_id)"></fa>
             </td>
@@ -72,6 +72,11 @@
       </table>
     </form>
   </div>
+  <div class="progress" *ngIf="uploadImgEdit">
+    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'"
+      [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100">{{this.precentageOfUpload}}</div>
+  </div>
+  <p>{{uploadMsg}}</p>
   <ngb-pagination [collectionSize]="numberOfPages" [(page)]="page" [boundaryLinks]="true" (click)="pageNum($event)"></ngb-pagination>
   <hr>
   <ng-template #delete let-c="close" let-d="dismiss">

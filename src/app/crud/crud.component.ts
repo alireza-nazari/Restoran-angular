@@ -10,6 +10,8 @@ import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { subscribeOn } from 'rxjs-compat/operator/subscribeOn';
+import { resolve } from 'path';
 
 
 @Component({
@@ -50,6 +52,8 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
   uploadMsg: string;
   uploadSubscribe: Subscription;
   imageUrl: Observable<any>;
+  linkOfImage: any;
+  uploadImgEdit: boolean;
   @ViewChild('selectedRow') row: ElementRef;
   constructor(public meals: MealsService,
     public crud: CrudService,
@@ -93,6 +97,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
     this.currentPage = this.page;
   }
   onFileSelected(event, button: HTMLButtonElement) {
+    console.log(button)
     this.uploadMsg = 'Slika se postavlja!';
     button.disabled = true;
     this.selectedFile = event.target.files[0];
@@ -101,21 +106,30 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
     this.task = this.ref.put(this.selectedFile);
     this.uploadProgress = this.task.percentageChanges();
     this.uploadSubscribe = this.uploadProgress
-    .subscribe(
-      (res) =>{
-        let num = Math.round(res);
-        this.precentageOfUpload = num +"%";
-        if(this.precentageOfUpload == '100%'){
-          button.disabled = false;
-          this.uploadMsg = 'Slika je uspešno postavljena!';
-        }
-          console.log(this.task.task)
-      },
-      (error) => {
-        this.uploadMsg = 'Došlo je do greške, pokušajte ponovo!'
-      }
-    )
-   
+      .subscribe(
+        (res) => {
+          let num = Math.round(res);
+          this.precentageOfUpload = num + "%";
+          if (this.precentageOfUpload == '100%') {
+            this.uploadMsg = 'Slika je uspešno postavljena!';
+            this.imageUrl = this.ref.getDownloadURL();
+            this.imageUrl
+              .subscribe(
+                (res) => {
+                  this.linkOfImage = res;
+                  console.log(this.linkOfImage)
+                  button.disabled = false;
+                },
+                (error) => {
+                  alert("Pokusajte ponovo!");
+                }
+              )
+          }
+        },
+        (error) => {
+          this.uploadMsg = 'Došlo je do greške, pokušajte ponovo!'
+        })
+
   }
   pageNum(event) {
     var now = event.toElement.innerText[0];
@@ -194,6 +208,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
     else {
       this.addNewMeal = false;
       this.i = 0;
+
     }
   }
   editMeal(n: any, p: any, c: any, url: any, mes: any, na: any, pr: any, co: any, ur: any, me: any) {
@@ -210,6 +225,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       ur.hidden = true;
       me.hidden = true;
       this.confirmBtn = true;
+      this.uploadImgEdit = true;
     }
     else {
       n.hidden = true;
@@ -223,12 +239,13 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       ur.hidden = false;
       me.hidden = false;
       this.confirmBtn = false;
+      this.uploadImgEdit = false;
       this.a = 0;
     }
 
   }
   confirm(n: any, p: any, c: any, mes: any, id: any, url: any, na: any, pr: any, co: any, ur: any, me: any) {
-    console.log(mes.value)
+    
     n.hidden = true;
     p.hidden = true;
     c.hidden = true;
@@ -246,27 +263,24 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       },
       name: n.value,
       price: p.value,
-      link: url.value,
+      link: this.linkOfImage,
       piece: mes.value
     }, id)
+    this.uploadImgEdit = false;
   }
 
   newMealData(name: any, price: any, category: any, url: any, measure: any) {
-    // const fd = new FormData();
-    // fd.append('image', this.selectedFile, this.selectedFile.name);
-    // this.http.post("url", fd);
-    if (name.value != "" && price.value != "", category.value != "" && url.value != "" && measure.value != "") {
+    if (name.value != "" && price.value != "", category.value != "" && this.linkOfImage != null && measure.value != "") {
       this.crud.postMeal({
         category: {
           category_id: category.value
         },
         name: name.value,
         price: price.value,
-        link: url.value,
+        link: this.linkOfImage,
         piece: measure.value,
         display: false
       })
-      this.addMeal();
       this.tostr.success('Jelo je dodato!');
     } else {
       this.tostr.error('Ispunite sva polja!');
@@ -297,7 +311,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         }
       )
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     // this.uploadSubscribe.unsubscribe()
   }
 }
