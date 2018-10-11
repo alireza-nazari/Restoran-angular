@@ -1,13 +1,13 @@
-import { ToastrConfig} from 'ngx-toastr';
-import { Component, OnInit, ViewChild, Inject,ElementRef, AfterViewInit, Input, AfterContentInit, DoCheck } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { Component, ElementRef, DoCheck, OnDestroy, ViewChild} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService} from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories-service';
 import { trigger, state, style } from '@angular/animations';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../data.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject} from 'rxjs';
+import { take, first, takeUntil, map } from 'rxjs/operators'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -27,7 +27,7 @@ import { Subscription, Observable } from 'rxjs';
     ])
   ]
 })
-export class MenuComponent implements OnInit, DoCheck {
+export class MenuComponent implements DoCheck, OnDestroy {
   meals: any = [];
   response: any = [];
   sub: any;
@@ -65,8 +65,7 @@ export class MenuComponent implements OnInit, DoCheck {
   check: number;
   doc: any;
   @ViewChild('cont') public outlet: ElementRef;
-  @Input('page') masterName: string;
-
+  private destroyed$ = new Subject();
   constructor(
     private tostr: ToastrService,
     private route: ActivatedRoute,
@@ -146,6 +145,9 @@ export class MenuComponent implements OnInit, DoCheck {
       this.outlet.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' })
       this.spinerGroup = true;
       var sub = this.cate.getByCategory(this.id, num)
+      .pipe(
+        takeUntil(this.destroyed$)
+      )
         .subscribe(
           (res: Array<any>[]) => {
             setTimeout(() => {
@@ -168,7 +170,6 @@ export class MenuComponent implements OnInit, DoCheck {
             this.spinerGroup = false;
           }
         );
-        console.log(sub)
   }
   showMore(){
     if(this.last.length == 0){
@@ -207,7 +208,7 @@ export class MenuComponent implements OnInit, DoCheck {
       this.tostr.success('Prosledjeno u korpu');
     }
   }
-  ngOnInit() {
-
+  ngOnDestroy(): void{
+    this.destroyed$.next();
   }
 }

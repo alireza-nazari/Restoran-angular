@@ -124,10 +124,10 @@ export class CarthComponent implements OnInit{
     if(isNumeric(data.key) || data.key == 'Backspace'){
     }
     else{
-      this.tostr.error("Količina mora biti broj")
+      this.tostr.error('Količina mora biti broj');
     }
   }
-  testIfNum(){
-    console.log()
+  testIfNum() {
+
   }
 }
