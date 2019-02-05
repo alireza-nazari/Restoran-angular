@@ -13,6 +13,7 @@ export class CategoriesService{
         return this.http.get<any>(environment.apiBaseUrl + "category");
     }
     getByCategory(id: any, page: number){
-        return this.http.get<any>(environment.apiBaseUrl + "meal/category/" + id +"/scroll?offset="+ page);
+        let resId = sessionStorage.getItem('resId')
+        return this.http.get<any>(environment.apiBaseUrl + "meal/restaurant/" + resId + "/category/" + id +"?offset="+ page);
     }
 }

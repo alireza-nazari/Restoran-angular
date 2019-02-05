@@ -3,6 +3,7 @@
     <div id="heading">
         <h1>Gladni ste?</h1>
         <div id="menuLinkDirect"><a>Pogledajte meni</a></div>
+        <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="false" [(ngModel)]="dataModel" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
     </div>
 </div>
 <div id="outletWrapper">

@@ -3,6 +3,7 @@ import { CategoriesService } from './categories-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { trigger, state, style } from '@angular/animations';
 import { DataService } from '../data.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
   constructor(private cat: CategoriesService,
               private router: Router,
               private route: ActivatedRoute,
-              private data: DataService) { }
+              private data: DataService,
+              private tostr: ToastrService) { }
   ngAfterContentInit(){
 
   }
@@ -51,10 +53,15 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
     )
   }
   getByCategory(id: any, out: ElementRef, body: any){
-     this.router.navigate([id,'meni']);
-     this.state = 'visible';
-    this.clickedCategory(body);
+    if (!sessionStorage.getItem('resId')) {
+      this.tostr.warning('Izaberite restoran iz dropdown menija', 'Nije izabran restoran')
+    } else {
+      this.router.navigate([id,'meni']);
+      this.state = 'visible';
+      this.clickedCategory(body);      
+    }
   }
+
   clickedCategory(body: HTMLDivElement){
     console.log(body)
     body.classList.remove('inactive');

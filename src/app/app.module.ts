@@ -56,6 +56,7 @@ import { CKEditorModule } from 'ngx-ckeditor';
 import { CrudImageService } from './crud/crud-image-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 const providers = [
   { provide: WindowRef, useValue: window }
@@ -102,7 +103,8 @@ const providers = [
       storageBucket: "file-upload-f2fd3.appspot.com",
       projectId: "file-upload-f2fd3",
     }),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    SelectDropDownModule
   ],
   providers: [
     MealsService,
