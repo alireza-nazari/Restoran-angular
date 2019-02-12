@@ -204,6 +204,11 @@ export class MenuComponent implements DoCheck, OnDestroy {
     if(data.amount < 1){
       alert("Kolicina mora biti veca od 0")
     }else{
+      if (data.type == 'komad') {
+        data.type = false;
+      } else {
+        data.type = true;
+      }
       this.menuData.sendData(data);
       this.tostr.success('Prosledjeno u korpu');
     }

@@ -82,6 +82,7 @@ export class CarthComponent implements OnInit{
           }, 500)
         },
         (error) => {
+          console.log(error)
          if(error.status == 401){
           this.tostr.error("Porudzbina nije prosledjena", "Prijavite se ponovo!")
          }else if(error.status == 403){
