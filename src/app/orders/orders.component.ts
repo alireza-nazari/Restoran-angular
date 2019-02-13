@@ -109,6 +109,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const token = this.auth.getToken();
     const tokenPayload = decode(token);
+    console.log(tokenPayload)
     this.current = tokenPayload.name;
     if (tokenPayload.role == 'admin') {
       this.getUsers();
@@ -118,7 +119,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
     else {
       this.userID = ({
-        id: tokenPayload.id
+        id: tokenPayload.sub
       })
       // this.userID = tokenPayload.id
       this.admin = false;
@@ -669,6 +670,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
           )
       }
       else if(this.userID != null  && this.singleDateUser.value.single != '') {
+        console.log(this.userID)
         this.orderService.singleDateUser(this.singleDateUser.value.single, this.userID, this.id)
           .subscribe(
             (res) => {
@@ -711,6 +713,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.clickedFunction = 'myOrders';
     this.todaysDate = new Date();
     var transformdate = this.datepipe.transform(this.todaysDate, 'yyyy-MM-dd');
+    console.log(this.userID)
     this.orderService.singleDateUser(transformdate, this.userID, this.id)
       .subscribe(
         (res) => {
