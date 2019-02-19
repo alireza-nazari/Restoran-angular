@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { subscribeOn } from 'rxjs-compat/operator/subscribeOn';
 import { resolve } from 'path';
+import { RestaurantService } from '../restaurant.service';
 
 
 @Component({
@@ -55,15 +56,34 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
   linkOfImage: any;
   uploadImgEdit: boolean;
   @ViewChild('selectedRow') row: ElementRef;
+
+  config = {
+    displayKey:"name",
+    search:true,
+    height: '300px',
+    placeholder:'Restoran',
+    noResultsFound: 'Nema rezultata',
+    searchPlaceholder:'Pretraga'
+  };
+
+  dataModel
+  dataModelEdit
+  dropdownOptions = [];  
+
+  selectShow = false;
+
   constructor(public meals: MealsService,
     public crud: CrudService,
     public responseOptions: ResponseOptions,
     public cat: CategoriesService,
     public tostr: ToastrService,
     private modalService: NgbModal,
-    private afStorage: AngularFireStorage) {
+    private afStorage: AngularFireStorage,
+    private res: RestaurantService) {
   }
-  ngOnInit() {
+  ngOnInit() {   
+    this.getRestaurants()
+
     this.meals.getMeals(this.offset)
       .subscribe(
         (res: Response[]) => {
@@ -131,49 +151,53 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         })
 
   }
-  pageNum(event) {
-    var now = event.toElement.innerText[0];
-    now = Number(now);
-    if (event.toElement.innerText == '«') {
-      this.pageNumToCompare = this.pageNumToCompare - 1;
-      this.offset = this.offset - 10;
-      this.moreMeals();
-    }
-    if (event.toElement.innerText == '««') {
-      this.pageNumToCompare = 1;
-      this.offset = 0;
-      this.moreMeals();
-    }
-    if (event.toElement.innerText == '»') {
-      this.pageNumToCompare = this.pageNumToCompare + 1;
-      this.offset = this.offset + 10;
-      this.moreMeals();
-    }
-    if (event.toElement.innerText == '»»') {
-      this.pageNumToCompare = this.numberOfPages;
-      let e = this.numberOfPages / 10;
-      let p = Math.round(e);
-      this.pageNumToCompare = p + 1;
-      this.offset = 10 * p;
-      this.moreMeals();
-    }
-    else {
-      if (now > this.pageNumToCompare) {
-        this.pageNumToCompare = now;
-        var temp = now - 1;
-        this.offset = 10 * temp;
-        this.moreMeals();
-      } else if (now < this.pageNumToCompare) {
-        var passed = this.pageNumToCompare - now;
-        passed = 10 * passed;
-        this.offset = this.offset - passed;
-        this.pageNumToCompare = now;
-        this.moreMeals();
-      }
-      else if (this.pageNumToCompare == now) {
+  pageNum() {
+    setTimeout(() => {
+      this.offset = this.page * 10;
+      this.moreMeals()
+    }, 50);
+    // var now = event.toElement.innerText[0];
+    // now = Number(now);
+    // if (event.toElement.innerText == '«') {
+    //   this.pageNumToCompare = this.pageNumToCompare - 1;
+    //   this.offset = this.offset - 10;
+    //   this.moreMeals();
+    // }
+    // if (event.toElement.innerText == '««') {
+    //   this.pageNumToCompare = 1;
+    //   this.offset = 0;
+    //   this.moreMeals();
+    // }
+    // if (event.toElement.innerText == '»') {
+    //   this.pageNumToCompare = this.pageNumToCompare + 1;
+    //   this.offset = this.offset + 10;
+    //   this.moreMeals();
+    // }
+    // if (event.toElement.innerText == '»»') {
+    //   this.pageNumToCompare = this.numberOfPages;
+    //   let e = this.numberOfPages / 10;
+    //   let p = Math.round(e);
+    //   this.pageNumToCompare = p + 1;
+    //   this.offset = 10 * p;
+    //   this.moreMeals();
+    // }
+    // else {
+    //   if (now > this.pageNumToCompare) {
+    //     this.pageNumToCompare = now;
+    //     var temp = now - 1;
+    //     this.offset = 10 * temp;
+    //     this.moreMeals();
+    //   } else if (now < this.pageNumToCompare) {
+    //     var passed = this.pageNumToCompare - now;
+    //     passed = 10 * passed;
+    //     this.offset = this.offset - passed;
+    //     this.pageNumToCompare = now;
+    //     this.moreMeals();
+    //   }
+    //   else if (this.pageNumToCompare == now) {
 
-      }
-    }
+    //   }
+    // }
   }
   open(content, name, id) {
     this.modalName = name;
@@ -211,7 +235,7 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
 
     }
   }
-  editMeal(n: any, p: any, c: any, url: any, mes: any, na: any, pr: any, co: any, ur: any, me: any) {
+  editMeal(n: any, p: any, c: any, url: any, mes: any, na: any, pr: any, co: any, ur: any, me: any, res: any) {
     this.a++;
     if (this.a <= 1) {
       n.hidden = false;
@@ -224,6 +248,8 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       co.hidden = true;
       ur.hidden = true;
       me.hidden = true;
+      res.hidden = true;
+      this.selectShow = true;
       this.confirmBtn = true;
       this.uploadImgEdit = true;
     }
@@ -238,13 +264,15 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       co.hidden = false;
       ur.hidden = false;
       me.hidden = false;
+      res.hidden = false;
+      this.selectShow = false;
       this.confirmBtn = false;
       this.uploadImgEdit = false;
       this.a = 0;
     }
 
   }
-  confirm(n: any, p: any, c: any, mes: any, id: any, url: any, na: any, pr: any, co: any, ur: any, me: any) {
+  confirm(n: any, p: any, c: any, mes: any, id: any, url: any, na: any, pr: any, co: any, ur: any, me: any, res: any) {
     
     n.hidden = true;
     p.hidden = true;
@@ -256,6 +284,8 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
     co.hidden = false;
     ur.hidden = false;
     me.hidden = false;
+    res.hidden = false;
+    this.selectShow = false;
     this.confirmBtn = false;
     this.crud.editMeal({
       category: {
@@ -264,14 +294,20 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
       name: n.value,
       price: p.value,
       link: this.linkOfImage,
-      piece: mes.value
+      piece: mes.value,
+      restaurant: {
+        id: this.dataModelEdit.id
+      }
     }, id)
     this.uploadImgEdit = false;
+    setTimeout(() => {
+      this.dataModelEdit = null
+    }, 200);
   }
 
   newMealData(name: any, price: any, category: any, url: any, measure: any) {
-    if (name.value != "" && price.value != "", category.value != "" && this.linkOfImage != null && measure.value != "") {
-      this.crud.postMeal({
+    if (name.value != "" && price.value != "", category.value != "" && this.linkOfImage != null && measure.value != "" && this.dataModel != null) {
+      let data = {
         category: {
           category_id: category.value
         },
@@ -279,9 +315,17 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         price: price.value,
         link: this.linkOfImage,
         piece: measure.value,
-        display: false
-      })
+        display: false,
+        restaurant: {
+          id: this.dataModel.id
+        }
+      }
+      console.log(data)
+      this.crud.postMeal(data)
       this.tostr.success('Jelo je dodato!');
+      setTimeout(() => {
+        this.dataModel = null
+      }, 200);
     } else {
       this.tostr.error('Ispunite sva polja!');
     }
@@ -311,6 +355,19 @@ export class CrudComponent implements OnInit, DoCheck, OnDestroy {
         }
       )
   }
+
+  getRestaurants(){
+    this.res.getRestaurants().subscribe(
+      res => {
+        console.log(res)
+        this.dropdownOptions = res
+      },
+      err => {
+        console.log(err)
+      }
+    )
+  }
+
   ngOnDestroy() {
     // this.uploadSubscribe.unsubscribe()
   }

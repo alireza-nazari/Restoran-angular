@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://biber-so.herokuapp.com/webapi/",
-  // apiBaseUrl: "http://192.168.0.120:8080/Restoran/webapi/",
+  // apiBaseUrl: "https://biber-so.herokuapp.com/webapi/",
+  apiBaseUrl: "http://192.168.0.120:8080/Restoran/webapi/",
   // apiBaseUrl: "http://192.168.0.120:8080/Restoran-0.0.1-SNAPSHOT/webapi/"
 };
 
